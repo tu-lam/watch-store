@@ -1,0 +1,2 @@
+post - method này có thể có req.body 
+get - method ko thể có req.body 

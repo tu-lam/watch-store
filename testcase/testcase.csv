@@ -1,0 +1,2 @@
+api,in,out
+https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&type=video&chart=mostPopular&videoDefinition=high&videoDuration=short&maxResults=50&key=AIzaSyBvIwJnjPYOD3OXPviJZyhTS9002JJ9IWI,{},{"kind": "youtube#videoListResponse"},

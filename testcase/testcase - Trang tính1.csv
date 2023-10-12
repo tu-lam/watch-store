@@ -1,0 +1,7 @@
+api,method,inputBody,outputCode,check
+"http://localhost:3000/api/amr/inputs/abc","get","{}",300,true
+"http://localhost:3000/api/amr/input/","post","{"inputs": "adc"}",433,true
+"http://localhost:3000/api/amr/input/","post","{"inputs": "ss"}",400,true
+"http://localhost:3000/api/amr/input/","post","{}",403,false
+"http://localhost:3000/api/amr/input/","post","{"inputs": "a"}",400,true
+"http://localhost:3000/api/amr/t/","get","{"params": {"data":"thai"}}",303,true
