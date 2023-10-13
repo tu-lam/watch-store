@@ -1,17 +1,17 @@
 import { IsNumber, IsString } from 'class-validator';
-import { Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Product {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @IsString()
+  @Column()
   name: string;
 
-  @IsString()
+  @Column()
   image: string;
 
-  @IsNumber()
+  @Column()
   price: number;
 }

@@ -45,8 +45,18 @@ export class UsersController {
       body.email,
       body.password,
     );
+
+    if (!user) {
+      return {
+        messageCode: 'signup_fail',
+      };
+    }
+
     session.userId = user.id;
-    return user;
+    return {
+      messageCode: 'signup_success',
+      data: { user },
+    };
   }
 
   @Post('/signin')
