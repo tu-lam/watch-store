@@ -25,7 +25,7 @@ const writeFileCSV = (data, filePath) => {
     csvStream.write('api,description,method,inputBody,outputCode,check\n');
 
     data.forEach(item => {
-        csvStream.write(`"${item.api}","${item.description}","${item.method}","${item.inputBody.replace(/"/g, '""')}",${item.outputCode},${item.check}\n`);
+        csvStream.write(`"${item.api}","${item.description}","${item.method}","${item.inputBody.replace(/"/g, '""')}","${item.outputCode}",${item.check}\n`);
     });
 
     csvStream.end();
@@ -54,24 +54,26 @@ async function fetchData() {
                     try {
                         response = await axios.get(test.api, requestBody);
                     } catch (error) {
-                        test.check = false;
+                        console.log(error.response.data.messageCode);
+                        error.response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
                         continue;
                     }
                     console.log("test.outputCode: ", test.outputCode);
-                    console.log("response.data.code: ", response.data.code);
-                    response.data.code == test.outputCode ? test.check = true : test.check = false;
+                    console.log("response.data.code: ", response.data.messageCode);
+                    response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
                     break;
                 case "post":
                     console.log(requestBody);
                     try {
                         response = await axios.post(test.api, requestBody);
                     } catch (error) {
-                        test.check = false;
+                        console.log(error.response.data.messageCode);
+                        error.response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
                         continue;
                     }
                     console.log(test.outputCode);
-                    console.log(response.data.code);
-                    response.data.code == test.outputCode ? test.check = true : test.check = false;
+                    console.log(response.data.messageCode);
+                    response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
                     break;
                 case "delete":
                     console.log(requestBody);
@@ -83,7 +85,7 @@ async function fetchData() {
                     }
                     console.log(test.outputCode);
                     console.log(response.data.code);
-                    response.data.code == test.outputCode ? test.check = true : test.check = false;
+                    response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
                     break;
                 case "patch":
                     console.log(requestBody);
@@ -95,7 +97,7 @@ async function fetchData() {
                     }
                     console.log(test.outputCode);
                     console.log(response.data.code);
-                    response.data.code == test.outputCode ? test.check = true : test.check = false;
+                    response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
                     break;
                 case "put":
                     console.log(requestBody);
