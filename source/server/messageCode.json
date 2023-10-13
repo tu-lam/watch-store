@@ -5,5 +5,6 @@
   "empty_name_err": "Tên không được để trống",
   "empty_email_err": "Email không được để trống",
   "empty_password_err": "Mật khẩu không được để trống",
-  "invalid_email_err": "email không hợp lệ"
+  "invalid_email_err": "Email không hợp lệ",
+  "product_not_found_err": "Không tìm thấy sản phẩm"
 }
