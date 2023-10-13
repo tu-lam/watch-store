@@ -5,17 +5,20 @@ import { UsersModule } from './users/users.module';
 import { APP_PIPE } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './users/entities/user.entity';
+import { ProductsModule } from './products/products.module';
 import * as session from 'express-session';
+import { Product } from './products/entities/product.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'db.sqlite',
-      entities: [User],
+      entities: [User, Product],
       synchronize: true,
     }),
     UsersModule,
+    ProductsModule,
   ],
   controllers: [AppController],
   providers: [
