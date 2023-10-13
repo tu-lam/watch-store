@@ -1,7 +1,7 @@
 api,description,method,inputBody,outputCode,check
-"http://localhost:3000/api/amr/input/","api login voi email khong dung cau truc","post","{""email"": ""adc"",""password"":""222as""}",400,true
-"http://localhost:3000/api/amr/input/","api login check SQL injection","post","{""email"": "" OR '1'='1'"",""password"":""222as""}",400,true
-"http://localhost:3000/api/amr/input/","api login dung tai khoang, sai mat khau","post","{""email"": ""admin@gmail.com"",""password"":""saimatkhau""}",400,true
-"http://localhost:3000/api/amr/input/","api login dung tai khoang, check mat viet hoa co khac viet thuong khong","post","{""email"": ""admin@gmail.com"",""password"":""ADmin""}",400,true
-"http://localhost:3000/api/amr/input/","api login dung tai khoan va mat khau co dau cach cuoi thi nhu nao","post","{""email"": ""admin@gmail.com  "",""password"":""admin  ""}",400,true
-"http://localhost:3000/api/amr/input/","api login dung tai khoang, dung mat khau","post","{""email"": ""admin@gmail.com"",""password"":""admin""}",400,true
+"http://localhost:4000/users/signin","api login voi email khong dung cau truc","post","{""email"": ""adc"",""password"":""222as""}","invalid_email_err",true
+"http://localhost:4000/users/signin","api login dung tai khoang, sai mat khau","post","{""email"": ""admin@gmail.com"",""password"":""saimatkhau""}","incorrect_password_err",true
+"http://localhost:4000/users/signin","api login dung tai khoang, check mat viet hoa co khac viet thuong khong","post","{""email"": ""admin@gmail.com"",""password"":""ADmin""}","incorrect_password_err",true
+"http://localhost:4000/users/signin","api login dung tai khoan va mat khau co dau cach cuoi thi nhu nao","post","{""email"": ""admin@gmail.com"",""password"":""admin  ""}","incorrect_password_err",true
+"http://localhost:4000/users/signin","api login dung tai khoang, dung mat khau","post","{""email"": ""admin@gmail.com"",""password"":""admin""}","",false
+"http://localhost:4000/users/signin","api login check SQL injection","post","{""email"": "" OR '1'='1'"",""password"":""222as""}","400",false
