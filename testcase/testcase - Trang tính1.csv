@@ -10,6 +10,8 @@ api,description,method,inputBody,outputCode,check
 "http://localhost:4000/users/signup","api dang ky voi email khong dung cau truc","post","{""name"": ""thai"",""email"": ""adc"",""password"":""222as""}","invalid_email_err",true
 "http://localhost:4000/users/signup","api dang ky trung email","post","{""name"": ""thai"",""email"": ""admin@gmail.com"",""password"":""222as""}","existing_email_err",true
 "http://localhost:4000/users/signup","api dang ky trong email","post","{""name"": ""thai"",""email"": """",""password"":""222as""}","empty_email_err",true
+"http://localhost:4000/users/signup","api dang ky khong the tao tai khoan neu co khoan trong email dau hoac cuoi","post","{""name"": ""thai"",""email"": ""adsds@gmail.com  "",""password"":""222as""}","invalid_email_err",true
+"http://localhost:4000/users/signup","api dang ky co ky tu dat biet trong email khong tao duocj tai khoan","post","{""name"": ""thai"",""email"": ""asdas!!@gmail.com"",""password"":""222as""}","invalid_email_err",true
 "http://localhost:4000/users/signup","api dang ky trong password","post","{""name"": ""thai"",""email"": ""adc@gmail.com"",""password"":""""}","empty_password_err",true
 "http://localhost:4000/users/signup","api dang ky trong ten","post","{""name"": """",""email"": ""adc@gmail.com"",""password"":""222as""}","empty_name_err",true
 "http://localhost:4000/users/signup","api dang ky dung","post","{""name"": ""thai"",""email"": ""adc6@gmail.com"",""password"":""222as""}","signup_success",false
