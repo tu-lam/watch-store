@@ -56,10 +56,11 @@ async function fetchData() {
                     } catch (error) {
                         console.log(error.response.data.messageCode);
                         error.response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
-                        continue;
+                        break;
                     }
                     console.log("test.outputCode: ", test.outputCode);
                     console.log("response.data.code: ", response.data.messageCode);
+                    console.log(response.data.messageCode == test.outputCode);
                     response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
                     break;
                 case "post":
@@ -69,10 +70,11 @@ async function fetchData() {
                     } catch (error) {
                         console.log(error.response.data.messageCode);
                         error.response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
-                        continue;
+                        break;
                     }
                     console.log(test.outputCode);
                     console.log(response.data.messageCode);
+                    console.log(response.data.messageCode == test.outputCode);
                     response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
                     break;
                 case "delete":
@@ -81,7 +83,7 @@ async function fetchData() {
                         response = await axios.post(test.api, requestBody);
                     } catch (error) {
                         test.check = false;
-                        continue;
+                        break;
                     }
                     console.log(test.outputCode);
                     console.log(response.data.code);
@@ -93,7 +95,7 @@ async function fetchData() {
                         response = await axios.post(test.api, requestBody);
                     } catch (error) {
                         test.check = false;
-                        continue;
+                        break;
                     }
                     console.log(test.outputCode);
                     console.log(response.data.code);
@@ -105,7 +107,7 @@ async function fetchData() {
                         response = await axios.post(test.api, requestBody);
                     } catch (error) {
                         test.check = false;
-                        continue;
+                        break;
                     }
                     console.log(test.outputCode);
                     console.log(response.data.code);
