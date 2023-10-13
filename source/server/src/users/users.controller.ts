@@ -62,8 +62,18 @@ export class UsersController {
   @Post('/signin')
   async signin(@Body() body: SignInDto, @Session() session: any) {
     const user = await this.authService.signin(body.email, body.password);
+
+    if (!user) {
+      return {
+        messageCode: 'signin_fail',
+      };
+    }
+
     session.userId = user.id;
-    return user;
+    return {
+      messageCode: 'signin_success',
+      data: { user },
+    };
   }
 
   @Get()
