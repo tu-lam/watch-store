@@ -80,7 +80,7 @@ async function fetchData() {
                 case "delete":
                     console.log(requestBody);
                     try {
-                        response = await axios.post(test.api, requestBody);
+                        response = await axios.delete(test.api, requestBody);
                     } catch (error) {
                         test.check = false;
                         break;
@@ -92,7 +92,7 @@ async function fetchData() {
                 case "patch":
                     console.log(requestBody);
                     try {
-                        response = await axios.post(test.api, requestBody);
+                        response = await axios.patch(test.api, requestBody);
                     } catch (error) {
                         test.check = false;
                         break;
@@ -104,7 +104,7 @@ async function fetchData() {
                 case "put":
                     console.log(requestBody);
                     try {
-                        response = await axios.post(test.api, requestBody);
+                        response = await axios.put(test.api, requestBody);
                     } catch (error) {
                         test.check = false;
                         break;
