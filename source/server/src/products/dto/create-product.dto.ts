@@ -7,6 +7,10 @@ export class CreateProductDto {
 
   @IsOptional()
   @IsString()
+  slug: string;
+
+  @IsOptional()
+  @IsString()
   image: string;
 
   @IsOptional()
