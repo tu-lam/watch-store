@@ -22,10 +22,10 @@ const readFileCSV = async (filePath) => {
 const writeFileCSV = (data, filePath) => {
     const csvStream = fs.createWriteStream(filePath, { flags: 'w' });
 
-    csvStream.write('api,method,inputBody,outputCode,check\n');
+    csvStream.write('api,description,method,inputBody,outputCode,check\n');
 
     data.forEach(item => {
-        csvStream.write(`"${item.api}","${item.method}","${item.inputBody}",${item.outputCode},${item.check}\n`);
+        csvStream.write(`"${item.api}","${item.description}","${item.method}","${item.inputBody.replace(/"/g, '""')}",${item.outputCode},${item.check}\n`);
     });
 
     csvStream.end();
@@ -42,7 +42,7 @@ async function fetchData() {
         let data = await readFileCSV(filePath);
         console.log(data);
         for (const test of data) {
-            if(isObjectEmpty(test))
+            if (isObjectEmpty(test))
                 return;
             console.log(test.api);
             const requestBody = JSON.parse(test.inputBody);
@@ -51,35 +51,60 @@ async function fetchData() {
             switch (test.method) {
                 case "get":
                     console.log(requestBody);
-                    response = await axios.get(test.api,requestBody);
-                    console.log("test.outputCode: ",test.outputCode);
+                    try {
+                        response = await axios.get(test.api, requestBody);
+                    } catch (error) {
+                        test.check = false;
+                        continue;
+                    }
+                    console.log("test.outputCode: ", test.outputCode);
                     console.log("response.data.code: ", response.data.code);
                     response.data.code == test.outputCode ? test.check = true : test.check = false;
                     break;
                 case "post":
                     console.log(requestBody);
-                    response = await axios.post(test.api, requestBody);
+                    try {
+                        response = await axios.post(test.api, requestBody);
+                    } catch (error) {
+                        test.check = false;
+                        continue;
+                    }
                     console.log(test.outputCode);
                     console.log(response.data.code);
                     response.data.code == test.outputCode ? test.check = true : test.check = false;
                     break;
                 case "delete":
                     console.log(requestBody);
-                    response = await axios.post(test.api, requestBody);
+                    try {
+                        response = await axios.post(test.api, requestBody);
+                    } catch (error) {
+                        test.check = false;
+                        continue;
+                    }
                     console.log(test.outputCode);
                     console.log(response.data.code);
                     response.data.code == test.outputCode ? test.check = true : test.check = false;
                     break;
                 case "patch":
                     console.log(requestBody);
-                    response = await axios.post(test.api, requestBody);
+                    try {
+                        response = await axios.post(test.api, requestBody);
+                    } catch (error) {
+                        test.check = false;
+                        continue;
+                    }
                     console.log(test.outputCode);
                     console.log(response.data.code);
                     response.data.code == test.outputCode ? test.check = true : test.check = false;
                     break;
                 case "put":
                     console.log(requestBody);
-                    response = await axios.post(test.api, requestBody);
+                    try {
+                        response = await axios.post(test.api, requestBody);
+                    } catch (error) {
+                        test.check = false;
+                        continue;
+                    }
                     console.log(test.outputCode);
                     console.log(response.data.code);
                     response.data.code == test.outputCode ? test.check = true : test.check = false;
