@@ -8,7 +8,7 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import Layout from "../components/layouts/Layout";
+import Layout from "../components/layout/Layout";
 
 const navigation = {
   categories: [

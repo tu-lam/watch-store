@@ -18,7 +18,7 @@ import {
   QuestionMarkCircleIcon,
   XMarkIcon,
 } from "@heroicons/react/20/solid";
-import Layout from "../components/layouts/Layout";
+import Layout from "../components/layout/Layout";
 
 const products = [
   {

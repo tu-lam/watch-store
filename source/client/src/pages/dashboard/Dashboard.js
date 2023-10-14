@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import SidebarLayout from "../../components/layouts/SidebarLayout";
+import SidebarLayout from "../../components/layout/SidebarLayout";
 import {
   Bars3Icon,
   CalendarIcon,

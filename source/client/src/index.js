@@ -11,8 +11,23 @@ import Product from "./pages/Product";
 import ProductManager from "./pages/dashboard/ProductManager";
 import Dashboard from "./pages/dashboard/Dashboard";
 import Cart from "./pages/Cart";
+import SignIn from "./pages/SignIn";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Provider } from "react-redux";
+import { store } from "./stores/store";
+import SignUp from "./pages/SignUp";
+
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
+  {
+    path: "/dang-nhap",
+    element: <SignIn />,
+  },
+  {
+    path: "/dang-ky",
+    element: <SignUp />,
+  },
   {
     path: "/",
     element: <Home />,
@@ -53,7 +68,11 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
+    </Provider>
   </React.StrictMode>
 );
 
