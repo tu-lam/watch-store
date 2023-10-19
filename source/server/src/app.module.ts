@@ -8,9 +8,13 @@ import { User } from './users/entities/user.entity';
 import { ProductsModule } from './products/products.module';
 import * as session from 'express-session';
 import { Product } from './products/entities/product.entity';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'db.sqlite',

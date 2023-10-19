@@ -19,12 +19,14 @@ import { User } from './entities/user.entity';
 import { AdminGuard } from 'guards/admin.guard';
 import session from 'express-session';
 import { SignInDto } from './dto/sign-in.dto';
+import { JwtService } from '@nestjs/jwt';
 
 @Controller('users')
 export class UsersController {
   constructor(
     private usersService: UsersService,
     private authService: AuthService,
+    private jwtService: JwtService,
   ) {}
 
   @Post('/signout')
@@ -55,6 +57,7 @@ export class UsersController {
     session.userId = user.id;
     return {
       messageCode: 'signup_success',
+      token: await this.jwtService.signAsync({ sub: user.id }),
       data: { user },
     };
   }
@@ -70,8 +73,10 @@ export class UsersController {
     }
 
     session.userId = user.id;
+
     return {
       messageCode: 'signin_success',
+      token: await this.jwtService.signAsync({ sub: user.id }),
       data: { user },
     };
   }
