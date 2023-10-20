@@ -7,6 +7,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CurrentUserMiddleware } from './middlewares/current-user.middleware';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { CartItemsService } from 'src/cart-items/cart-items.service';
+import { CartItemsModule } from 'src/cart-items/cart-items.module';
+import { ProductsModule } from 'src/products/products.module';
 @Module({
   imports: [
     TypeOrmModule.forFeature([User]),
@@ -15,10 +18,12 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       useFactory: async (configService: ConfigService) => ({
         global: true,
         secret: configService.get<string>('JWT_SECRET_KEY'),
-        signOptions: { expiresIn: '60s' },
+        // signOptions: { expiresIn: '60s' },
       }),
       inject: [ConfigService],
     }),
+    CartItemsModule,
+    ProductsModule,
   ],
   controllers: [UsersController],
   providers: [UsersService, AuthService],

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCartItemDto } from './dto/create-cart-item.dto';
 import { UpdateCartItemDto } from './dto/update-cart-item.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -14,8 +14,8 @@ export class CartItemsService {
     return this.repo.save(product);
   }
 
-  findAll() {
-    return this.repo.find();
+  findAll(query: any = {}) {
+    return this.repo.find({ where: query, relations: ['product'] });
   }
 
   findOne(id: number) {
@@ -27,11 +27,29 @@ export class CartItemsService {
     });
   }
 
-  update(id: number, updateCartItemDto: UpdateCartItemDto) {
-    return `This action updates a #${id} cartItem`;
+  findWhere(query: any = {}) {
+    return this.repo.findOne({ where: query });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} cartItem`;
+  async update(id: number, updateCartItemDto: UpdateCartItemDto) {
+    const cartItem = await this.findOne(id);
+
+    if (!cartItem) {
+      throw new NotFoundException({ messageCode: 'cart_item_not_found_err' });
+    }
+
+    Object.assign(cartItem, updateCartItemDto);
+
+    return this.repo.save(cartItem);
+  }
+
+  async remove(id: number) {
+    const cartItem = await this.findOne(id);
+
+    if (!cartItem) {
+      throw new NotFoundException({ messageCode: 'cart_item_not_found_err' });
+    }
+
+    return this.repo.remove(cartItem);
   }
 }
