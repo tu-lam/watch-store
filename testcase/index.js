@@ -39,7 +39,7 @@ const writeFileCSV = (data, filePath) => {
 
 }
 function isObjectEmpty(obj) {
-    console.log('rong');
+
     return JSON.stringify(obj) === '{}';
 }
 function deleteFilesInFolder(folderPath) {
@@ -163,6 +163,7 @@ async function testCaseFE() {
     let count = 0;
     const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
+    await page.setViewport({ width: 1920, height: 1080 });
     page.on('dialog', async (dialog) => {
         await dialog.accept();
     });
@@ -234,7 +235,9 @@ async function testCaseFE() {
             }
 
         } catch (error) {
+            console.log('U' + count);
             console.log(error);
+
             await page.screenshot({ path: 'photo-test/U' + count + '-error' + '.png' });
         }
         count++;

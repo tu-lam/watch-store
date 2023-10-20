@@ -1,0 +1,46 @@
+.custom-alert {
+    position: relative;
+    top: -100px;
+    left: 0;
+    right: 0;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    transition: top 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    animation: fadeIn 0.22s 0.22s forwards;
+    ;
+}
+
+.custom-alert.show {
+    position: relative;
+    top: 0;
+    animation: none;
+}
+.custom-alert.show.success {
+    background-color: rgba(0, 255, 0, 0.5);
+
+}
+.custom-alert.show.error{
+    background-color: rgba(255, 0, 0, 0.5);
+}
+.custom-alert-content {
+    padding: 20px;
+    color: rgb(59, 59, 59);
+    text-align: center;
+    opacity: 0;
+    transform: translateY(-50px);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.custom-alert.show .custom-alert-content {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@keyframes fadeIn {
+    to {
+        position: fixed;
+    }
+}

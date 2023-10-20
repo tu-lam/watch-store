@@ -10,6 +10,7 @@ import {
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import Layout from "../components/layout/Layout";
 import { Link } from "react-router-dom";
+import { getAllProduct } from "../queries/auth";
 
 const navigation = {
   categories: [
@@ -75,76 +76,90 @@ const navigation = {
     { name: "Stores", href: "#" },
   ],
 };
-const trendingProducts = [
-  {
-    id: 1,
-    name: "Đồng hồ XYZ",
-    // color: "Black",
-    price: "$35",
-    href: "#",
-    imageSrc: "/images/product.png",
-    imageAlt:
-      "Black machined steel pen with hexagonal grip and small white logo at top.",
-    // availableColors: [
-    //   { name: "Black", colorBg: "#111827" },
-    //   { name: "Brass", colorBg: "#FDE68A" },
-    //   { name: "Chrome", colorBg: "#E5E7EB" },
-    // ],
-  },
-  {
-    id: 1,
-    name: "Đồng hồ XYZ",
-    // color: "Black",
-    price: "$35",
-    href: "#",
-    imageSrc: "/images/product.png",
-    imageAlt:
-      "Black machined steel pen with hexagonal grip and small white logo at top.",
-    // availableColors: [
-    //   { name: "Black", colorBg: "#111827" },
-    //   { name: "Brass", colorBg: "#FDE68A" },
-    //   { name: "Chrome", colorBg: "#E5E7EB" },
-    // ],
-  },
-  {
-    id: 1,
-    name: "Đồng hồ XYZ",
-    // color: "Black",
-    price: "$35",
-    href: "#",
-    imageSrc: "/images/product.png",
-    imageAlt:
-      "Black machined steel pen with hexagonal grip and small white logo at top.",
-    // availableColors: [
-    //   { name: "Black", colorBg: "#111827" },
-    //   { name: "Brass", colorBg: "#FDE68A" },
-    //   { name: "Chrome", colorBg: "#E5E7EB" },
-    // ],
-  },
-  {
-    id: 1,
-    name: "Đồng hồ XYZ",
-    // color: "Black",
-    price: "$35",
-    href: "#",
-    imageSrc: "/images/product.png",
-    imageAlt:
-      "Black machined steel pen with hexagonal grip and small white logo at top.",
-    // availableColors: [
-    //   { name: "Black", colorBg: "#111827" },
-    //   { name: "Brass", colorBg: "#FDE68A" },
-    //   { name: "Chrome", colorBg: "#E5E7EB" },
-    // ],
-  },
-  // More products...
-];
+console.log();
 
+const initialData = await (await getAllProduct()).json();
+console.log(initialData);
+const trendingProducts = initialData.map(item => ({
+  id: item.id,
+  name: `Đồng hồ ${item.id}`,
+  price: `$${item.price}`,
+  href: `/chi-tiet-san-pham?id=${item.id}`,
+  imageSrc: `${process.env.REACT_APP_API_URL}/public/products/${item.image}`,
+  imageAlt: `Product ${item.id}`,
+}));
+
+//  [
+//   {
+//     id: 1,
+//     name: "Đồng hồ 1",
+//     // color: "Black",
+//     price: "$35",
+//     href: "/chi-tiet-san-pham?id=1",
+//     imageSrc: "/images/product.png",
+//     imageAlt:
+//       "Black machined steel pen with hexagonal grip and small white logo at top.",
+//     // availableColors: [
+//     //   { name: "Black", colorBg: "#111827" },
+//     //   { name: "Brass", colorBg: "#FDE68A" },
+//     //   { name: "Chrome", colorBg: "#E5E7EB" },
+//     // ],
+//   },
+//   {
+//     id: 2,
+//     name: "Đồng hồ 2",
+//     // color: "Black",
+//     price: "$35",
+//     href: "/chi-tiet-san-pham?id=2",
+//     imageSrc: "/images/product.png",
+//     imageAlt:
+//       "Black machined steel pen with hexagonal grip and small white logo at top.",
+//     // availableColors: [
+//     //   { name: "Black", colorBg: "#111827" },
+//     //   { name: "Brass", colorBg: "#FDE68A" },
+//     //   { name: "Chrome", colorBg: "#E5E7EB" },
+//     // ],
+//   },
+//   {
+//     id: 3,
+//     name: "Đồng hồ 3",
+//     // color: "Black",
+//     price: "$35",
+//     href: "/chi-tiet-san-pham?id=3",
+//     imageSrc: "/images/product.png",
+//     imageAlt:
+//       "Black machined steel pen with hexagonal grip and small white logo at top.",
+//     // availableColors: [
+//     //   { name: "Black", colorBg: "#111827" },
+//     //   { name: "Brass", colorBg: "#FDE68A" },
+//     //   { name: "Chrome", colorBg: "#E5E7EB" },
+//     // ],
+//   },
+//   {
+//     id: 4,
+//     name: "Đồng hồ 4",
+//     // color: "Black",
+//     price: "$35",
+//     href: "/chi-tiet-san-pham?id=4",
+//     imageSrc: "/images/product.png",
+//     imageAlt:
+//       "Black machined steel pen with hexagonal grip and small white logo at top.",
+//     // availableColors: [
+//     //   { name: "Black", colorBg: "#111827" },
+//     //   { name: "Brass", colorBg: "#FDE68A" },
+//     //   { name: "Chrome", colorBg: "#E5E7EB" },
+//     // ],
+//   },
+//   // More products...
+// ];
+// const trendingProducts = (await getAllProduct());
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
 
   return (
     <Layout>
