@@ -1,7 +1,10 @@
 const axios = require('axios');
 const csv = require('csv-parser');
+const puppeteer = require('puppeteer');
 const fs = require('fs');
+const path = require('path');
 const filePath = 'testcase - Trang tính1.csv';
+const fileTestFE = 'testcase - FE.csv';
 
 const readFileCSV = async (filePath) => {
     return new Promise((resolve, reject) => {
@@ -24,7 +27,9 @@ const writeFileCSV = (data, filePath) => {
 
     csvStream.write('api,description,method,inputBody,outputCode,check\n');
 
-    data.forEach(item => {
+    const nonEmptyData = data.filter(item => Object.keys(item).length > 0);
+
+    nonEmptyData.forEach(item => {
         csvStream.write(`"${item.api}","${item.description}","${item.method}","${item.inputBody.replace(/"/g, '""')}","${item.outputCode}",${item.check}\n`);
     });
 
@@ -34,7 +39,27 @@ const writeFileCSV = (data, filePath) => {
 
 }
 function isObjectEmpty(obj) {
+    console.log('rong');
     return JSON.stringify(obj) === '{}';
+}
+function deleteFilesInFolder(folderPath) {
+    fs.readdir(folderPath, (err, files) => {
+        if (err) {
+            console.error('Không thể đọc thư mục:', err);
+            return;
+        }
+
+        for (const file of files) {
+            const filePath = path.join(folderPath, file);
+            fs.unlink(filePath, (err) => {
+                if (err) {
+                    console.error('Không thể xóa tệp:', err);
+                } else {
+                    console.log(`Đã xóa tệp: ${filePath}`);
+                }
+            });
+        }
+    });
 }
 
 async function fetchData() {
@@ -132,4 +157,91 @@ async function fetchData() {
     }
 }
 
-fetchData();
+async function testCaseFE() {
+    let data = await readFileCSV(fileTestFE);
+    console.log(data);
+    let count = 0;
+    const browser = await puppeteer.launch({ headless: true });
+    const page = await browser.newPage();
+    page.on('dialog', async (dialog) => {
+        await dialog.accept();
+    });
+    for (const test of data) {
+        if (isObjectEmpty(test)) {
+            writeFileCSV(data, fileTestFE);
+            await browser.close();
+            return;
+        }
+        console.log(test.api);
+        const requestBody = JSON.parse(test.inputBody);
+        console.log(test.method);
+        try {
+            await page.goto(test.api);
+            switch (test.method) {
+                case 'login':
+                    await page.type('input[type="email"]', requestBody.email);
+                    await page.type('input[type="password"]', requestBody.password);
+                    await page.click('button[type="submit"]');
+                    await page.waitForTimeout(1000);
+                    const fileImage = 'photo-test/U' + count + '.png';
+                    await page.screenshot({ path: fileImage, fullPage: true });
+                    test.check = 'U' + count;
+                    break;
+                case 'signup':
+                    await page.type('input[id="name"]', requestBody.name);
+                    await page.type('input[id="email"]', requestBody.email);
+                    await page.type('input[id="password"]', requestBody.password);
+                    await page.click('button[type="submit"]');
+                    await page.waitForTimeout(1000);
+                    await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
+                    test.check = 'U' + count;
+                    break;
+                case 'addProduct':
+                    await page.type('');
+                    await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
+                    test.check = 'U' + count;
+                    break;
+                case 'showProduct':
+                    await page.waitForTimeout(1000);
+                    await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
+                    test.check = 'U' + count;
+                    break;
+                case 'showProductDetail':
+                    const elements = await page.$$('.group');
+                    await elements[Math.floor(Math.random() * elements.length)].click();
+                    await page.waitForTimeout(1000);
+                    await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
+                    test.check = 'U' + count;
+                    break;
+                case 'addProductCartNotLogin':
+                    await page.click('button[type="submit"]');
+                    await page.waitForTimeout(1000);
+                    await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
+                    test.check = 'U' + count;
+                    break;
+                case 'addProductCartHaveLogin':
+                    await page.type('input[type="email"]', requestBody.email);
+                    await page.type('input[type="password"]', requestBody.password);
+                    await page.click('button[type="submit"]');
+                    await page.waitForTimeout(1000);
+                    await page.goto(requestBody.URLAddProductCart);
+                    await page.click('button[type="submit"]');
+                    await page.waitForTimeout(1000);
+                    await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
+                    break;
+                default:
+                    break;
+            }
+
+        } catch (error) {
+            console.log(error);
+            await page.screenshot({ path: 'photo-test/U' + count + '-error' + '.png' });
+        }
+        count++;
+    }
+    writeFileCSV(data, fileTestFE);
+    await browser.close();
+}
+// fetchData();
+testCaseFE();
+deleteFilesInFolder('photo-test/');
