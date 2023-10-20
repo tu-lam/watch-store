@@ -9,5 +9,7 @@
   "product_not_found_err": "Không tìm thấy sản phẩm",
   "empty_name_product_err": "Tên không được để trống",
   "empty_price_product_err": "Giá không được để trống",
-  "empty_slug_product_err": "Slug không được để trống"
+  "empty_slug_product_err": "Slug không được để trống",
+  "signup_success":"đăng ký thành công",
+  "signin_success":"đăng nhập thành công"
 }

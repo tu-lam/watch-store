@@ -9,6 +9,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import Layout from "../components/layout/Layout";
+import { Link } from "react-router-dom";
 
 const navigation = {
   categories: [
@@ -190,7 +191,7 @@ export default function Home() {
                   </p>
                   <div className="mt-6">
                     <a
-                      href="#"
+                      href="san-pham"
                       className="inline-block rounded-md border border-transparent bg-indigo-600 px-8 py-3 font-medium text-white hover:bg-indigo-700"
                     >
                       Mua ngay
@@ -220,13 +221,13 @@ export default function Home() {
             >
               Sản phẩm mới
             </h2>
-            <a
-              href="#"
+            <Link
+              to="/san-pham"
               className="hidden text-sm font-semibold text-indigo-600 hover:text-indigo-500 sm:block"
             >
               Tất cả
               <span aria-hidden="true"> &rarr;</span>
-            </a>
+            </Link>
           </div>
 
           <div className="relative mt-8">

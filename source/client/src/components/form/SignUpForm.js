@@ -37,10 +37,9 @@ const SignUpForm = () => {
       console.log(data);
       console.log(data.messageCode === "signup_success");
       myAlert(data.messageCode);
-      // if (data.messageCode === "signin_success") {
-      //   alert(JSON.stringify(data));
-      // }
-
+      if (data.messageCode === "signin_success") {
+        
+      }
       // if (
       //   data.status === "fail" &&
       //   data.message === "Incorrect username or password"

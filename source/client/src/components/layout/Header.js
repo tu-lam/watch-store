@@ -348,7 +348,7 @@ const Header = () => {
 
                         <div className="flex">
                           <Link
-                            to="/bang-dieu-khien"
+                            to="/dang-nhap"
                             className="-m-2 p-2 text-gray-400 hover:text-gray-500"
                           >
                             <span className="sr-only">Account</span>
@@ -363,8 +363,8 @@ const Header = () => {
                       />
 
                       <div className="flow-root">
-                        <a
-                          href="#"
+                        <Link
+                          to="/gio-hang"
                           className="group -m-2 flex items-center p-2"
                         >
                           <ShoppingCartIcon
@@ -377,7 +377,7 @@ const Header = () => {
                           <span className="sr-only">
                             items in cart, view bag
                           </span>
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>
