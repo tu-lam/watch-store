@@ -1,5 +1,6 @@
 import { IsNumber, IsString } from 'class-validator';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { CartItem } from 'src/cart-items/entities/cart-item.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Product {
@@ -7,14 +8,14 @@ export class Product {
   id: number;
 
   @Column()
-  name: string;
-
-  @Column()
-  slug: string;
-
-  @Column()
   image: string;
 
   @Column()
+  name: string;
+
+  @Column()
   price: number;
+
+  @OneToMany(() => CartItem, (cartItem) => cartItem.productId)
+  public cartItems: CartItem[];
 }

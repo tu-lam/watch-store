@@ -9,7 +9,11 @@ import { ProductsModule } from './products/products.module';
 import * as session from 'express-session';
 import { Product } from './products/entities/product.entity';
 import { ConfigModule } from '@nestjs/config';
-
+import { MulterModule } from '@nestjs/platform-express';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+import { CartItemsModule } from './cart-items/cart-items.module';
+import { CartItem } from './cart-items/entities/cart-item.entity';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -18,11 +22,19 @@ import { ConfigModule } from '@nestjs/config';
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'db.sqlite',
-      entities: [User, Product],
+      entities: [User, Product, CartItem],
       synchronize: true,
+    }),
+    MulterModule.register({
+      dest: './public',
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', '../public'),
+      serveRoot: '/public/',
     }),
     UsersModule,
     ProductsModule,
+    CartItemsModule,
   ],
   controllers: [AppController],
   providers: [

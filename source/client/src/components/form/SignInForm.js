@@ -2,12 +2,14 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useEffect } from "react";
-// import { signInQuery } from "../../queries/auth";
+import { signInQuery } from "../../queries/auth";
 import { useDispatch, useSelector } from "react-redux";
 // import { signIn } from "../../stores/authSlice";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../ui/Spinner";
 import { useMutation } from "@tanstack/react-query";
+import { signIn } from "../../stores/authSlice";
+import { myAlert } from "../../utils";
 
 const schema = yup.object({
   email: yup.string().required("Vui lòng nhập email"),
@@ -28,27 +30,32 @@ const SignInForm = () => {
   } = useForm({ resolver: yupResolver(schema) });
 
   const mutation = useMutation({
-    // mutationFn: signInQuery,
-    mutationFn: () => {},
+    mutationFn: signInQuery,
+    // mutationFn: () => {},
     onSuccess: async (response, _, __) => {
       const data = await response.json();
       console.log(data);
-      if (data.status === "success") {
-        // dispatch(signIn({ token: data.token, user: data.data.user }));
-        navigate("/bang-dieu-khien", { replace: true });
-      }
+      console.log(data);
+      myAlert(data.messageCode);
+      // if (data.messageCode === "signin_success") {
+      //   alert(JSON.stringify(data));
+      //   dispatch(signIn(data.token));
+      //   navigate("/bang-dieu-khien", { replace: true });
+      // }
 
-      if (
-        data.status === "fail" &&
-        data.message === "Incorrect username or password"
-      ) {
-        alert("Email hoặc mật khẩu không chính xác");
-      }
+      //   if (
+      //     data.status === "fail" &&
+      //     data.message === "Incorrect username or password"
+      //   ) {
+      //     alert("Email hoặc mật khẩu không chính xác");
+      //   }
+    },
+    onError: (err) => {
+      console.log(err);
     },
   });
 
   const submitHandler = (data) => {
-    console.log(mutation.status);
     mutation.mutate(data);
   };
 

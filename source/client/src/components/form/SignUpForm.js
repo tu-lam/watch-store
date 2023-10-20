@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../ui/Spinner";
 import { useMutation } from "@tanstack/react-query";
+import { myAlert } from "../../utils";
+import { signUpQuery } from "../../queries/auth";
 
 const schema = yup.object({
   name: yup.string().required("Vui lòng nhập tên"),
@@ -29,22 +31,22 @@ const SignUpForm = () => {
   } = useForm({ resolver: yupResolver(schema) });
 
   const mutation = useMutation({
-    // mutationFn: signInQuery,
-    mutationFn: () => {},
+    mutationFn: signUpQuery,
     onSuccess: async (response, _, __) => {
       const data = await response.json();
       console.log(data);
-      if (data.status === "success") {
-        // dispatch(signIn({ token: data.token, user: data.data.user }));
-        navigate("/bang-dieu-khien", { replace: true });
-      }
+      console.log(data.messageCode === "signup_success");
+      myAlert(data.messageCode);
+      // if (data.messageCode === "signin_success") {
+      //   alert(JSON.stringify(data));
+      // }
 
-      if (
-        data.status === "fail" &&
-        data.message === "Incorrect username or password"
-      ) {
-        alert("Email hoặc mật khẩu không chính xác");
-      }
+      // if (
+      //   data.status === "fail" &&
+      //   data.message === "Incorrect username or password"
+      // ) {
+      //   alert("Email hoặc mật khẩu không chính xác");
+      // }
     },
   });
 

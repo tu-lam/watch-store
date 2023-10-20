@@ -61,7 +61,7 @@ const adminNavigation = [
 ];
 
 const Dashboard = () => {
-  //   const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 

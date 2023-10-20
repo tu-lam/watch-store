@@ -1,0 +1,13 @@
+{
+  "existing_email_err": "Email đã tồn tại",
+  "user_not_found_err": "Không tìm thấy tài khoản",
+  "incorrect_password_err": "Mật khẩu không chính xác",
+  "empty_name_err": "Tên không được để trống",
+  "empty_email_err": "Email không được để trống",
+  "empty_password_err": "Mật khẩu không được để trống",
+  "invalid_email_err": "Email không hợp lệ",
+  "product_not_found_err": "Không tìm thấy sản phẩm",
+  "empty_name_product_err": "Tên không được để trống",
+  "empty_price_product_err": "Giá không được để trống",
+  "empty_slug_product_err": "Slug không được để trống"
+}

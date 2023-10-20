@@ -1,3 +1,4 @@
+import { CartItem } from 'src/cart-items/entities/cart-item.entity';
 import {
   Column,
   PrimaryGeneratedColumn,
@@ -19,4 +20,10 @@ export class User {
 
   @Column()
   password: string;
+
+  @Column({ default: 'user' })
+  role: string;
+
+  @OneToMany(() => CartItem, (cartItem) => cartItem.userId)
+  public cartItems: CartItem[];
 }

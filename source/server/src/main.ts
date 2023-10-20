@@ -22,22 +22,19 @@ async function bootstrap() {
 
   app.useGlobalPipes(
     new ValidationPipe({
-      exceptionFactory: (errors) => {
-        const result = errors.map((error) => ({
-          property: error.property,
-          message: error.constraints[Object.keys(error.constraints)[0]],
-        }));
-
-        const error = errors[0];
-
-        return new BadRequestException({
-          messageCode: error.constraints[Object.keys(error.constraints)[0]],
-        });
-      },
-      stopAtFirstError: true,
+      // exceptionFactory: (errors) => {
+      //   const result = errors.map((error) => ({
+      //     property: error.property,
+      //     message: error.constraints[Object.keys(error.constraints)[0]],
+      //   }));
+      //   const error = errors[0];
+      //   return new BadRequestException({
+      //     messageCode: error.constraints[Object.keys(error.constraints)[0]],
+      //   });
+      // },
+      // stopAtFirstError: true,
     }),
   );
-
   await app.listen(4000);
 }
 bootstrap();

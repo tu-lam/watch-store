@@ -4,7 +4,11 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 import Home from "./pages/Home";
 import Products from "./pages/Products";
 import Product from "./pages/Product";
@@ -48,7 +52,7 @@ const router = createBrowserRouter([
     path: "/bang-dieu-khien",
     element: <Dashboard />,
     children: [
-      // { path: "", element: <Navigate to={"/bang-dieu-khien/thong-bao"} /> },
+      { path: "", element: <Navigate to={"/bang-dieu-khien/san-pham"} /> },
       // { path: "tai-khoan", element: <Account /> },
       { path: "san-pham", element: <ProductManager /> },
       // { path: "danh-muc", element: <CategoryManager /> },
