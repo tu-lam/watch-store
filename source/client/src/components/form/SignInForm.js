@@ -13,10 +13,8 @@ import { myAlert } from "../../utils";
 
 const schema = yup.object({
   email: yup.string().required("Vui lòng nhập email"),
-  password: yup
-    .string()
-    .required("Vui lòng nhập mật khẩu")
-    .min(8, "Mật khẩu phải có ít nhất 8 ký tự"),
+  password: yup.string().required("Vui lòng nhập mật khẩu"),
+  // .min(8, "Mật khẩu phải có ít nhất 8 ký tự"),
 });
 
 const SignInForm = () => {

@@ -10,14 +10,13 @@ import Spinner from "../ui/Spinner";
 import { useMutation } from "@tanstack/react-query";
 import { myAlert } from "../../utils";
 import { signUpQuery } from "../../queries/auth";
+import { signIn } from "../../stores/authSlice";
 
 const schema = yup.object({
   name: yup.string().required("Vui lòng nhập tên"),
   email: yup.string().required("Vui lòng nhập email"),
-  password: yup
-    .string()
-    .required("Vui lòng nhập mật khẩu")
-    .min(8, "Mật khẩu phải có ít nhất 8 ký tự"),
+  password: yup.string().required("Vui lòng nhập mật khẩu"),
+  // .min(8, "Mật khẩu phải có ít nhất 8 ký tự"),
 });
 
 const SignUpForm = () => {
@@ -37,8 +36,9 @@ const SignUpForm = () => {
       console.log(data);
       console.log(data.messageCode === "signup_success");
       myAlert(data.messageCode);
-      if (data.messageCode === "signin_success") {
-        
+      if (data.messageCode === "signup_success") {
+        dispatch(signIn(data.token));
+        navigate("/bang-dieu-khien", { replace: true });
       }
       // if (
       //   data.status === "fail" &&
