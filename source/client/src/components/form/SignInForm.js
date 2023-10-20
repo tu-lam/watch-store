@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { signInQuery } from "../../queries/auth";
 import { useDispatch, useSelector } from "react-redux";
 // import { signIn } from "../../stores/authSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Spinner from "../ui/Spinner";
 import { useMutation } from "@tanstack/react-query";
 import { signIn } from "../../stores/authSlice";
@@ -56,6 +56,7 @@ const SignInForm = () => {
         /**
         * Set the alert message, show the alert, and indicate success.
         */
+        window.location.href = '../';
         setAlertMessage(data.messageCode);
         setShowAlert(true);
         setSuccess(true);
@@ -145,12 +146,12 @@ const SignInForm = () => {
           </div>
 
           <div className="text-sm">
-            <a
-              href="#"
+            <Link
+              to="/dang-ky"
               className="font-medium text-indigo-600 hover:text-indigo-500"
             >
-              Quên mật khẩu?
-            </a>
+             bạn chưa có tài khoản?
+            </Link>
           </div>
         </div>
 
