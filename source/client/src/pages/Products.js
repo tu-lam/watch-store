@@ -1,44 +1,56 @@
 import Layout from "../components/layout/Layout";
+import { getAllProduct } from "../queries/auth";
 
-const products = [
-  {
-    id: 1,
-    name: "Đồng hồ A",
-    href: "#",
-    price: "$48",
-    imageSrc: "/images/product.png",
-    imageAlt:
-      "Tall slender porcelain bottle with natural clay textured body and cork stopper.",
-  },
-  {
-    id: 2,
-    name: "Đồng hồ B",
-    href: "#",
-    price: "$35",
-    imageSrc: "/images/product.png",
-    imageAlt:
-      "Olive drab green insulated bottle with flared screw lid and flat top.",
-  },
-  {
-    id: 3,
-    name: "Đồng hồ C",
-    href: "#",
-    price: "$89",
-    imageSrc: "/images/product.png",
-    imageAlt:
-      "Person using a pen to cross a task off a productivity paper card.",
-  },
-  {
-    id: 4,
-    name: "Đồng hồ D",
-    href: "#",
-    price: "$35",
-    imageSrc: "/images/product.png",
-    imageAlt:
-      "Hand holding black machined steel mechanical pencil with brass tip and top.",
-  },
-  // More products...
-];
+
+
+const initialData = await (await getAllProduct()).json();
+const products = initialData.map(item => ({
+  id: item.id,
+  name: `Đồng hồ ${item.id}`,
+  price: `$${item.price}`,
+  href: `/chi-tiet-san-pham?id=${item.id}`,
+  imageSrc: `${process.env.REACT_APP_API_URL}/public/products/${item.image}`,
+  imageAlt: `Product ${item.id}`,
+}));
+// [
+//   {
+//     id: 1,
+//     name: "Đồng hồ A",
+//     href: "#",
+//     price: "$48",
+//     imageSrc: "/images/product.png",
+//     imageAlt:
+//       "Tall slender porcelain bottle with natural clay textured body and cork stopper.",
+//   },
+//   {
+//     id: 2,
+//     name: "Đồng hồ B",
+//     href: "#",
+//     price: "$35",
+//     imageSrc: "/images/product.png",
+//     imageAlt:
+//       "Olive drab green insulated bottle with flared screw lid and flat top.",
+//   },
+//   {
+//     id: 3,
+//     name: "Đồng hồ C",
+//     href: "#",
+//     price: "$89",
+//     imageSrc: "/images/product.png",
+//     imageAlt:
+//       "Person using a pen to cross a task off a productivity paper card.",
+//   },
+//   {
+//     id: 4,
+//     name: "Đồng hồ D",
+//     href: "#",
+//     price: "$35",
+//     imageSrc: "/images/product.png",
+//     imageAlt:
+//       "Hand holding black machined steel mechanical pencil with brass tip and top.",
+//   },
+//   // More products...
+// ];
 
 export default function Products() {
   return (
