@@ -20,6 +20,8 @@ import { AdminGuard } from 'guards/admin.guard';
 import session from 'express-session';
 import { SignInDto } from './dto/sign-in.dto';
 import { JwtService } from '@nestjs/jwt';
+import { AddItemToCartDto } from './dto/add-item-to-cart.dto';
+import { CartItemsService } from 'src/cart-items/cart-items.service';
 
 @Controller('users')
 export class UsersController {
@@ -27,7 +29,16 @@ export class UsersController {
     private usersService: UsersService,
     private authService: AuthService,
     private jwtService: JwtService,
+    private cartItemService: CartItemsService,
   ) {}
+
+  @Get('cart')
+  @UseGuards(AuthGuard)
+  getCart(@CurrentUser() user: User) {
+    const cart = this.cartItemService.findAll({ userId: user.id });
+    console.log(cart);
+    return cart;
+  }
 
   @Post('/signout')
   signOut(@Session() session: any) {
@@ -96,5 +107,49 @@ export class UsersController {
   @UseGuards(AdminGuard)
   remove(@Param('id') id: string) {
     return this.usersService.remove(+id);
+  }
+
+  @Post('cart')
+  @UseGuards(AuthGuard)
+  async addItemToCart(
+    @Body() addItemToCartDto: AddItemToCartDto,
+    @CurrentUser() user: User,
+  ) {
+    const existedCartItem = await this.cartItemService.findWhere({
+      userId: user.id,
+      productId: addItemToCartDto.productId,
+    });
+    if (existedCartItem) {
+      const updateCartItem = await this.cartItemService.update(
+        existedCartItem.id,
+        {
+          quantity: existedCartItem.quantity + addItemToCartDto.quantity,
+        },
+      );
+
+      return updateCartItem;
+    }
+    const cartItem = this.cartItemService.create({
+      userId: user.id,
+      productId: addItemToCartDto.productId,
+      quantity: addItemToCartDto.quantity,
+    });
+    return cartItem;
+  }
+  @Patch('cart/:id')
+  @UseGuards(AuthGuard)
+  async updateQuantityCartItem(
+    @Body('quantity') quantity: number,
+    @CurrentUser() user: User,
+    @Param('id') id: string,
+  ) {
+    const cartItem = await this.cartItemService.update(+id, { quantity });
+    return cartItem;
+  }
+
+  @Delete('cart/:id')
+  @UseGuards(AuthGuard)
+  deleteCartItem(@Param('id') id: string) {
+    return this.cartItemService.remove(+id);
   }
 }

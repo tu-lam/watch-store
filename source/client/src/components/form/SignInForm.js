@@ -14,10 +14,8 @@ import CustomAlert from "../../utils/CustomAlert";
 
 const schema = yup.object({
   email: yup.string().required("Vui lòng nhập email"),
-  password: yup
-    .string()
-    .required("Vui lòng nhập mật khẩu")
-    .min(8, "Mật khẩu phải có ít nhất 8 ký tự"),
+  password: yup.string().required("Vui lòng nhập mật khẩu"),
+  // .min(8, "Mật khẩu phải có ít nhất 8 ký tự"),
 });
 
 const SignInForm = () => {
@@ -56,10 +54,14 @@ const SignInForm = () => {
         /**
         * Set the alert message, show the alert, and indicate success.
         */
-        window.location.href = '../';
+        
         setAlertMessage(data.messageCode);
         setShowAlert(true);
         setSuccess(true);
+        setTimeout(() => {
+          window.location.href = '../';
+        }, 1000);
+        return;
         return;
       }
       console.log(data);
