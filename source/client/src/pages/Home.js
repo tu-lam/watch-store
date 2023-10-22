@@ -11,6 +11,7 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import Layout from "../components/layout/Layout";
 import { Link } from "react-router-dom";
 import { getAllProduct } from "../queries/auth";
+import { useSelector } from "react-redux";
 
 const navigation = {
   categories: [
@@ -158,8 +159,9 @@ function classNames(...classes) {
 }
 
 export default function Home() {
+  const payload = useSelector((state) => state.auth);
+  console.log(payload);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
 
   return (
     <Layout>
@@ -205,12 +207,12 @@ export default function Home() {
                     can't beat checking off some items on a paper card.
                   </p>
                   <div className="mt-6">
-                    <a
-                      href="san-pham"
+                    <Link
+                      to="/san-pham"
                       className="inline-block rounded-md border border-transparent bg-indigo-600 px-8 py-3 font-medium text-white hover:bg-indigo-700"
                     >
                       Mua ngay
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>

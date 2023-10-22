@@ -1,4 +1,5 @@
 const axios = require('axios');
+const FormData = require('form-data');
 const csv = require('csv-parser');
 const puppeteer = require('puppeteer');
 const fs = require('fs');
@@ -74,33 +75,59 @@ async function fetchData() {
             console.log(test.method);
             let response;
             switch (test.method) {
-                case "get":
+                // case "get":
+                //     console.log(requestBody);
+                //     try {
+                //         response = await axios.get(test.api, requestBody);
+                //     } catch (error) {
+                //         console.log(error.response.data.messageCode);
+                //         error.response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
+                //         break;
+                //     }
+                //     console.log("test.outputCode: ", test.outputCode);
+                //     console.log("response.data.code: ", response.data.messageCode);
+                //     console.log(response.data.messageCode == test.outputCode);
+                //     response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
+                //     break;
+                // case "post":
+                //     console.log(requestBody);
+                //     try {
+                //         response = await axios.post(test.api, requestBody);
+                //     } catch (error) {
+                //         console.log(error.response.data.messageCode);
+                //         error.response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
+                //         break;
+                //     }
+                //     console.log(test.outputCode);
+                //     console.log(response.data.messageCode);
+                //     console.log(response.data.messageCode == test.outputCode);
+                //     response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
+                //     break;
+                case "post-formData":
                     console.log(requestBody);
+                    let formData = new FormData();
+                    formData.append('name', requestBody.name);
+                    formData.append('price', requestBody.price);
+                    const fileImage = path.resolve('/home/anhthai/PTIT/watch-store/testcase/' + requestBody.image);
+                    formData.append('image', fs.createReadStream(fileImage));
                     try {
-                        response = await axios.get(test.api, requestBody);
+                        response = await axios.post(test.api, formData, {
+                            headers: {
+                                ...formData.getHeaders(),
+                            },
+                        });
                     } catch (error) {
-                        console.log(error.response.data.messageCode);
-                        error.response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
-                        break;
-                    }
-                    console.log("test.outputCode: ", test.outputCode);
-                    console.log("response.data.code: ", response.data.messageCode);
-                    console.log(response.data.messageCode == test.outputCode);
-                    response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
-                    break;
-                case "post":
-                    console.log(requestBody);
-                    try {
-                        response = await axios.post(test.api, requestBody);
-                    } catch (error) {
-                        console.log(error.response.data.messageCode);
-                        error.response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
+                        console.log(error);
+                        // error.response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
                         break;
                     }
                     console.log(test.outputCode);
                     console.log(response.data.messageCode);
                     console.log(response.data.messageCode == test.outputCode);
                     response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
+                    if (test.check) {
+                        await axios.delete('http://localhost:4000/products/' + response.data.data.product.id);
+                    }
                     break;
                 case "delete":
                     console.log(requestBody);
@@ -245,6 +272,6 @@ async function testCaseFE() {
     writeFileCSV(data, fileTestFE);
     await browser.close();
 }
-// fetchData();
-testCaseFE();
-deleteFilesInFolder('photo-test/');
+fetchData();
+// testCaseFE();
+// deleteFilesInFolder('photo-test/');

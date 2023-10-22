@@ -11,7 +11,7 @@ api,description,method,inputBody,outputCode,check
 "http://localhost:3000/dang-ky","test giao diện khi đăng ký thiếu name","signup","{""name"": """",""email"": ""admin@gmail.com"",""phone"":""22082309"",""passwordConfirm"":""admin"",""password"":""admin""}","signup_success",U9
 "http://localhost:3000/dang-ky","test giao điện khi đăng ký email đã tồn tại ","signup","{""name"": ""thai"",""email"": ""admin@gmail.com"",""phone"":""22082309"",""passwordConfirm"":""admin"",""password"":""admin""}","signup_success",U10
 "http://localhost:3000/dang-ky","test giao điện khi đăng ký không có mật khẩu","signup","{""name"": ""thai"",""email"": ""admin@gmail.com"",""phone"":""22082309"",""passwordConfirm"":""admin"",""password"":""""}","signup_success",U11
-"http://localhost:3000/dang-ky","test giao điện khi đăng ký dung","signup","{""name"": ""thai"",""email"": ""thai1@gmail.com"",""phone"":""22082309"",""passwordConfirm"":""admin"",""password"":""""}","signup_success",U12
+"http://localhost:3000/dang-ky","test giao điện khi đăng ký dung","signup","{""name"": ""thai"",""email"": ""thai4@gmail.com"",""password"":""123456789""}","signup_success",U12
 "http://localhost:3000/san-pham","hiển thị danh sách sản phảm","showProduct","{}","signup_success",U13
 "http://localhost:3000/san-pham","test khi nhân vào sản phảm xem có hiên ra chi tiên hay chưa","showProductDetail","{}","signup_success",U14
 "http://localhost:3000/chi-tiet-san-pham","test thêm vào giỏ hàng khi chưa dang nhap","addProductCartNotLogin","{}","sad",U15

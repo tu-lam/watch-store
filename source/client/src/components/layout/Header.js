@@ -348,7 +348,7 @@ const Header = () => {
 
                         <div className="flex">
                           <Link
-                            to="/dang-nhap"
+                            to="/bang-dieu-khien"
                             className="-m-2 p-2 text-gray-400 hover:text-gray-500"
                           >
                             <span className="sr-only">Account</span>

@@ -4,7 +4,6 @@ import * as yup from "yup";
 import { useEffect, useState } from "react";
 import { signInQuery } from "../../queries/auth";
 import { useDispatch, useSelector } from "react-redux";
-// import { signIn } from "../../stores/authSlice";
 import { Link, useNavigate } from "react-router-dom";
 import Spinner from "../ui/Spinner";
 import { useMutation } from "@tanstack/react-query";
@@ -54,28 +53,19 @@ const SignInForm = () => {
         /**
         * Set the alert message, show the alert, and indicate success.
         */
-        
         setAlertMessage(data.messageCode);
         setShowAlert(true);
         setSuccess(true);
+        dispatch(signIn({ token: data.token, user: data.data.user }));
         setTimeout(() => {
-          window.location.href = '../';
+          navigate("/", { replace: true });
         }, 1000);
         return;
-        return;
       }
-      console.log(data);
       console.log(data);
       setAlertMessage(data.messageCode);
       setShowAlert(true);
       setSuccess(false);
-
-      //   if (
-      //     data.status === "fail" &&
-      //     data.message === "Incorrect username or password"
-      //   ) {
-      //     alert("Email hoặc mật khẩu không chính xác");
-      //   }
     },
     onError: (err) => {
       console.log(err);
@@ -152,7 +142,7 @@ const SignInForm = () => {
               to="/dang-ky"
               className="font-medium text-indigo-600 hover:text-indigo-500"
             >
-             bạn chưa có tài khoản?
+              bạn chưa có tài khoản?
             </Link>
           </div>
         </div>

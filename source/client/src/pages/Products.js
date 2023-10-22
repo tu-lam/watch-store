@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import Layout from "../components/layout/Layout";
 import { getAllProduct } from "../queries/auth";
 
@@ -53,6 +54,7 @@ const products = initialData.map(item => ({
 // ];
 
 export default function Products() {
+
   return (
     <Layout>
       <div className="bg-white">

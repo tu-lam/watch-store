@@ -19,6 +19,9 @@ import {
   XMarkIcon,
 } from "@heroicons/react/20/solid";
 import Layout from "../components/layout/Layout";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const products = [
   {
@@ -57,6 +60,13 @@ const products = [
 ];
 
 export default function Cart() {
+  const navigate = useNavigate();
+  const payload = useSelector((state) => state.auth);
+  useEffect(() => {
+    if (!payload.token) {
+      navigate("/dang-nhap");
+    }
+  }, [payload]);
   return (
     <Layout>
       <div className="bg-white">

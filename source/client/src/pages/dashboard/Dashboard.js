@@ -17,6 +17,7 @@ import {
   BellIcon,
 } from "@heroicons/react/24/outline";
 import { Outlet, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 const navigation = [
   { name: "Dashboard", href: "#", icon: HomeIcon, current: true },
@@ -60,10 +61,47 @@ const adminNavigation = [
   },
 ];
 
+const clientNavigation = [
+  {
+    name: "Thông báo",
+    href: "/bang-dieu-khien/thong-bao",
+    icon: BellIcon,
+    current: false,
+  },
+  {
+    name: "Danh mục",
+    href: "/bang-dieu-khien/danh-muc",
+    icon: ArchiveBoxIcon,
+    current: false,
+  },
+  {
+    name: "Sản phẩm",
+    href: "/bang-dieu-khien/san-pham",
+    icon: CubeIcon,
+    current: false,
+  },
+  {
+    name: "Hóa đơn",
+    href: "/bang-dieu-khien/hoa-don",
+    icon: DocumentTextIcon,
+    current: false,
+  },
+  {
+    name: "Đăng xuất",
+    href: "/dang-xuat",
+    icon: ArrowLeftOnRectangleIcon,
+    current: false,
+  },
+];
 const Dashboard = () => {
   const navigate = useNavigate();
-
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const payload = useSelector((state) => state.auth);
+  useEffect(() => {
+    if (!payload.token) {
+      navigate("/dang-nhap");
+    }
+  }, [payload]);
 
   // const [navigation, setNavigation] = useState < any > [];
   //   const query = useQuery({

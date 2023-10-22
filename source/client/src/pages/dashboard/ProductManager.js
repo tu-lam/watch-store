@@ -1,35 +1,57 @@
 import { Link, useNavigate } from "react-router-dom";
+import { DeleteProductById, getAllProduct } from "../../queries/auth";
+import { useEffect, useState } from "react";
 
-const products = [
-  {
-    id: "1",
-    name: "Đồng hồ ABC",
-    category: "Đồng hồ nam",
-    price: "100000",
-  },
-  {
-    id: "1",
-    name: "Đồng hồ ABC",
-    category: "Đồng hồ nam",
-    price: "100000",
-  },
-  {
-    id: "1",
-    name: "Đồng hồ ABC",
-    category: "Đồng hồ nam",
-    price: "100000",
-  },
-  {
-    id: "1",
-    name: "Đồng hồ ABC",
-    category: "Đồng hồ nam",
-    price: "100000",
-  },
-];
+
+
+// [
+//   {
+//     id: "1",
+//     name: "Đồng hồ ABC",
+//     category: "Đồng hồ nam",
+//     price: "100000",
+//   },
+//   {
+//     id: "1",
+//     name: "Đồng hồ ABC",
+//     category: "Đồng hồ nam",
+//     price: "100000",
+//   },
+//   {
+//     id: "1",
+//     name: "Đồng hồ ABC",
+//     category: "Đồng hồ nam",
+//     price: "100000",
+//   },
+//   {
+//     id: "1",
+//     name: "Đồng hồ ABC",
+//     category: "Đồng hồ nam",
+//     price: "100000",
+//   },
+// ];
 
 const ProductManager = () => {
-  //   const navigate = useNavigate();
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const response = await getAllProduct();
+      const data = await response.json();
+      setProducts(data);
+    };
 
+    fetchProducts();
+  }, []);
+
+  const handleEditProduct = () => {
+    return;
+  };
+  const handleDeleteProduct = (productId) => {
+    console.log(productId);
+    DeleteProductById(productId);
+    const updatedProducts = products.filter((product) => product.id !== productId);
+    setProducts(updatedProducts);
+  };
   //   const query = useQuery({
   //     queryKey: ["products"],
   //     queryFn: getAllProductsQuery,
@@ -83,12 +105,7 @@ const ProductManager = () => {
                   >
                     Tên sản phẩm
                   </th>
-                  <th
-                    scope="col"
-                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                  >
-                    Danh mục
-                  </th>
+
                   <th
                     scope="col"
                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
@@ -113,14 +130,11 @@ const ProductManager = () => {
                       {product.name}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {product.category}
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                       {product.price}
                     </td>
                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                       <a
-                        onClick={() => {}}
+                        onClick={() => { }}
                         className="text-indigo-600 hover:text-indigo-900"
                       >
                         Chỉnh sửa
@@ -129,7 +143,7 @@ const ProductManager = () => {
                     </td>
                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                       <button
-                        onClick={() => {}}
+                        onClick={() => handleDeleteProduct(product.id)}
                         className="text-red-600 hover:text-red-900"
                       >
                         Xóa

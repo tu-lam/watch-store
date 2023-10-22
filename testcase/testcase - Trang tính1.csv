@@ -1,17 +1,19 @@
 api,description,method,inputBody,outputCode,check
-http://localhost:4000/users/signin,api login voi email khong dung cau truc,post,"{""email"": ""adc"",""password"":""222as""}",invalid_email_err,true
-http://localhost:4000/users/signin,api login khong nhap email,post,"{""email"": """",""password"":""222as""}",empty_email_err,true
-http://localhost:4000/users/signin,api login khong nhap password,post,"{""email"": ""admin@gmail.com"",""password"":""""}",empty_password_err,true
-http://localhost:4000/users/signin,"api login dung tai khoang, sai mat khau",post,"{""email"": ""admin@gmail.com"",""password"":""adjsb""}",incorrect_password_err,false
-http://localhost:4000/users/signin,"api login dung tai khoang, check mat viet hoa co khac viet thuong khong",post,"{""email"": ""admin@gmail.com"",""password"":""ADmin""}",incorrect_password_err,true
-http://localhost:4000/users/signin,api login dung tai khoan va mat khau co dau cach cuoi thi nhu nao,post,"{""email"": ""admin@gmail.com"",""password"":""admin  ""}",incorrect_password_err,true
-http://localhost:4000/users/signin,"api login dung tai khoang, dung mat khau",post,"{""email"": ""admin@gmail.com"",""password"":""admin""}",signin_success,true
-http://localhost:4000/users/signin,api login check SQL injection,post,"{""email"": ""admin@gmail.com"",""password"":"" OR '1'='1'""}",incorrect_password_err,true
-http://localhost:4000/users/signup,api dang ky voi email khong dung cau truc,post,"{""name"": ""thai"",""email"": ""adc"",""password"":""222as""}",invalid_email_err,true
-http://localhost:4000/users/signup,api dang ky trung email,post,"{""name"": ""thai"",""email"": ""admin@gmail.com"",""password"":""222as""}",existing_email_err,true
-http://localhost:4000/users/signup,api dang ky trong email,post,"{""name"": ""thai"",""email"": """",""password"":""222as""}",empty_email_err,true
-http://localhost:4000/users/signup,api dang ky khong the tao tai khoan neu co khoan trong email dau hoac cuoi,post,"{""name"": ""thai"",""email"": ""adsds@gmail.com  "",""password"":""222as""}",invalid_email_err,true
-http://localhost:4000/users/signup,api dang ky co ky tu dat biet trong email khong tao duocj tai khoan,post,"{""name"": ""thai"",""email"": ""asdas!!@gmail.com"",""password"":""222as""}",invalid_email_err,false
-http://localhost:4000/users/signup,api dang ky trong password,post,"{""name"": ""thai"",""email"": ""adc@gmail.com"",""password"":""""}",empty_password_err,true
-http://localhost:4000/users/signup,api dang ky trong ten,post,"{""name"": """",""email"": ""adc@gmail.com"",""password"":""222as""}",empty_name_err,true
-http://localhost:4000/users/signup,api dang ky dung,post,"{""name"": ""thai"",""email"": ""admin@gmail.com"",""password"":""admin""}",signup_success,false
+"http://localhost:4000/users/signin","api login voi email khong dung cau truc","post","{""email"": ""adc"",""password"":""222as""}","invalid_email_err",true
+"http://localhost:4000/users/signin","api login khong nhap email","post","{""email"": """",""password"":""222as""}","empty_email_err",true
+"http://localhost:4000/users/signin","api login khong nhap password","post","{""email"": ""admin@gmail.com"",""password"":""""}","empty_password_err",true
+"http://localhost:4000/users/signin","api login dung tai khoang, sai mat khau","post","{""email"": ""admin@gmail.com"",""password"":""adjsb""}","incorrect_password_err",false
+"http://localhost:4000/users/signin","api login dung tai khoang, check mat viet hoa co khac viet thuong khong","post","{""email"": ""admin@gmail.com"",""password"":""ADmin""}","incorrect_password_err",true
+"http://localhost:4000/users/signin","api login dung tai khoan va mat khau co dau cach cuoi thi nhu nao","post","{""email"": ""admin@gmail.com"",""password"":""admin  ""}","incorrect_password_err",true
+"http://localhost:4000/users/signin","api login dung tai khoang, dung mat khau","post","{""email"": ""admin@gmail.com"",""password"":""admin""}","signin_success",true
+"http://localhost:4000/users/signin","api login check SQL injection","post","{""email"": ""admin@gmail.com"",""password"":"" OR '1'='1'""}","incorrect_password_err",true
+"http://localhost:4000/users/signup","api dang ky voi email khong dung cau truc","post","{""name"": ""thai"",""email"": ""adc"",""password"":""222as""}","invalid_email_err",true
+"http://localhost:4000/users/signup","api dang ky trung email","post","{""name"": ""thai"",""email"": ""admin@gmail.com"",""password"":""222as""}","existing_email_err",true
+"http://localhost:4000/users/signup","api dang ky trong email","post","{""name"": ""thai"",""email"": """",""password"":""222as""}","empty_email_err",true
+"http://localhost:4000/users/signup","api dang ky khong the tao tai khoan neu co khoan trong email dau hoac cuoi","post","{""name"": ""thai"",""email"": ""adsds@gmail.com  "",""password"":""222as""}","invalid_email_err",true
+"http://localhost:4000/users/signup","api dang ky co ky tu dat biet trong email khong tao duocj tai khoan","post","{""name"": ""thai"",""email"": ""asdas!!@gmail.com"",""password"":""222as""}","invalid_email_err",false
+"http://localhost:4000/users/signup","api dang ky trong password","post","{""name"": ""thai"",""email"": ""adc@gmail.com"",""password"":""""}","empty_password_err",true
+"http://localhost:4000/users/signup","api dang ky trong ten","post","{""name"": """",""email"": ""adc@gmail.com"",""password"":""222as""}","empty_name_err",true
+"http://localhost:4000/users/signup","api dang ky dung","post","{""name"": ""thai"",""email"": ""admin@gmail.com"",""password"":""admin""}","signup_success",false
+"http://localhost:4000/products","api thêm sản phảm nhập đúng","post-formData","{""name"": ""jjj"",""price"": ""300"",""image"":""image-products-test/1.jpg""}","add_product_success",true
+"http://localhost:4000/products/signup","api dang ky dung","post-l","{""name"": ""thai"",""email"": ""admin@gmail.com"",""password"":""admin""}","signup_success",false

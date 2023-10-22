@@ -49,3 +49,13 @@ export const getProductDetail = (productId) => {
     },
   });
 };
+
+export const DeleteProductById = (productId) => {
+  return fetch(`${process.env.REACT_APP_API_URL}/products/${productId || ''}`, {
+    method: "DELETE",
+    headers: {
+      Accept: "application.json",
+      "Content-Type": "application/json",
+    },
+  });
+};

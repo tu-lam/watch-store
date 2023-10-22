@@ -20,6 +20,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Provider } from "react-redux";
 import { store } from "./stores/store";
 import SignUp from "./pages/SignUp";
+import SignOut from "./pages/SignOut";
 
 const queryClient = new QueryClient();
 
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
   {
     path: "/gio-hang",
     element: <Cart />,
+  },
+  {
+    path: "dang-xuat",
+    element: <SignOut />
   },
   {
     path: "/bang-dieu-khien",
