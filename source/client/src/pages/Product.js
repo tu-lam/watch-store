@@ -1,20 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Disclosure, RadioGroup, Tab } from "@headlessui/react";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { HeartIcon, MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import Layout from "../components/layout/Layout";
-import { getProductDetail } from "../queries/auth";
-
-const id = (new URLSearchParams(window.location.search)).get('id');
-
-const product = await (await getProductDetail(id)).json();
-product.images = [{
-  id: 1,
-  name: "son",
-  src: process.env.REACT_APP_API_URL + '/public/products/' + product.image
-}];
-product.rating = 4;
-// {
+import { addCartProduct, getProductDetail } from "../queries/auth";
+import CustomAlert from "../utils/CustomAlert";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+// const productTest = {
 //   name: "Đồng hồ XYZ",
 //   price: "$140",
 //   rating: 4,
@@ -65,11 +58,87 @@ function classNames(...classes) {
 }
 
 export default function Product() {
-  // const [selectedColor, setSelectedColor] = useState(product.colors[0]);
+  const navigate = useNavigate();
+  const payload = useSelector((state) => state.auth);
+  console.log("payload ", payload);
+  /**
+ * Configuration for handling alerts in the component.
+ * These states control the behavior of the alert:
+ * - `showAlert`: Indicates whether the alert should be displayed or hidden.
+ * - `success`: Specifies if the alert represents a success (true) or an error (false).
+ * - `alertMessage`: The message to be displayed in the alert.
+ * - `handleAlertClose()`: A function that sets `showAlert` to `false`, hiding the alert when called.
+ */
+  const [showAlert, setShowAlert] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+
+  const handleAlertClose = () => {
+    setShowAlert(false);
+  };
+  // end 
+  const [product, setProduct] = useState({
+    id: 1,
+    name: "",
+    price: 0,
+    images: []
+  })
+  const id = (new URLSearchParams(window.location.search)).get('id');
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getProductDetail(id);
+        if (response.ok) {
+          const product = await response.json();
+          product.images = [{
+            id: 1,
+            name: "son",
+            src: process.env.REACT_APP_API_URL + '/public/products/' + product.image
+          }];
+          product.rating = 4;
+          setProduct(product);
+          console.log(product);
+        } else {
+        }
+      } catch (error) {
+      }
+    };
+    fetchData();
+  },[id])
+  const addToCart = () => {
+    if (!payload.token) {
+      setTimeout(() => {
+        navigate("/dang-nhap");
+      }, 1000)
+      setAlertMessage("Bạn cần đăng nhập để thêm vào giỏ hàng!");
+      setShowAlert(true);
+      setSuccess(false);
+      return;
+    }
+
+    const productData = {
+      productId: Number(id),
+      quantity: 1
+    }
+    addCartProduct(productData, payload.token);
+    setAlertMessage("Đã thêm sản phẩm vào giỏ hàng!");
+    setShowAlert(true);
+    setSuccess(true);
+
+  };
 
   return (
     <Layout>
+
       <div className="bg-white">
+        {/* 
+                  Render the CustomAlert component with the following props:
+                  - `show`: Determines whether the alert should be displayed or hidden based on the value of `showAlert`.
+                  - `messageCode`: Passes the alert message or message code to be displayed in the alert.
+                  - `onClose`: Provides the `handleAlertClose` function as a callback for closing the alert when needed.
+                  - `success`: Specifies whether the alert should have a success (true) or error (false) appearance.
+                */}
+        <CustomAlert show={showAlert} messageCode={alertMessage} onClose={handleAlertClose} success={success} />
         <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
           <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8">
             {/* Image gallery */}
@@ -164,6 +233,7 @@ export default function Product() {
               </div> */}
 
               <form className="mt-6">
+
                 {/* Colors */}
                 {/* <div>
                   <h3 className="text-sm text-gray-600">Color</h3>
@@ -208,8 +278,9 @@ export default function Product() {
 
                 <div className="mt-10 flex">
                   <button
-                    type="submit"
+                    type="button"
                     className="flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full"
+                    onClick={addToCart}
                   >
                     Thêm vào giỏ hàng
                   </button>

@@ -39,6 +39,25 @@ const writeFileCSV = (data, filePath) => {
     console.log(`Data has been written to ${filePath}`);
 
 }
+const checkType = (type, input) => {
+    switch (type) {
+        case 'List':
+            return Array.isArray(input);
+        case 'Number':
+            return typeof input === 'number';
+        case 'String':
+            return typeof input === 'string';
+        case 'Boolean':
+            return typeof input === 'boolean';
+        case 'Object':
+            return (typeof input === 'object' && !Array.isArray(input) && input !== null);
+        case 'Null':
+            return input === ''
+        default:
+            return "is not a recognized type";
+    }
+}
+
 function isObjectEmpty(obj) {
 
     return JSON.stringify(obj) === '{}';
@@ -89,6 +108,18 @@ async function fetchData() {
                 //     console.log(response.data.messageCode == test.outputCode);
                 //     response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
                 //     break;
+                case "getProduct":
+                    console.log(requestBody);
+                    try {
+                        response = await axios.get(test.api, requestBody);
+                    } catch (error) {
+                        test.check = false;
+                        break;
+                    }
+                    console.log("test.outputCode: ", test.outputCode);
+                    console.log(checkType(test.outputCode, response.data));
+                    test.check = checkType(test.outputCode, response.data);
+                    break;
                 // case "post":
                 //     console.log(requestBody);
                 //     try {
@@ -108,8 +139,13 @@ async function fetchData() {
                     let formData = new FormData();
                     formData.append('name', requestBody.name);
                     formData.append('price', requestBody.price);
-                    const fileImage = path.resolve('/home/anhthai/PTIT/watch-store/testcase/' + requestBody.image);
-                    formData.append('image', fs.createReadStream(fileImage));
+                    if(requestBody.image){
+                        const fileImage = path.resolve('/home/anhthai/PTIT/watch-store/testcase/' + requestBody.image);
+                        formData.append('image', fs.createReadStream(fileImage));
+                    }else{
+                        formData.append('image', '');
+                    }
+                   
                     try {
                         response = await axios.post(test.api, formData, {
                             headers: {
@@ -117,8 +153,10 @@ async function fetchData() {
                             },
                         });
                     } catch (error) {
-                        console.log(error);
-                        // error.response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
+                        console.log(test.outputCode);
+                        console.log(error.response.data.messageCode);
+                        console.log(error.response.data.messageCode == test.outputCode);
+                        error.response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
                         break;
                     }
                     console.log(test.outputCode);
@@ -129,12 +167,18 @@ async function fetchData() {
                         await axios.delete('http://localhost:4000/products/' + response.data.data.product.id);
                     }
                     break;
+
                 case "delete":
                     console.log(requestBody);
                     try {
                         response = await axios.delete(test.api, requestBody);
                     } catch (error) {
-                        test.check = false;
+                        console.log(test.outputCode);
+                        console.log(error.response.data.code);
+                        if (!error.response.data.code) {
+                            test.check = false;
+                        }
+                        error.response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
                         break;
                     }
                     console.log(test.outputCode);
@@ -146,7 +190,9 @@ async function fetchData() {
                     try {
                         response = await axios.patch(test.api, requestBody);
                     } catch (error) {
-                        test.check = false;
+                        console.log(test.outputCode);
+                        console.log(error.response.data.code);
+                        error.response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
                         break;
                     }
                     console.log(test.outputCode);
@@ -158,7 +204,9 @@ async function fetchData() {
                     try {
                         response = await axios.put(test.api, requestBody);
                     } catch (error) {
-                        test.check = false;
+                        console.log(test.outputCode);
+                        console.log(response.data.code);
+                        response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
                         break;
                     }
                     console.log(test.outputCode);

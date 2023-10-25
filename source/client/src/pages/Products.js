@@ -1,13 +1,14 @@
 import { useSelector } from "react-redux";
 import Layout from "../components/layout/Layout";
 import { getAllProduct } from "../queries/auth";
+import { Link } from "react-router-dom";
 
 
 
 const initialData = await (await getAllProduct()).json();
 const products = initialData.map(item => ({
   id: item.id,
-  name: `Đồng hồ ${item.id}`,
+  name: item.name,
   price: `$${item.price}`,
   href: `/chi-tiet-san-pham?id=${item.id}`,
   imageSrc: `${process.env.REACT_APP_API_URL}/public/products/${item.image}`,
@@ -63,7 +64,7 @@ export default function Products() {
 
           <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
             {products.map((product) => (
-              <a key={product.id} href={product.href} className="group">
+              <Link key={product.id} to={product.href} className="group">
                 <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
                   <img
                     src={product.imageSrc}
@@ -75,7 +76,7 @@ export default function Products() {
                 <p className="mt-1 text-lg font-medium text-gray-900">
                   {product.price}
                 </p>
-              </a>
+              </Link>
             ))}
           </div>
         </div>

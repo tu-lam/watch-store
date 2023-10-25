@@ -16,4 +16,19 @@ api,description,method,inputBody,outputCode,check
 "http://localhost:4000/users/signup","api dang ky trong ten","post","{""name"": """",""email"": ""adc@gmail.com"",""password"":""222as""}","empty_name_err",true
 "http://localhost:4000/users/signup","api dang ky dung","post","{""name"": ""thai"",""email"": ""admin@gmail.com"",""password"":""admin""}","signup_success",false
 "http://localhost:4000/products","api thêm sản phảm nhập đúng","post-formData","{""name"": ""jjj"",""price"": ""300"",""image"":""image-products-test/1.jpg""}","add_product_success",true
-"http://localhost:4000/products/signup","api dang ky dung","post-l","{""name"": ""thai"",""email"": ""admin@gmail.com"",""password"":""admin""}","signup_success",false
+"http://localhost:4000/products","api thêm sản phẩm thiếu name","post-formData","{""name"": """",""price"": ""300"",""image"":""image-products-test/1.jpg""}","empty_name_product_err",true
+"http://localhost:4000/products","api thêm sản phẩm thiếu name","post-formData","{""name"": ""thai"",""price"": ""300"",""image"":""""}","empty_image_product_err",true
+"http://localhost:4000/products","api thêm sản phẩm thiếu price","post-formData","{""name"": ""jjj"",""price"": """",""image"":""image-products-test/1.jpg""}","empty_price_product_err",false
+"http://localhost:4000/products","api thêm sản phẩm price có chữ","post-formData","{""name"": ""jjj"",""price"": ""30p0"",""image"":""image-products-test/1.jpg""}","invalid_price_product_err",false
+"http://localhost:4000/products","api thêm sản phẩm price có kí tự đặt biệt","post-formData","{""name"": ""jjj"",""price"": ""30#0"",""image"":""image-products-test/1.jpg""}","invalid_price_product_err",false
+"http://localhost:4000/products","api lấy tất cả sản phẩm trong database","getProduct","{}","List",true
+"http://localhost:4000/products/15","api lấy một sản phẩm","getProduct","{}","Object",true
+"http://localhost:4000/products/1","tìm sản phẩm không tồn tại, không trả về j hết","getProduct","{}","Null",true
+"http://localhost:4000/products/1","api xóa một sản phẩm không tông tại","delete","{}","product_not_found_err",true
+"http://localhost:4000/products/51","xóa một sản phẩm thành công","delete","{}","delete_product_success",false
+"http://localhost:4000/products/12","api cập nhẩn thông tin sản phẩm không để name","patch","{""name"": """",""price"": ""300"",""image"":""image-products-test/1.jpg""}","delete_product_success",false
+"http://localhost:4000/products/12","api cập nhẩn thông tin sản phẩm không để price","patch","{""name"": ""kkk"",""price"": """",""image"":""image-products-test/1.jpg""}","delete_product_success",false
+"http://localhost:4000/products/12","api cập nhẩn thông tin sản phẩm không để image","patch","{""name"": ""kkk"",""price"": ""222"",""image"":""""}","delete_product_success",false
+"http://localhost:4000/products/12","api cập nhẩn thông tin sản phẩm price không hợp lệ","patch","{""name"": ""kkk"",""price"": ""2@@22"",""image"":""image-products-test/1.jpg""}","invalid_price_product_err",false
+"http://localhost:4000/products/1","api cập nhẩn thông tin với id không tồn tại ","patch","{""name"": ""kkk"",""price"": ""222"",""image"":""image-products-test/1.jpg""}","product_not_found_err",true
+"http://localhost:4000/products/12","api cập nhẩn thông tin sản phẩm  thành công","patch","{""name"": ""kkk"",""price"": ""222"",""image"":""image-products-test/1.jpg""}","edit_product_success",true

@@ -83,7 +83,7 @@ const initialData = await (await getAllProduct()).json();
 console.log(initialData);
 const trendingProducts = initialData.map(item => ({
   id: item.id,
-  name: `Đồng hồ ${item.id}`,
+  name: `Đồng hồ ${item.name}`,
   price: `$${item.price}`,
   href: `/chi-tiet-san-pham?id=${item.id}`,
   imageSrc: `${process.env.REACT_APP_API_URL}/public/products/${item.image}`,
@@ -269,10 +269,10 @@ export default function Home() {
                       <div className="mt-6">
                         {/* <p className="text-sm text-gray-500">{product.color}</p> */}
                         <h3 className="mt-1 font-semibold text-gray-900">
-                          <a href={product.href}>
+                          <Link  to={product.href}>
                             <span className="absolute inset-0" />
                             {product.name}
-                          </a>
+                          </Link>
                         </h3>
                         <p className="mt-1 text-gray-900">{product.price}</p>
                       </div>

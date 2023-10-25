@@ -16,6 +16,6 @@ api,description,method,inputBody,outputCode,check
 "http://localhost:3000/san-pham","test khi nhân vào sản phảm xem có hiên ra chi tiên hay chưa","showProductDetail","{}","signup_success",U14
 "http://localhost:3000/chi-tiet-san-pham","test thêm vào giỏ hàng khi chưa dang nhap","addProductCartNotLogin","{}","sad",U15
 "http://localhost:3000/dang-nhap","test thêm vào giỏ hàng khi đã đăng nhập","addProductCartHaveLogin","{""email"": ""admin@gmail.com"",""password"":""admin"",""URLAddProductCart"":""http://localhost:3000/chi-tiet-san-pham""}","sad",undefined
-"http://localhost:3000/gio-hang","tăng giảm sô lượng trong giỏ hàng","addProductInCart","{""email"": ""admin@gmail.com"",""password"":""admin"",""URLAddProductCart"":""http://localhost:3000/chi-tiet-san-pham""}","sad",undefined
+"http://localhost:3000/gio-hang","tăng giảm sô lượng trong giỏ hàng","addProductInCart","{""email"": ""thai4@gmail.com"",""password"":""123456789"",""URLAddProductCart"":""http://localhost:3000/chi-tiet-san-pham""}","sad",undefined
 "http://localhost:3000/gio-hang","giỏ hàng xem có sản phảm trong giỏ chưa","showCartHaveLogin","{""email"": ""admin@gmail.com"",""password"":""admin"",""URLAddProductCart"":""http://localhost:3000/chi-tiet-san-pham""}","sad",undefined
 "http://localhost:3000/gio-hang","giỏ hàng khi chưa đang nhập","showCartNotLogin","{""email"": ""admin@gmail.com"",""password"":""admin"",""URLAddProductCart"":""http://localhost:3000/chi-tiet-san-pham""}","sad",undefined

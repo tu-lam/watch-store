@@ -21,52 +21,93 @@ import {
 import Layout from "../components/layout/Layout";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { DeleteProductInCartById, getAllCartProduct } from "../queries/auth";
 
-const products = [
-  {
-    id: 1,
-    name: "Đồng hồ A",
-    href: "#",
-    price: "$32.00",
-    color: "Sienna",
-    inStock: true,
-    size: "Large",
-    imageSrc: "/images/product.png",
-    imageAlt: "Front of men's Basic Tee in sienna.",
-  },
-  {
-    id: 2,
-    name: "Đồng hồ B",
-    href: "#",
-    price: "$32.00",
-    color: "Black",
-    inStock: false,
-    leadTime: "3–4 weeks",
-    size: "Large",
-    imageSrc: "/images/product.png",
-    imageAlt: "Front of men's Basic Tee in black.",
-  },
-  {
-    id: 3,
-    name: "Đồng hồ C",
-    href: "#",
-    price: "$35.00",
-    color: "White",
-    inStock: true,
-    imageSrc: "/images/product.png",
-    imageAlt: "Insulated bottle with white base and black snap lid.",
-  },
-];
-
+// const products =
+//  [
+//   {
+//     id: 1,
+//     name: "Đồng hồ A",
+//     href: "#",
+//     price: "$32.00",
+//     color: "Sienna",
+//     inStock: true,
+//     size: "Large",
+//     imageSrc: "/images/product.png",
+//     imageAlt: "Front of men's Basic Tee in sienna.",
+//   },
+//   {
+//     id: 2,
+//     name: "Đồng hồ B",
+//     href: "#",
+//     price: "$32.00",
+//     color: "Black",
+//     inStock: false,
+//     leadTime: "3–4 weeks",
+//     size: "Large",
+//     imageSrc: "/images/product.png",
+//     imageAlt: "Front of men's Basic Tee in black.",
+//   },
+//   {
+//     id: 3,
+//     name: "Đồng hồ C",
+//     href: "#",
+//     price: "$35.00",
+//     color: "White",
+//     inStock: true,
+//     imageSrc: "/images/product.png",
+//     imageAlt: "Insulated bottle with white base and black snap lid.",
+//   },
+// ];
 export default function Cart() {
   const navigate = useNavigate();
+  const [products, setProducts] = useState([]);
   const payload = useSelector((state) => state.auth);
   useEffect(() => {
     if (!payload.token) {
       navigate("/dang-nhap");
+    } else {
+      const fetchData = async () => {
+        try {
+          const response = await getAllCartProduct(payload.token);
+          if (response.ok) {
+            const inputData = await response.json();
+            const data = inputData.map(item => {
+              return {
+                id: item.id,
+                name: item.product.name,
+                href: "#",
+                price: item.product.price,
+                quantity: item.quantity,
+                color: "", // Bổ sung thông tin mà bạn có
+                inStock: true, // Bổ sung thông tin mà bạn có
+                size: "", // Bổ sung thông tin mà bạn có
+                imageSrc: `${process.env.REACT_APP_API_URL}/public/products/${item.product.image}`,
+                imageAlt: item.product.name, // Chỉnh lại mô tả hình ảnh nếu cần
+              };
+            });
+            setProducts(data);
+            console.log(data);
+          } else {
+          }
+        } catch (error) {
+        }
+      };
+      fetchData();
     }
+
+
   }, [payload]);
+  const handleDeleteProductInCart = (productId) => {
+    console.log(productId);
+    DeleteProductInCartById(productId, payload.token);
+    const updatedProducts = products.filter((product) => product.id !== productId);
+    setProducts(updatedProducts);
+  }
+  const  total = products.reduce((accumulator, currentProduct) => {
+    return accumulator + currentProduct.price;
+  }, 0);
   return (
     <Layout>
       <div className="bg-white">
@@ -116,7 +157,7 @@ export default function Cart() {
                             ) : null}
                           </div>
                           <p className="mt-1 text-sm font-medium text-gray-900">
-                            {product.price}
+                            {product.price.toFixed(2)}$
                           </p>
                         </div>
 
@@ -131,6 +172,7 @@ export default function Cart() {
                             id={`quantity-${productIdx}`}
                             name={`quantity-${productIdx}`}
                             className="max-w-full rounded-md border border-gray-300 py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
+                            defaultValue={product.quantity}
                           >
                             <option value={1}>1</option>
                             <option value={2}>2</option>
@@ -146,6 +188,7 @@ export default function Cart() {
                             <button
                               type="button"
                               className="-m-2 inline-flex p-2 text-gray-400 hover:text-gray-500"
+                              onClick={() => handleDeleteProductInCart(product.id)}
                             >
                               <span className="sr-only">Remove</span>
                               <XMarkIcon
@@ -197,7 +240,7 @@ export default function Cart() {
               <dl className="mt-6 space-y-4">
                 <div className="flex items-center justify-between">
                   <dt className="text-sm text-gray-600">Tạm tính</dt>
-                  <dd className="text-sm font-medium text-gray-900">$99.00</dd>
+                  <dd className="text-sm font-medium text-gray-900">${total.toFixed(2)}</dd>
                 </div>
                 <div className="flex items-center justify-between border-t border-gray-200 pt-4">
                   <dt className="flex items-center text-sm text-gray-600">
@@ -233,14 +276,14 @@ export default function Cart() {
                       />
                     </a>
                   </dt>
-                  <dd className="text-sm font-medium text-gray-900">$8.32</dd>
+                  <dd className="text-sm font-medium text-gray-900">${(total*10/100).toFixed(2)}</dd>
                 </div>
                 <div className="flex items-center justify-between border-t border-gray-200 pt-4">
                   <dt className="text-base font-medium text-gray-900">
                     Tổng cộng
                   </dt>
                   <dd className="text-base font-medium text-gray-900">
-                    $112.32
+                    ${(total*1.1 + 5).toFixed(2)}
                   </dd>
                 </div>
               </dl>

@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Dialog, Popover, Tab, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
@@ -12,6 +12,8 @@ import { Link } from "react-router-dom";
 
 import { classNames } from "../../utils";
 import MobileMenu from "./MobileMenu";
+import { useSelector } from "react-redux";
+import { getAllCartProduct } from "../../queries/auth";
 
 const currencies = ["CAD", "USD", "AUD", "EUR", "GBP"];
 const navigation = {
@@ -81,7 +83,31 @@ const navigation = {
 
 const Header = () => {
   const [open, setOpen] = useState(false);
+  const payload = useSelector((state) => state.auth);
+  const [productsCount, setProductsCount] = useState(0);
 
+  const fetchData = async () => {
+    try {
+      const response = await getAllCartProduct(payload.token);
+      if (response.ok) {
+        const data = await response.json();
+        setProductsCount(data.length);
+        console.log(data);
+      }
+    } catch (error) {
+      // Xử lý lỗi nếu cần
+    }
+  };
+
+  useEffect(() => {
+    fetchData(); // Lấy dữ liệu ban đầu
+    const refreshInterval = setInterval(() => {
+      fetchData(); // Lấy dữ liệu theo khoảng thời gian
+    }, 500); // Cập nhật dữ liệu mỗi 1 phút (có thể điều chỉnh thời gian cần thiết)
+    return () => {
+      clearInterval(refreshInterval); // Dọn dẹp interval khi component bị unmount
+    };
+  }, [payload]);
   return (
     <div className="bg-white">
       {/* Mobile menu */}
@@ -372,7 +398,7 @@ const Header = () => {
                             aria-hidden="true"
                           />
                           <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-                            0
+                            {productsCount}
                           </span>
                           <span className="sr-only">
                             items in cart, view bag
