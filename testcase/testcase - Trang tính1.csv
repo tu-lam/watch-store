@@ -1,20 +1,20 @@
 api,description,method,inputBody,outputCode,check
-"http://localhost:4000/users/signin","api login voi email khong dung cau truc","post","{""email"": ""adc"",""password"":""222as""}","invalid_email_err",true
-"http://localhost:4000/users/signin","api login khong nhap email","post","{""email"": """",""password"":""222as""}","empty_email_err",true
-"http://localhost:4000/users/signin","api login khong nhap password","post","{""email"": ""admin@gmail.com"",""password"":""""}","empty_password_err",true
-"http://localhost:4000/users/signin","api login dung tai khoang, sai mat khau","post","{""email"": ""admin@gmail.com"",""password"":""adjsb""}","incorrect_password_err",false
-"http://localhost:4000/users/signin","api login dung tai khoang, check mat viet hoa co khac viet thuong khong","post","{""email"": ""admin@gmail.com"",""password"":""ADmin""}","incorrect_password_err",true
-"http://localhost:4000/users/signin","api login dung tai khoan va mat khau co dau cach cuoi thi nhu nao","post","{""email"": ""admin@gmail.com"",""password"":""admin  ""}","incorrect_password_err",true
-"http://localhost:4000/users/signin","api login dung tai khoang, dung mat khau","post","{""email"": ""admin@gmail.com"",""password"":""admin""}","signin_success",true
+"http://localhost:4000/users/signin","api login với email không đúng cấu trúc","post","{""email"": ""adc"",""password"":""222as""}","invalid_email_err",true
+"http://localhost:4000/users/signin","api login không nhập email","post","{""email"": """",""password"":""222as""}","empty_email_err",true
+"http://localhost:4000/users/signin","api login không nhập password","post","{""email"": ""admin@gmail.com"",""password"":""""}","empty_password_err",true
+"http://localhost:4000/users/signin","api login đúng tài khoang, sai mật khẩu","post","{""email"": ""admin@gmail.com"",""password"":""adjsb""}","incorrect_password_err",true
+"http://localhost:4000/users/signin","api login đúng tài khoang, check mật khẩu chữ hoa có khác chữ thường thông","post","{""email"": ""admin@gmail.com"",""password"":""ADmin""}","incorrect_password_err",true
+"http://localhost:4000/users/signin","api login đúng tài khoang và mật khẩu có đâu cách cuối thì sao","post","{""email"": ""admin@gmail.com"",""password"":""admin  ""}","incorrect_password_err",true
+"http://localhost:4000/users/signin","api login đúng tài khoang,đúng mật khẩu","post","{""email"": ""admin@gmail.com"",""password"":""admin""}","signin_success",true
 "http://localhost:4000/users/signin","api login check SQL injection","post","{""email"": ""admin@gmail.com"",""password"":"" OR '1'='1'""}","incorrect_password_err",true
-"http://localhost:4000/users/signup","api dang ky voi email khong dung cau truc","post","{""name"": ""thai"",""email"": ""adc"",""password"":""222as""}","invalid_email_err",true
-"http://localhost:4000/users/signup","api dang ky trung email","post","{""name"": ""thai"",""email"": ""admin@gmail.com"",""password"":""222as""}","existing_email_err",true
-"http://localhost:4000/users/signup","api dang ky trong email","post","{""name"": ""thai"",""email"": """",""password"":""222as""}","empty_email_err",true
-"http://localhost:4000/users/signup","api dang ky khong the tao tai khoan neu co khoan trong email dau hoac cuoi","post","{""name"": ""thai"",""email"": ""adsds@gmail.com  "",""password"":""222as""}","invalid_email_err",true
-"http://localhost:4000/users/signup","api dang ky co ky tu dat biet trong email khong tao duocj tai khoan","post","{""name"": ""thai"",""email"": ""asdas!!@gmail.com"",""password"":""222as""}","invalid_email_err",false
-"http://localhost:4000/users/signup","api dang ky trong password","post","{""name"": ""thai"",""email"": ""adc@gmail.com"",""password"":""""}","empty_password_err",true
-"http://localhost:4000/users/signup","api dang ky trong ten","post","{""name"": """",""email"": ""adc@gmail.com"",""password"":""222as""}","empty_name_err",true
-"http://localhost:4000/users/signup","api dang ky dung","post","{""name"": ""thai"",""email"": ""admin@gmail.com"",""password"":""admin""}","signup_success",false
+"http://localhost:4000/users/signup","api đăng ký với email không đúng cấu trúc","post","{""name"": ""thai"",""email"": ""adc"",""password"":""222as""}","invalid_email_err",true
+"http://localhost:4000/users/signup","api đăng ký trùng email","post","{""name"": ""thai"",""email"": ""admin@gmail.com"",""password"":""222as""}","existing_email_err",true
+"http://localhost:4000/users/signup","api đăng ký bỏ trống email","post","{""name"": ""thai"",""email"": """",""password"":""222as""}","empty_email_err",true
+"http://localhost:4000/users/signup","api đăng ký không thể tạo tài khoản nếu có khoản trắng trên email đầu hoặc cuối","post","{""name"": ""thai"",""email"": ""adsds@gmail.com  "",""password"":""222as""}","invalid_email_err",true
+"http://localhost:4000/users/signup","api đăng ký có ký tự đặt biệt trong email không tạo được tài khoản","post","{""name"": ""thai"",""email"": ""asdas!!@gmail.com"",""password"":""222as""}","invalid_email_err",false
+"http://localhost:4000/users/signup","api đăng ký bỏ trống password","post","{""name"": ""thai"",""email"": ""adc@gmail.com"",""password"":""""}","empty_password_err",true
+"http://localhost:4000/users/signup","api đăng ký bỏ trống tên","post","{""name"": """",""email"": ""adc@gmail.com"",""password"":""222as""}","empty_name_err",true
+"http://localhost:4000/users/signup","api đăng ký đúng","post","{""name"": ""thai"",""email"": ""admin@gmail.com"",""password"":""admin""}","signup_success",false
 "http://localhost:4000/products","api thêm sản phảm nhập đúng","post-formData","{""name"": ""jjj"",""price"": ""300"",""image"":""image-products-test/1.jpg""}","add_product_success",true
 "http://localhost:4000/products","api thêm sản phẩm thiếu name","post-formData","{""name"": """",""price"": ""300"",""image"":""image-products-test/1.jpg""}","empty_name_product_err",true
 "http://localhost:4000/products","api thêm sản phẩm thiếu name","post-formData","{""name"": ""thai"",""price"": ""300"",""image"":""""}","empty_image_product_err",true
@@ -23,12 +23,12 @@ api,description,method,inputBody,outputCode,check
 "http://localhost:4000/products","api thêm sản phẩm price có kí tự đặt biệt","post-formData","{""name"": ""jjj"",""price"": ""30#0"",""image"":""image-products-test/1.jpg""}","invalid_price_product_err",false
 "http://localhost:4000/products","api lấy tất cả sản phẩm trong database","getProduct","{}","List",true
 "http://localhost:4000/products/15","api lấy một sản phẩm","getProduct","{}","Object",true
-"http://localhost:4000/products/1","tìm sản phẩm không tồn tại, không trả về j hết","getProduct","{}","Null",true
+"http://localhost:4000/products/1","tìm sản phẩm không tồn tại, không trả về gì hết","getProduct","{}","Null",true
 "http://localhost:4000/products/1","api xóa một sản phẩm không tông tại","delete","{}","product_not_found_err",true
 "http://localhost:4000/products/51","xóa một sản phẩm thành công","delete","{}","delete_product_success",false
-"http://localhost:4000/products/12","api cập nhẩn thông tin sản phẩm không để name","patch","{""name"": """",""price"": ""300"",""image"":""image-products-test/1.jpg""}","delete_product_success",false
-"http://localhost:4000/products/12","api cập nhẩn thông tin sản phẩm không để price","patch","{""name"": ""kkk"",""price"": """",""image"":""image-products-test/1.jpg""}","delete_product_success",false
-"http://localhost:4000/products/12","api cập nhẩn thông tin sản phẩm không để image","patch","{""name"": ""kkk"",""price"": ""222"",""image"":""""}","delete_product_success",false
+"http://localhost:4000/products/12","api cập nhẩn thông tin sản phẩm không để name","patch","{""name"": """",""price"": ""300"",""image"":""image-products-test/1.jpg""}","empty_name_product_err",false
+"http://localhost:4000/products/12","api cập nhẩn thông tin sản phẩm không để price","patch","{""name"": ""kkk"",""price"": """",""image"":""image-products-test/1.jpg""}","empty_price_product_err",false
+"http://localhost:4000/products/12","api cập nhẩn thông tin sản phẩm không để image","patch","{""name"": ""kkk"",""price"": ""222"",""image"":""""}","empty_image_product_err",false
 "http://localhost:4000/products/12","api cập nhẩn thông tin sản phẩm price không hợp lệ","patch","{""name"": ""kkk"",""price"": ""2@@22"",""image"":""image-products-test/1.jpg""}","invalid_price_product_err",false
 "http://localhost:4000/products/1","api cập nhẩn thông tin với id không tồn tại ","patch","{""name"": ""kkk"",""price"": ""222"",""image"":""image-products-test/1.jpg""}","product_not_found_err",true
 "http://localhost:4000/products/12","api cập nhẩn thông tin sản phẩm  thành công","patch","{""name"": ""kkk"",""price"": ""222"",""image"":""image-products-test/1.jpg""}","edit_product_success",true
