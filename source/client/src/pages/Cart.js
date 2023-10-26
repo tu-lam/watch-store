@@ -105,7 +105,7 @@ export default function Cart() {
     const updatedProducts = products.filter((product) => product.id !== productId);
     setProducts(updatedProducts);
   }
-  const  total = products.reduce((accumulator, currentProduct) => {
+  const total = products.reduce((accumulator, currentProduct) => {
     return accumulator + currentProduct.price;
   }, 0);
   return (
@@ -186,6 +186,7 @@ export default function Cart() {
 
                           <div className="absolute right-0 top-0">
                             <button
+                              name="deleteProductInCart"
                               type="button"
                               className="-m-2 inline-flex p-2 text-gray-400 hover:text-gray-500"
                               onClick={() => handleDeleteProductInCart(product.id)}
@@ -276,14 +277,14 @@ export default function Cart() {
                       />
                     </a>
                   </dt>
-                  <dd className="text-sm font-medium text-gray-900">${(total*10/100).toFixed(2)}</dd>
+                  <dd className="text-sm font-medium text-gray-900">${(total * 10 / 100).toFixed(2)}</dd>
                 </div>
                 <div className="flex items-center justify-between border-t border-gray-200 pt-4">
                   <dt className="text-base font-medium text-gray-900">
                     Tổng cộng
                   </dt>
                   <dd className="text-base font-medium text-gray-900">
-                    ${(total*1.1 + 5).toFixed(2)}
+                    ${(total * 1.1 + 5).toFixed(2)}
                   </dd>
                 </div>
               </dl>
