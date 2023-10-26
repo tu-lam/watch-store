@@ -6,6 +6,8 @@ api,description,method,inputBody,outputCode,check
 "http://localhost:3000/dang-nhap","api login đúng tài khoản, sai mật khẩu","login","{""email"": ""admin@gmail.com"",""password"":""123456789a""}","incorrect_password_err",U4
 "http://localhost:3000/dang-nhap","api login đúng tài khoản, check mật khẩu có viết hoa có khác viết thường không","login","{""email"": ""admin@gmail.com"",""password"":""ADmin""}","incorrect_password_err",U5
 "http://localhost:3000/dang-nhap","api login đúng tài khoản,  mật khẩu có dấu cách cuối thì như nào","login","{""email"": ""admin@gmail.com"",""password"":""123456789     ""}","incorrect_password_err",U6
+"http://localhost:3000/dang-nhap","api login đúng tài khoản,  mật khẩu đăng nhập quản lý","login","{""email"": ""admin@gmail.com"",""password"":""123456789""}","form của quẩn lý ",U6
+"http://localhost:3000/dang-nhap","api login đúng tài khoản,  mật khẩu đăng nhập nhân viên","login","{""email"": ""admin@gmail.com"",""password"":""123456789""}","form của nhân viên",U6
 "http://localhost:3000/dang-nhap","api login đúng tài khoản, đúng mật khẩu","login","{""email"": ""thai4@gmail.com"",""password"":""123456789""}","signin_success",U7
 "http://localhost:3000/dang-nhap","api login check SQL ","login","{""email"": ""admin@gmail.com"",""password"":"" OR '1'='1'""}","incorrect_password_err",U8
 "http://localhost:3000/dang-ky","test giao diện khi đăng ký thiếu name","signup","{""name"": """",""email"": ""admin@gmail.com"",""phone"":""22082309"",""passwordConfirm"":""admin"",""password"":""admin""}","signup_success",U9
