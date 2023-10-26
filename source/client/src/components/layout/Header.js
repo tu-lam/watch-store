@@ -100,13 +100,15 @@ const Header = () => {
   };
 
   useEffect(() => {
-    fetchData(); // Lấy dữ liệu ban đầu
-    const refreshInterval = setInterval(() => {
-      fetchData(); // Lấy dữ liệu theo khoảng thời gian
-    }, 500); // Cập nhật dữ liệu mỗi 1 phút (có thể điều chỉnh thời gian cần thiết)
-    return () => {
-      clearInterval(refreshInterval); // Dọn dẹp interval khi component bị unmount
-    };
+    if (payload.token) {
+      fetchData(); // Lấy dữ liệu ban đầu
+      const refreshInterval = setInterval(() => {
+        fetchData(); // Lấy dữ liệu theo khoảng thời gian
+      }, 500); // Cập nhật dữ liệu mỗi 1 phút (có thể điều chỉnh thời gian cần thiết)
+      return () => {
+        clearInterval(refreshInterval); // Dọn dẹp interval khi component bị unmount
+      };
+    }
   }, [payload]);
   return (
     <div className="bg-white">
