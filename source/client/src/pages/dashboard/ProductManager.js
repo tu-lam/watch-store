@@ -2,54 +2,26 @@ import { Link, useNavigate } from "react-router-dom";
 import { DeleteProductById, getAllProduct } from "../../queries/auth";
 import { useEffect, useState } from "react";
 
-
-
-// [
-//   {
-//     id: "1",
-//     name: "Đồng hồ ABC",
-//     category: "Đồng hồ nam",
-//     price: "100000",
-//   },
-//   {
-//     id: "1",
-//     name: "Đồng hồ ABC",
-//     category: "Đồng hồ nam",
-//     price: "100000",
-//   },
-//   {
-//     id: "1",
-//     name: "Đồng hồ ABC",
-//     category: "Đồng hồ nam",
-//     price: "100000",
-//   },
-//   {
-//     id: "1",
-//     name: "Đồng hồ ABC",
-//     category: "Đồng hồ nam",
-//     price: "100000",
-//   },
-// ];
-
 const ProductManager = () => {
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   useEffect(() => {
     const fetchProducts = async () => {
       const response = await getAllProduct();
       const data = await response.json();
       setProducts(data);
+      console.log(data);
     };
 
     fetchProducts();
   }, []);
 
-  const handleEditProduct = () => {
-    return;
-  };
   const handleDeleteProduct = (productId) => {
     console.log(productId);
     DeleteProductById(productId);
-    const updatedProducts = products.filter((product) => product.id !== productId);
+    const updatedProducts = products.filter(
+      (product) => product.id !== productId
+    );
     setProducts(updatedProducts);
   };
   //   const query = useQuery({
@@ -134,14 +106,18 @@ const ProductManager = () => {
                     </td>
                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                       <a
-                        onClick={() => { }}
+                        onClick={() => {
+                          navigate("/bang-dieu-khien/san-pham/chinh-sua", {
+                            state: { productId: product.id },
+                          });
+                        }}
                         className="text-indigo-600 hover:text-indigo-900"
                       >
                         Chỉnh sửa
                         <span className="sr-only">, {product.name}</span>
                       </a>
                     </td>
-                    <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                    {/* <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                       <button
                         onClick={() => handleDeleteProduct(product.id)}
                         className="text-red-600 hover:text-red-900"
@@ -149,7 +125,7 @@ const ProductManager = () => {
                         Xóa
                         <span className="sr-only">, {product.name}</span>
                       </button>
-                    </td>
+                    </td> */}
                   </tr>
                 ))}
               </tbody>

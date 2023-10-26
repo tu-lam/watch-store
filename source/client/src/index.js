@@ -22,6 +22,7 @@ import { store } from "./stores/store";
 import SignUp from "./pages/SignUp";
 import SignOut from "./pages/SignOut";
 import AddProduct from "./pages/dashboard/AddProduct";
+import EditProduct from "./pages/dashboard/EditProduct";
 
 const queryClient = new QueryClient();
 
@@ -69,7 +70,7 @@ const router = createBrowserRouter([
       { path: "san-pham/them", element: <AddProduct /> },
       // { path: "thong-bao/them", element: <AddNotification /> },
       // { path: "danh-muc/chinh-sua", element: <EditCategory /> },
-      // { path: "san-pham/chinh-sua", element: <EditProduct /> },
+      { path: "san-pham/chinh-sua", element: <EditProduct /> },
       // // { path: "san-pham/chinh-sua", element: <EditProduct /> },
       // { path: "thong-bao/chinh-sua", element: <EditNotification /> },
     ],

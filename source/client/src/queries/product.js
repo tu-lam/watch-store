@@ -9,3 +9,23 @@ export const createProductQuery = async (formData) => {
     body: formData,
   });
 };
+
+export const getProductQuery = async ({ queryKey }) => {
+  const res = await fetch(
+    `${process.env.REACT_APP_API_URL}/products/${queryKey[1]}`
+  );
+  return res.json();
+};
+
+export const updateProductQuery = async (data) => {
+  const token = localStorage.getItem("token");
+
+  return fetch(`${process.env.REACT_APP_API_URL}/products/${data.productId}`, {
+    method: "PATCH",
+    headers: {
+      // "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: data.formData,
+  });
+};
