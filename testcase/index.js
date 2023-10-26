@@ -31,7 +31,7 @@ const writeFileCSV = (data, filePath) => {
     const nonEmptyData = data.filter(item => Object.keys(item).length > 0);
 
     nonEmptyData.forEach(item => {
-        csvStream.write(`"${item.api}","${item.description}","${item.method}","${item.inputBody.replace(/"/g, '""')}","${item.outputCode}",${toString(item.check)}\n`);
+        csvStream.write(`"${item.api}","${item.description}","${item.method}","${item.inputBody.replace(/"/g, '""')}","${item.outputCode}",${item.check}\n`);
     });
 
     csvStream.end();
@@ -94,20 +94,20 @@ async function fetchData() {
             console.log(test.method);
             let response;
             switch (test.method) {
-                // case "get":
-                //     console.log(requestBody);
-                //     try {
-                //         response = await axios.get(test.api, requestBody);
-                //     } catch (error) {
-                //         console.log(error.response.data.messageCode);
-                //         error.response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
-                //         break;
-                //     }
-                //     console.log("test.outputCode: ", test.outputCode);
-                //     console.log("response.data.code: ", response.data.messageCode);
-                //     console.log(response.data.messageCode == test.outputCode);
-                //     response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
-                //     break;
+                case "get":
+                    console.log(requestBody);
+                    try {
+                        response = await axios.get(test.api, requestBody);
+                    } catch (error) {
+                        console.log(error.response.data.messageCode);
+                        error.response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
+                        break;
+                    }
+                    console.log("test.outputCode: ", test.outputCode);
+                    console.log("response.data.code: ", response.data.messageCode);
+                    console.log(response.data.messageCode == test.outputCode);
+                    response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
+                    break;
                 case "getProduct":
                     console.log(requestBody);
                     try {
@@ -120,20 +120,20 @@ async function fetchData() {
                     console.log(checkType(test.outputCode, response.data));
                     test.check = checkType(test.outputCode, response.data);
                     break;
-                // case "post":
-                //     console.log(requestBody);
-                //     try {
-                //         response = await axios.post(test.api, requestBody);
-                //     } catch (error) {
-                //         console.log(error.response.data.messageCode);
-                //         error.response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
-                //         break;
-                //     }
-                //     console.log(test.outputCode);
-                //     console.log(response.data.messageCode);
-                //     console.log(response.data.messageCode == test.outputCode);
-                //     response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
-                //     break;
+                case "post":
+                    console.log(requestBody);
+                    try {
+                        response = await axios.post(test.api, requestBody);
+                    } catch (error) {
+                        console.log(error.response.data.messageCode);
+                        error.response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
+                        break;
+                    }
+                    console.log(test.outputCode);
+                    console.log(response.data.messageCode);
+                    console.log(response.data.messageCode == test.outputCode);
+                    response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
+                    break;
                 case "post-formData":
                     console.log(requestBody);
                     let formData = new FormData();
@@ -255,44 +255,44 @@ async function testCaseFE() {
         try {
             await page.goto(test.api);
             switch (test.method) {
-                // case 'login':
-                //     await page.type('input[type="email"]', requestBody.email);
-                //     await page.type('input[type="password"]', requestBody.password);
-                //     await page.click('button[type="submit"]');
-                //     await page.waitForTimeout(1000);
-                //     const fileImage = 'photo-test/U' + count + '.png';
-                //     await page.screenshot({ path: fileImage, fullPage: true });
-                //     test.check = 'U' + count;
-                //     break;
-                // case 'signup':
-                //     await page.type('input[id="name"]', requestBody.name);
-                //     await page.type('input[id="email"]', requestBody.email);
-                //     await page.type('input[id="password"]', requestBody.password);
-                //     await page.click('button[type="submit"]');
-                //     await page.waitForTimeout(1000);
-                //     await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
-                //     test.check = 'U' + count;
-                //     break;
-                // case 'addProduct':
-                //     await page.type('');
-                //     await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
-                //     test.check = 'U' + count;
-                //     break;
-                // case 'showProduct':
-                //     await page.waitForTimeout(1000);
-                //     await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
-                //     test.check = 'U' + count;
-                //     break;
-                // case 'showProductDetail':
-                //     elements = await page.$$('.group');
-                //     await elements[Math.floor(Math.random() * elements.length)].click();
-                //     await page.waitForTimeout(1000);
-                //     await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
-                //     test.check = 'U' + count;
-                //     break;
-                // case 'showCartNotLogin':
-                //     test.check = 'U' + count;
-                //     break;
+                case 'login':
+                    await page.type('input[type="email"]', requestBody.email);
+                    await page.type('input[type="password"]', requestBody.password);
+                    await page.click('button[type="submit"]');
+                    await page.waitForTimeout(1000);
+                    const fileImage = 'photo-test/U' + count + '.png';
+                    await page.screenshot({ path: fileImage, fullPage: true });
+                    test.check = 'U' + count;
+                    break;
+                case 'signup':
+                    await page.type('input[id="name"]', requestBody.name);
+                    await page.type('input[id="email"]', requestBody.email);
+                    await page.type('input[id="password"]', requestBody.password);
+                    await page.click('button[type="submit"]');
+                    await page.waitForTimeout(1000);
+                    await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
+                    test.check = 'U' + count;
+                    break;
+                case 'addProduct':
+                    await page.type('');
+                    await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
+                    test.check = 'U' + count;
+                    break;
+                case 'showProduct':
+                    await page.waitForTimeout(1000);
+                    await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
+                    test.check = 'U' + count;
+                    break;
+                case 'showProductDetail':
+                    elements = await page.$$('.group');
+                    await elements[Math.floor(Math.random() * elements.length)].click();
+                    await page.waitForTimeout(1000);
+                    await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
+                    test.check = 'U' + count;
+                    break;
+                case 'showCartNotLogin':
+                    test.check = 'U' + count;
+                    break;
                 case 'showCartHaveLogin':
                     await page.type('input[type="email"]', requestBody.email);
                     await page.type('input[type="password"]', requestBody.password);
@@ -316,32 +316,32 @@ async function testCaseFE() {
                     await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
                     test.check = 'U' + count;
                     break;
-                // case 'addProductCartNotLogin':
-                //     elements = await page.$$('.group');
-                //     await elements[3].click();
-                //     await page.waitForTimeout(500);
-                //     await page.click('button[name="addProductInCart"]');
-                //     await page.waitForTimeout(500);
-                //     await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
-                //     test.check = 'U' + count;
-                //     break;
-                // case 'deleteProductInCart':
-                //     await page.type('input[type="email"]', requestBody.email);
-                //     await page.type('input[type="password"]', requestBody.password);
-                //     await page.click('button[type="submit"]');
-                //     await page.waitForTimeout(1500);
-                //     await page.click('a[href="/gio-hang"]');
-                //     await page.waitForTimeout(1000);
-                //     try {
-                //         await page.click('button[name="deleteProductInCart"]');
-                //         await page.waitForTimeout(600);
-                //         await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
-                //         test.check = 'U' + count;
-                //     } catch (error) {
-                //         await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
-                //         test.check = 'U' + count;
-                //     }
-                //     break;
+                case 'addProductCartNotLogin':
+                    elements = await page.$$('.group');
+                    await elements[3].click();
+                    await page.waitForTimeout(500);
+                    await page.click('button[name="addProductInCart"]');
+                    await page.waitForTimeout(500);
+                    await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
+                    test.check = 'U' + count;
+                    break;
+                case 'deleteProductInCart':
+                    await page.type('input[type="email"]', requestBody.email);
+                    await page.type('input[type="password"]', requestBody.password);
+                    await page.click('button[type="submit"]');
+                    await page.waitForTimeout(1500);
+                    await page.click('a[href="/gio-hang"]');
+                    await page.waitForTimeout(1000);
+                    try {
+                        await page.click('button[name="deleteProductInCart"]');
+                        await page.waitForTimeout(600);
+                        await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
+                        test.check = 'U' + count;
+                    } catch (error) {
+                        await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
+                        test.check = 'U' + count;
+                    }
+                    break;
                 default:
                     break;
             }
@@ -357,6 +357,6 @@ async function testCaseFE() {
     writeFileCSV(data, fileTestFE);
     await browser.close();
 }
-// fetchData();
-testCaseFE();
 deleteFilesInFolder('photo-test/');
+fetchData();
+testCaseFE();
