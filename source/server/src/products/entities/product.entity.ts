@@ -17,6 +17,9 @@ export class Product {
   @Column()
   price: number;
 
+  @Column({ default: '' })
+  description: string;
+
   @OneToMany(() => CartItem, (cartItem) => cartItem.productId)
   public cartItems: CartItem[];
 
