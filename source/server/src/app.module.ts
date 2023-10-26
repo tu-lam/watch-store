@@ -14,6 +14,10 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { CartItemsModule } from './cart-items/cart-items.module';
 import { CartItem } from './cart-items/entities/cart-item.entity';
+import { OrdersModule } from './orders/orders.module';
+import { OrderItemsModule } from './order-items/order-items.module';
+import { Order } from './orders/entities/order.entity';
+import { OrderItem } from './order-items/entities/order-item.entity';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -22,7 +26,7 @@ import { CartItem } from './cart-items/entities/cart-item.entity';
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'db.sqlite',
-      entities: [User, Product, CartItem],
+      entities: [User, Product, CartItem, Order, OrderItem],
       synchronize: true,
     }),
     MulterModule.register({
@@ -35,6 +39,8 @@ import { CartItem } from './cart-items/entities/cart-item.entity';
     UsersModule,
     ProductsModule,
     CartItemsModule,
+    OrdersModule,
+    OrderItemsModule,
   ],
   controllers: [AppController],
   providers: [
