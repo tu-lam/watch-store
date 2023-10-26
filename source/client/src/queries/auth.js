@@ -41,7 +41,7 @@ export const createProduct = (productData) => {
   });
 };
 export const getProductDetail = (productId) => {
-  return fetch(`${process.env.REACT_APP_API_URL}/products/${productId || ''}`, {
+  return fetch(`${process.env.REACT_APP_API_URL}/products/${productId || ""}`, {
     method: "GET",
     headers: {
       Accept: "application.json",
@@ -51,7 +51,7 @@ export const getProductDetail = (productId) => {
 };
 
 export const DeleteProductById = (productId) => {
-  return fetch(`${process.env.REACT_APP_API_URL}/products/${productId || ''}`, {
+  return fetch(`${process.env.REACT_APP_API_URL}/products/${productId || ""}`, {
     method: "DELETE",
     headers: {
       Accept: "application.json",
@@ -60,13 +60,13 @@ export const DeleteProductById = (productId) => {
   });
 };
 
-export const addCartProduct = (productData,token) => {
+export const addCartProduct = (productData, token) => {
   return fetch(`${process.env.REACT_APP_API_URL}/users/cart`, {
     method: "POST",
     headers: {
       Accept: "application.json",
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(productData),
   });
@@ -78,17 +78,17 @@ export const getAllCartProduct = (token) => {
     headers: {
       Accept: "application.json",
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     },
   });
 };
-export const DeleteProductInCartById = (productId,token) => {
+export const DeleteProductInCartById = (productId, token) => {
   return fetch(`${process.env.REACT_APP_API_URL}/users/cart/${productId}`, {
     method: "DELETE",
     headers: {
       Accept: "application.json",
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     },
   });
 };

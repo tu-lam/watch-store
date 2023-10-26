@@ -1,17 +1,3 @@
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
 import {
   CheckIcon,
   ClockIcon,
@@ -24,56 +10,25 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { DeleteProductInCartById, getAllCartProduct } from "../queries/auth";
 
-// const products =
-//  [
-//   {
-//     id: 1,
-//     name: "Đồng hồ A",
-//     href: "#",
-//     price: "$32.00",
-//     color: "Sienna",
-//     inStock: true,
-//     size: "Large",
-//     imageSrc: "/images/product.png",
-//     imageAlt: "Front of men's Basic Tee in sienna.",
-//   },
-//   {
-//     id: 2,
-//     name: "Đồng hồ B",
-//     href: "#",
-//     price: "$32.00",
-//     color: "Black",
-//     inStock: false,
-//     leadTime: "3–4 weeks",
-//     size: "Large",
-//     imageSrc: "/images/product.png",
-//     imageAlt: "Front of men's Basic Tee in black.",
-//   },
-//   {
-//     id: 3,
-//     name: "Đồng hồ C",
-//     href: "#",
-//     price: "$35.00",
-//     color: "White",
-//     inStock: true,
-//     imageSrc: "/images/product.png",
-//     imageAlt: "Insulated bottle with white base and black snap lid.",
-//   },
-// ];
 export default function Cart() {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const payload = useSelector((state) => state.auth);
   useEffect(() => {
-    if (!payload.token) {
+    if (!localStorage.getItem("token")) {
       navigate("/dang-nhap");
     } else {
       const fetchData = async () => {
         try {
-          const response = await getAllCartProduct(payload.token);
+          const response = await getAllCartProduct(
+            localStorage.getItem("token")
+          );
+
+          console.log(response);
           if (response.ok) {
             const inputData = await response.json();
-            const data = inputData.map(item => {
+            console.log(inputData);
+            const data = inputData.map((item) => {
               return {
                 id: item.id,
                 name: item.product.name,
@@ -91,20 +46,19 @@ export default function Cart() {
             console.log(data);
           } else {
           }
-        } catch (error) {
-        }
+        } catch (error) {}
       };
       fetchData();
     }
-
-
   }, [payload]);
   const handleDeleteProductInCart = (productId) => {
     console.log(productId);
     DeleteProductInCartById(productId, payload.token);
-    const updatedProducts = products.filter((product) => product.id !== productId);
+    const updatedProducts = products.filter(
+      (product) => product.id !== productId
+    );
     setProducts(updatedProducts);
-  }
+  };
   const total = products.reduce((accumulator, currentProduct) => {
     return accumulator + currentProduct.price;
   }, 0);
@@ -189,7 +143,9 @@ export default function Cart() {
                               name="deleteProductInCart"
                               type="button"
                               className="-m-2 inline-flex p-2 text-gray-400 hover:text-gray-500"
-                              onClick={() => handleDeleteProductInCart(product.id)}
+                              onClick={() =>
+                                handleDeleteProductInCart(product.id)
+                              }
                             >
                               <span className="sr-only">Remove</span>
                               <XMarkIcon
@@ -241,7 +197,9 @@ export default function Cart() {
               <dl className="mt-6 space-y-4">
                 <div className="flex items-center justify-between">
                   <dt className="text-sm text-gray-600">Tạm tính</dt>
-                  <dd className="text-sm font-medium text-gray-900">${total.toFixed(2)}</dd>
+                  <dd className="text-sm font-medium text-gray-900">
+                    ${total.toFixed(2)}
+                  </dd>
                 </div>
                 <div className="flex items-center justify-between border-t border-gray-200 pt-4">
                   <dt className="flex items-center text-sm text-gray-600">
@@ -277,7 +235,9 @@ export default function Cart() {
                       />
                     </a>
                   </dt>
-                  <dd className="text-sm font-medium text-gray-900">${(total * 10 / 100).toFixed(2)}</dd>
+                  <dd className="text-sm font-medium text-gray-900">
+                    ${((total * 10) / 100).toFixed(2)}
+                  </dd>
                 </div>
                 <div className="flex items-center justify-between border-t border-gray-200 pt-4">
                   <dt className="text-base font-medium text-gray-900">

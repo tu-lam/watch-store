@@ -21,6 +21,7 @@ import { Provider } from "react-redux";
 import { store } from "./stores/store";
 import SignUp from "./pages/SignUp";
 import SignOut from "./pages/SignOut";
+import AddProduct from "./pages/dashboard/AddProduct";
 
 const queryClient = new QueryClient();
 
@@ -51,7 +52,7 @@ const router = createBrowserRouter([
   },
   {
     path: "dang-xuat",
-    element: <SignOut />
+    element: <SignOut />,
   },
   {
     path: "/bang-dieu-khien",
@@ -65,7 +66,7 @@ const router = createBrowserRouter([
       // { path: "hoa-don", element: <OrderManager /> },
       // { path: "hoa-don/:id", element: <EditOrder /> },
       // { path: "danh-muc/them", element: <AddCategory /> },
-      // { path: "san-pham/them", element: <AddProduct /> },
+      { path: "san-pham/them", element: <AddProduct /> },
       // { path: "thong-bao/them", element: <AddNotification /> },
       // { path: "danh-muc/chinh-sua", element: <EditCategory /> },
       // { path: "san-pham/chinh-sua", element: <EditProduct /> },

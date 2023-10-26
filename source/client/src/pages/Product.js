@@ -7,52 +7,6 @@ import { addCartProduct, getProductDetail } from "../queries/auth";
 import CustomAlert from "../utils/CustomAlert";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-// const productTest = {
-//   name: "Đồng hồ XYZ",
-//   price: "$140",
-//   rating: 4,
-//   images: [
-//     {
-//       id: 1,
-//       name: "Angled view",
-//       src: "/images/product.png",
-//       alt: "Angled front view with bag zipped and handles upright.",
-//     },
-//     // More images...
-//   ],
-//   // colors: [
-//   //   {
-//   //     name: "Washed Black",
-//   //     bgColor: "bg-gray-700",
-//   //     selectedColor: "ring-gray-700",
-//   //   },
-//   //   { name: "White", bgColor: "bg-white", selectedColor: "ring-gray-400" },
-//   //   {
-//   //     name: "Washed Gray",
-//   //     bgColor: "bg-gray-500",
-//   //     selectedColor: "ring-gray-500",
-//   //   },
-//   // ],
-//   // description: `
-//   //   <p>The Zip Tote Basket is the perfect midpoint between shopping tote and comfy backpack. With convertible straps, you can hand carry, should sling, or backpack this convenient and spacious bag. The zip top and durable canvas construction keeps your goods protected for all-day use.</p>
-//   // `,
-//   // details: [
-//   //   {
-//   //     name: "Features",
-//   //     items: [
-//   //       "Multiple strap configurations",
-//   //       "Spacious interior with top zip",
-//   //       "Leather handle and tabs",
-//   //       "Interior dividers",
-//   //       "Stainless strap loops",
-//   //       "Double stitched construction",
-//   //       "Water-resistant",
-//   //     ],
-//   //   },
-//   //   // More sections...
-//   // ],
-// };
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -62,13 +16,13 @@ export default function Product() {
   const payload = useSelector((state) => state.auth);
   console.log("payload ", payload);
   /**
- * Configuration for handling alerts in the component.
- * These states control the behavior of the alert:
- * - `showAlert`: Indicates whether the alert should be displayed or hidden.
- * - `success`: Specifies if the alert represents a success (true) or an error (false).
- * - `alertMessage`: The message to be displayed in the alert.
- * - `handleAlertClose()`: A function that sets `showAlert` to `false`, hiding the alert when called.
- */
+   * Configuration for handling alerts in the component.
+   * These states control the behavior of the alert:
+   * - `showAlert`: Indicates whether the alert should be displayed or hidden.
+   * - `success`: Specifies if the alert represents a success (true) or an error (false).
+   * - `alertMessage`: The message to be displayed in the alert.
+   * - `handleAlertClose()`: A function that sets `showAlert` to `false`, hiding the alert when called.
+   */
   const [showAlert, setShowAlert] = useState(false);
   const [success, setSuccess] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
@@ -76,40 +30,44 @@ export default function Product() {
   const handleAlertClose = () => {
     setShowAlert(false);
   };
-  // end 
+  // end
   const [product, setProduct] = useState({
     id: 1,
     name: "",
     price: 0,
-    images: []
-  })
-  const id = (new URLSearchParams(window.location.search)).get('id');
+    images: [],
+  });
+  const id = new URLSearchParams(window.location.search).get("id");
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await getProductDetail(id);
         if (response.ok) {
           const product = await response.json();
-          product.images = [{
-            id: 1,
-            name: "son",
-            src: process.env.REACT_APP_API_URL + '/public/products/' + product.image
-          }];
+          product.images = [
+            {
+              id: 1,
+              name: "son",
+              src:
+                process.env.REACT_APP_API_URL +
+                "/public/products/" +
+                product.image,
+            },
+          ];
           product.rating = 4;
           setProduct(product);
           console.log(product);
         } else {
         }
-      } catch (error) {
-      }
+      } catch (error) {}
     };
     fetchData();
-  },[id])
+  }, [id]);
   const addToCart = () => {
-    if (!payload.token) {
+    if (!localStorage.getItem("token")) {
       setTimeout(() => {
         navigate("/dang-nhap");
-      }, 1000)
+      }, 1000);
       setAlertMessage("Bạn cần đăng nhập để thêm vào giỏ hàng!");
       setShowAlert(true);
       setSuccess(false);
@@ -118,18 +76,16 @@ export default function Product() {
 
     const productData = {
       productId: Number(id),
-      quantity: 1
-    }
+      quantity: 1,
+    };
     addCartProduct(productData, payload.token);
     setAlertMessage("Đã thêm sản phẩm vào giỏ hàng!");
     setShowAlert(true);
     setSuccess(true);
-
   };
 
   return (
     <Layout>
-
       <div className="bg-white">
         {/* 
                   Render the CustomAlert component with the following props:
@@ -138,7 +94,12 @@ export default function Product() {
                   - `onClose`: Provides the `handleAlertClose` function as a callback for closing the alert when needed.
                   - `success`: Specifies whether the alert should have a success (true) or error (false) appearance.
                 */}
-        <CustomAlert show={showAlert} messageCode={alertMessage} onClose={handleAlertClose} success={success} />
+        <CustomAlert
+          show={showAlert}
+          messageCode={alertMessage}
+          onClose={handleAlertClose}
+          success={success}
+        />
         <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
           <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8">
             {/* Image gallery */}
@@ -233,7 +194,6 @@ export default function Product() {
               </div> */}
 
               <form className="mt-6">
-
                 {/* Colors */}
                 {/* <div>
                   <h3 className="text-sm text-gray-600">Color</h3>
