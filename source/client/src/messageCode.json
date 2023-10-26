@@ -8,6 +8,7 @@
   "invalid_email_err": "Email không hợp lệ",
   "product_not_found_err": "Không tìm thấy sản phẩm",
   "empty_image_product_err": "Ảnh không được để trống",
+  "invalid_file_size_product_err": "Ảnh có kích thước lớn hơn 5mb",
   "empty_name_product_err": "Tên không được để trống",
   "empty_price_product_err": "Giá không được để trống",
   "empty_slug_product_err": "Slug không được để trống",

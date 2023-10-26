@@ -111,7 +111,10 @@ export default function Cart() {
                             ) : null}
                           </div>
                           <p className="mt-1 text-sm font-medium text-gray-900">
-                            {product.price.toFixed(2)}$
+                            {product.price.toLocaleString("vi", {
+                              style: "currency",
+                              currency: "VND",
+                            })}
                           </p>
                         </div>
 
@@ -198,7 +201,10 @@ export default function Cart() {
                 <div className="flex items-center justify-between">
                   <dt className="text-sm text-gray-600">Tạm tính</dt>
                   <dd className="text-sm font-medium text-gray-900">
-                    ${total.toFixed(2)}
+                    {total.toLocaleString("vi", {
+                      style: "currency",
+                      currency: "VND",
+                    })}
                   </dd>
                 </div>
                 <div className="flex items-center justify-between border-t border-gray-200 pt-4">
@@ -217,9 +223,14 @@ export default function Cart() {
                       />
                     </a>
                   </dt>
-                  <dd className="text-sm font-medium text-gray-900">$5.00</dd>
+                  <dd className="text-sm font-medium text-gray-900">
+                    {(25000).toLocaleString("vi", {
+                      style: "currency",
+                      currency: "VND",
+                    })}
+                  </dd>
                 </div>
-                <div className="flex items-center justify-between border-t border-gray-200 pt-4">
+                {/* <div className="flex items-center justify-between border-t border-gray-200 pt-4">
                   <dt className="flex text-sm text-gray-600">
                     <span>Thuế</span>
                     <a
@@ -238,13 +249,16 @@ export default function Cart() {
                   <dd className="text-sm font-medium text-gray-900">
                     ${((total * 10) / 100).toFixed(2)}
                   </dd>
-                </div>
+                </div> */}
                 <div className="flex items-center justify-between border-t border-gray-200 pt-4">
                   <dt className="text-base font-medium text-gray-900">
                     Tổng cộng
                   </dt>
                   <dd className="text-base font-medium text-gray-900">
-                    ${(total * 1.1 + 5).toFixed(2)}
+                    {(total + 25000).toLocaleString("vi", {
+                      style: "currency",
+                      currency: "VND",
+                    })}
                   </dd>
                 </div>
               </dl>

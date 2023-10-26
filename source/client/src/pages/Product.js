@@ -44,7 +44,7 @@ export default function Product() {
         if (response.ok) {
           const data = await response.json();
           let product = {
-            ...data.data.product
+            ...data.data.product,
           };
           console.log(product);
           product.images = [
@@ -108,7 +108,7 @@ export default function Product() {
             {/* Image gallery */}
             <Tab.Group as="div" className="flex flex-col-reverse">
               {/* Image selector */}
-              <div className="mx-auto mt-6 hidden w-full max-w-2xl sm:block lg:max-w-none">
+              {/* <div className="mx-auto mt-6 hidden w-full max-w-2xl sm:block lg:max-w-none">
                 <Tab.List className="grid grid-cols-4 gap-6">
                   {product.images.map((image) => (
                     <Tab
@@ -137,7 +137,7 @@ export default function Product() {
                     </Tab>
                   ))}
                 </Tab.List>
-              </div>
+              </div> */}
 
               <Tab.Panels className="aspect-h-1 aspect-w-1 w-full">
                 {product.images.map((image) => (
@@ -161,12 +161,15 @@ export default function Product() {
               <div className="mt-3">
                 <h2 className="sr-only">Product information</h2>
                 <p className="text-3xl tracking-tight text-gray-900">
-                  {product.price}
+                  {product.price.toLocaleString("vi", {
+                    style: "currency",
+                    currency: "VND",
+                  })}
                 </p>
               </div>
 
               {/* Reviews */}
-              <div className="mt-3">
+              {/* <div className="mt-3">
                 <h3 className="sr-only">Reviews</h3>
                 <div className="flex items-center">
                   <div className="flex items-center">
@@ -185,7 +188,7 @@ export default function Product() {
                   </div>
                   <p className="sr-only">{product.rating} out of 5 stars</p>
                 </div>
-              </div>
+              </div> */}
 
               {/* <div className="mt-6">
                 <h3 className="sr-only">Description</h3>
