@@ -17,7 +17,8 @@ api,description,method,inputBody,outputCode,check
 "http://localhost:4000/users/signup","api đăng ký đúng","post","{""name"": ""thai"",""email"": ""admin@gmail.com"",""password"":""admin""}","signup_success",false
 "http://localhost:4000/products","api thêm sản phảm nhập đúng","post-formData","{""name"": ""jjj"",""price"": ""300"",""image"":""image-products-test/1.jpg""}","add_product_success",true
 "http://localhost:4000/products","api thêm sản phẩm thiếu name","post-formData","{""name"": """",""price"": ""300"",""image"":""image-products-test/1.jpg""}","empty_name_product_err",true
-"http://localhost:4000/products","api thêm sản phẩm thiếu name","post-formData","{""name"": ""thai"",""price"": ""300"",""image"":""""}","empty_image_product_err",true
+"http://localhost:4000/products","api thêm sản phẩm thiếu image","post-formData","{""name"": ""thai"",""price"": ""300"",""image"":""""}","empty_image_product_err",true
+"http://localhost:4000/products","api thêm sản phẩm có image quá lơn hơn 5mb","post-formData","{""name"": ""thai"",""price"": ""300"",""image"":""""}","empty_image_product_err",true
 "http://localhost:4000/products","api thêm sản phẩm thiếu price","post-formData","{""name"": ""jjj"",""price"": """",""image"":""image-products-test/1.jpg""}","empty_price_product_err",false
 "http://localhost:4000/products","api thêm sản phẩm price có chữ","post-formData","{""name"": ""jjj"",""price"": ""30p0"",""image"":""image-products-test/1.jpg""}","invalid_price_product_err",false
 "http://localhost:4000/products","api thêm sản phẩm price có kí tự đặt biệt","post-formData","{""name"": ""jjj"",""price"": ""30#0"",""image"":""image-products-test/1.jpg""}","invalid_price_product_err",false

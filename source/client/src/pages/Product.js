@@ -32,7 +32,6 @@ export default function Product() {
   };
   // end
   const [product, setProduct] = useState({
-    id: 1,
     name: "",
     price: 0,
     images: [],
@@ -43,7 +42,11 @@ export default function Product() {
       try {
         const response = await getProductDetail(id);
         if (response.ok) {
-          const product = await response.json();
+          const data = await response.json();
+          let product = {
+            ...data.data.product
+          };
+          console.log(product);
           product.images = [
             {
               id: 1,
