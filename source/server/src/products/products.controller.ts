@@ -75,14 +75,33 @@ export class ProductsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.productsService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    const product = await this.productsService.findOne(+id);
+    return {
+      messageCode: 'find_product_success',
+      data: {
+        product: product,
+      },
+    };
   }
 
   @Patch(':id')
+  @UseInterceptors(
+    FileInterceptor('image', {
+      storage: diskStorage({
+        destination: './public/products',
+        filename: (_, file, callback) => {
+          const ext = file.mimetype.split('/')[1];
+          const filename = `product-${Date.now()}.${ext}`;
+          callback(null, filename);
+        },
+      }),
+    }),
+  )
   async update(
     @Param('id') id: string,
     @Body() updateProductDto: UpdateProductDto,
+    @UploadedFile() file: Express.Multer.File,
   ) {
     const product = await this.productsService.update(+id, updateProductDto);
     if (!product) {

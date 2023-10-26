@@ -29,11 +29,11 @@ export class ProductsService {
 
   async update(id: number, updateProductDto: UpdateProductDto) {
     const product = await this.findOne(id);
-
+    console.log(product);
     if (!product) {
       throw new NotFoundException({ messageCode: 'product_not_found_err' });
     }
-
+    console.log(updateProductDto);
     Object.assign(product, updateProductDto);
 
     return this.repo.save(product);
