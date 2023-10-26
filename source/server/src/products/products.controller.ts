@@ -37,10 +37,16 @@ export class ProductsController {
     @Body() createProductDto: CreateProductDto,
     @UploadedFile() file: Express.Multer.File,
   ) {
+    // console.log(file);
     console.log(file);
     if (!file) {
       throw new BadRequestException({
         messageCode: 'empty_image_product_err',
+      });
+    }
+    if (file.size > 5120) {
+      throw new BadRequestException({
+        messageCode: 'invalid_file_size_product_err',
       });
     }
     if (!createProductDto.name) {
@@ -103,6 +109,11 @@ export class ProductsController {
     @Body() updateProductDto: UpdateProductDto,
     @UploadedFile() file: Express.Multer.File,
   ) {
+    if (file && file.size > 5120) {
+      throw new BadRequestException({
+        messageCode: 'invalid_file_size_product_err',
+      });
+    }
     const product = await this.productsService.update(+id, updateProductDto);
     if (!product) {
       return {
