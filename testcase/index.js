@@ -356,6 +356,7 @@ async function testCaseFE() {
                     await page.waitForSelector('a[href="/bang-dieu-khien"]');
                     await page.waitForTimeout(500);
                     await page.click('a[href="/bang-dieu-khien"]');
+                    await page.waitForTimeout(500);
                     elements = await page.$$('a[name="editProduct"]');
                     await elements[Math.floor(Math.random() * elements.length)].click();
                     await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });

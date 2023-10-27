@@ -13,7 +13,6 @@ export const addCartProduct = (productData) => {
 
 export const getAllCartProduct = () => {
     const token = localStorage.getItem("token");
-
     return fetch(`${process.env.REACT_APP_API_URL}/users/cart`, {
         method: "GET",
         headers: {

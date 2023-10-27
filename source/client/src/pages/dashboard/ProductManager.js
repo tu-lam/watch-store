@@ -111,7 +111,8 @@ const ProductManager = () => {
                             state: { productId: product.id },
                           });
                         }}
-                        className="text-indigo-600 hover:text-indigo-900"
+                        className="text-indigo-600 hover:text-indigo-900 cursor-pointer"
+                        name="editProduct"
                       >
                         Chỉnh sửa
                         <span className="sr-only">, {product.name}</span>
