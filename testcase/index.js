@@ -236,9 +236,9 @@ async function testCaseFE() {
     let data = await readFileCSV(fileTestFE);
     console.log(data);
     let count = 0;
-    const browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({ headless: true, args: ['--start-maximized'] });
     const page = await browser.newPage();
-    await page.setViewport({ width: 1920, height: 1080 });
+    await page.setViewport({ width: 2560, height: 1600 });
     page.on('dialog', async (dialog) => {
         await dialog.accept();
     });
@@ -249,6 +249,7 @@ async function testCaseFE() {
             return;
         }
         await page.goto('http://localhost:3000/dang-xuat');
+        await page.waitForTimeout(200);
         console.log(test.api);
         const requestBody = JSON.parse(test.inputBody);
         console.log(test.method);
@@ -272,11 +273,6 @@ async function testCaseFE() {
                     await page.type('input[id="password"]', requestBody.password);
                     await page.click('button[type="submit"]');
                     await page.waitForTimeout(1000);
-                    await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
-                    test.check = 'U' + count;
-                    break;
-                case 'addProduct':
-                    await page.type('');
                     await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
                     test.check = 'U' + count;
                     break;
@@ -333,19 +329,16 @@ async function testCaseFE() {
                     await page.type('input[type="email"]', requestBody.email);
                     await page.type('input[type="password"]', requestBody.password);
                     await page.click('button[type="submit"]');
-                    await page.click('a[href="/gio-hang"]');
-                    await page.waitForTimeout(1000);
-                    try {
-                        await page.click('button[name="deleteProductInCart"]');
-                        await page.waitForTimeout(600);
-                        await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
-                        test.check = 'U' + count;
-                    } catch (error) {
-                        await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
-                        test.check = 'U' + count;
-                    }
+                    await page.waitForTimeout(600);
+                    await page.goto(test.api);
+                    await page.click('button[name="deleteProductInCart"]');
+                    await page.waitForTimeout(600);
+                    await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
+                    test.check = 'U' + count;
                     break;
                 case 'showManagerProductHaveLogin':
+                    await page.goto('http://localhost:3000/dang-nhap');
+                    await page.waitForSelector('input[type="email"]');
                     await page.type('input[type="email"]', requestBody.email);
                     await page.type('input[type="password"]', requestBody.password);
                     await page.click('button[type="submit"]');
@@ -353,6 +346,20 @@ async function testCaseFE() {
                     await page.goto(test.api);
                     test.check = 'U' + count;
                     await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
+                    break;
+                case 'FormEditManagerProductHaveLogin':
+                    await page.goto('http://localhost:3000/dang-nhap');
+                    await page.waitForSelector('input[type="email"]');
+                    await page.type('input[type="email"]', requestBody.email);
+                    await page.type('input[type="password"]', requestBody.password);
+                    await page.click('button[type="submit"]');
+                    await page.waitForSelector('a[href="/bang-dieu-khien"]');
+                    await page.waitForTimeout(500);
+                    await page.click('a[href="/bang-dieu-khien"]');
+                    elements = await page.$$('a[name="editProduct"]');
+                    await elements[Math.floor(Math.random() * elements.length)].click();
+                    await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
+                    test.check = 'U' + count;
                     break;
                 default:
                     break;
