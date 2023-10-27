@@ -1,24 +1,28 @@
 api,description,method,inputBody,outputCode,check
-"http://localhost:3000/dang-nhap","api login đúng tài khoản, đúng mật khẩu","login","{""email"": ""admin@gmail.com"",""password"":""admin123123132142412""}","signin_success",U0
-"http://localhost:3000/dang-nhap","api login với email không đúng cấu trúc","login","{""email"": ""adc"",""password"":""222as""}","invalid_email_err",U1
-"http://localhost:3000/dang-nhap","api login không nhập nhập email","login","{""email"": """",""password"":""222as""}","empty_email_err",U2
-"http://localhost:3000/dang-nhap","api login không nhập nhập password","login","{""email"": ""admin@gmail.com"",""password"":""""}","empty_password_err",U3
-"http://localhost:3000/dang-nhap","api login đúng tài khoản, sai mật khẩu","login","{""email"": ""admin@gmail.com"",""password"":""123456789a""}","incorrect_password_err",U4
-"http://localhost:3000/dang-nhap","api login đúng tài khoản, check mật khẩu có viết hoa có khác viết thường không","login","{""email"": ""admin@gmail.com"",""password"":""ADmin""}","incorrect_password_err",U5
-"http://localhost:3000/dang-nhap","api login đúng tài khoản,  mật khẩu có dấu cách cuối thì như nào","login","{""email"": ""admin@gmail.com"",""password"":""123456789     ""}","incorrect_password_err",U6
-"http://localhost:3000/dang-nhap","api login đúng tài khoản,  mật khẩu đăng nhập quản lý","login","{""email"": ""admin@gmail.com"",""password"":""123456789""}","form của quẩn lý ",U6
-"http://localhost:3000/dang-nhap","api login đúng tài khoản,  mật khẩu đăng nhập nhân viên","login","{""email"": ""admin@gmail.com"",""password"":""123456789""}","form của nhân viên",U6
-"http://localhost:3000/dang-nhap","api login đúng tài khoản, đúng mật khẩu","login","{""email"": ""thai4@gmail.com"",""password"":""123456789""}","signin_success",U7
-"http://localhost:3000/dang-nhap","api login check SQL ","login","{""email"": ""admin@gmail.com"",""password"":"" OR '1'='1'""}","incorrect_password_err",U8
-"http://localhost:3000/dang-ky","test giao diện khi đăng ký thiếu name","signup","{""name"": """",""email"": ""admin@gmail.com"",""phone"":""22082309"",""passwordConfirm"":""admin"",""password"":""admin""}","signup_success",U9
-"http://localhost:3000/dang-ky","test giao điện khi đăng ký email đã tồn tại ","signup","{""name"": ""thai"",""email"": ""admin@gmail.com"",""phone"":""22082309"",""passwordConfirm"":""admin"",""password"":""admin""}","signup_success",U10
-"http://localhost:3000/dang-ky","test giao điện khi đăng ký không có mật khẩu","signup","{""name"": ""thai"",""email"": ""admin@gmail.com"",""phone"":""22082309"",""passwordConfirm"":""admin"",""password"":""""}","signup_success",U11
-"http://localhost:3000/dang-ky","test giao điện khi đăng ký dung","signup","{""name"": ""thai"",""email"": ""thai4@gmail.com"",""password"":""123456789""}","signup_success",U12
-"http://localhost:3000/san-pham","hiển thị danh sách sản phảm","showProduct","{}","signup_success",U13
-"http://localhost:3000/san-pham","test khi nhân vào sản phảm xem có hiên ra chi tiên hay chưa","showProductDetail","{}","signup_success",U14
-"http://localhost:3000/gio-hang","vào giỏ hàng khi chưa đăng nhập","showCartNotLogin","{}","hiện ra màng hình login nếu người dùng chưa đăng nhập",U15
-"http://localhost:3000/gio-hang","vào giỏ khi đã đăng nhập","showCartHaveLogin","{""email"": ""thai4@gmail.com"",""password"":""123456789""}","Hiện thị thông tin của giỏ hàng người đùng",U16
-"http://localhost:3000/gio-hang","thêm một sản phẩm vào giỏ hàng","addProductCartHaveLogin","{""email"": ""thai4@gmail.com"",""password"":""123456789""}","sad",U17
-"http://localhost:3000/","thêm một sản phẩm vào giỏ hàng khi chưa login","addProductCartNotLogin","{""email"": ""thai4@gmail.com"",""password"":""123456789""}","sad",U18
-"http://localhost:3000/gio-hang","thêm một sản phẩm đã có trong giỏ hàng xem số lượng của sản phầm đó có tăng lên không, khi đã đăng nhập","addProductCartHaveLogin","{""email"": ""thai4@gmail.com"",""password"":""123456789""}","sad",U19
-"http://localhost:3000/gio-hang","xóa một sản phẩm khi đã đăng nhập","deleteProductInCart","{""email"": ""thai4@gmail.com"",""password"":""123456789"" }","sad",U20
+"http://localhost:3000/dang-nhap","login đúng tài khoản, đúng mật khẩu","login","{""email"": ""admin@gmail.com"",""password"":""admin123123132142412""}","thông báo không tìm thấy tài khoản",U0
+"http://localhost:3000/dang-nhap","login với email thiếu @","login","{""email"": ""adc"",""password"":""222as""}","không cho phép submit và hiện yêu cầu thêm @",U1
+"http://localhost:3000/dang-nhap","login với email không đúng cấu trúc","login","{""email"": ""adc@gmail"",""password"":""222as""}","thông báo email không hợp lệ",U2
+"http://localhost:3000/dang-nhap","login không nhập nhập email","login","{""email"": """",""password"":""222as""}","không cho phép submit và hiện trỏ chuột tại vị trí chưa điền",U3
+"http://localhost:3000/dang-nhap","login không nhập nhập password","login","{""email"": ""admin@gmail.com"",""password"":""""}","không cho phép submit và hiện trỏ chuột tại vị trí chưa điền",U4
+"http://localhost:3000/dang-nhap","login đúng tài khoản, sai mật khẩu","login","{""email"": ""admin@gmail.com"",""password"":""123456789a""}","thông báo sai mật khẩu",U5
+"http://localhost:3000/dang-nhap","login đúng tài khoản, check mật khẩu có viết hoa có khác viết thường không","login","{""email"": ""admin@gmail.com"",""password"":""ADmin""}","thông báo sai mật khẩu",U6
+"http://localhost:3000/dang-nhap","login đúng tài khoản,  mật khẩu có dấu cách cuối thì như nào","login","{""email"": ""admin@gmail.com"",""password"":""123456789     ""}","thông báo sai mật khẩu",U7
+"http://localhost:3000/dang-nhap","login đúng tài khoản,  mật khẩu đăng nhập quản lý","login","{""email"": ""admin@gmail.com"",""password"":""123456789""}","thông báo thành công chuyển trang quản lý ",U8
+"http://localhost:3000/dang-nhap","login đúng tài khoản,  mật khẩu đăng nhập nhân viên","login","{""email"": ""admin@gmail.com"",""password"":""123456789""}","thông báo thành công chuyển trang nhân viên",U9
+"http://localhost:3000/dang-nhap","login đúng tài khoản, đúng mật khẩu","login","{""email"": ""thai4@gmail.com"",""password"":""123456789""}","thông báo đăng nhập thành công chuyển trang",U10
+"http://localhost:3000/dang-nhap","login check SQL ","login","{""email"": ""admin@gmail.com"",""password"":"" OR '1'='1'""}","thông báo sai mật khẩu",U11
+"http://localhost:3000/dang-ky","test giao diện khi đăng ký thiếu name","signup","{""name"": """",""email"": ""admin@gmail.com"",""phone"":""22082309"",""passwordConfirm"":""admin"",""password"":""admin""}","không cho phép submit và hiện trỏ chuột tại vị trí chưa điền",U12
+"http://localhost:3000/dang-ky","test giao điện khi đăng ký email đã tồn tại ","signup","{""name"": ""thai"",""email"": ""admin@gmail.com"",""phone"":""22082309"",""passwordConfirm"":""admin"",""password"":""admin""}","thông báo email đã tồn tại",U13
+"http://localhost:3000/dang-ky","test giao điện khi đăng ký không có mật khẩu","signup","{""name"": ""thai"",""email"": ""admin@gmail.com"",""phone"":""22082309"",""passwordConfirm"":""admin"",""password"":""""}","không cho phép submit và hiện trỏ chuột tại vị trí chưa điền",U14
+"http://localhost:3000/dang-ky","test giao điện khi đăng ký đúng","signup","{""name"": ""thai"",""email"": ""thai4@gmail.com"",""password"":""123456789""}","thông báo đăng ký thành công thành công",U15
+"http://localhost:3000/san-pham","hiển thị danh sách sản phảm","showProduct","{}","Hiện thị danh sách tất cả sản phẩm đúng theo thiết kế",U16
+"http://localhost:3000/san-pham","test khi nhân vào sản phảm xem có hiên ra chi tiến hay chưa","showProductDetail","{}","Hiển thị thông tín chi tiết của một sản phẩm",U17
+"http://localhost:3000/gio-hang","vào giỏ hàng khi chưa đăng nhập","showCartNotLogin","{}","hiện ra mang hình login nếu người dùng chưa đăng nhập",U18
+"http://localhost:3000/gio-hang","vào giỏ khi đã đăng nhập","showCartHaveLogin","{""email"": ""thai4@gmail.com"",""password"":""123456789""}","Hiện thị giỏ hàng của người dùng",U19
+"http://localhost:3000/gio-hang","thêm một sản phẩm vào giỏ hàng","addProductCartHaveLogin","{""email"": ""thai4@gmail.com"",""password"":""123456789""}","thông báo thêm sản phẩm thành công",U20
+"http://localhost:3000/","thêm một sản phẩm vào giỏ hàng khi chưa login","addProductCartNotLogin","{""email"": ""thai4@gmail.com"",""password"":""123456789""}","thông báo lỗi và chuyển trang đăng nhập",U21
+"http://localhost:3000/gio-hang","thêm một sản phẩm đã có trong giỏ hàng xem số lượng của sản phầm đó có tăng lên không, khi đã đăng nhập","addProductCartHaveLogin","{""email"": ""thai4@gmail.com"",""password"":""123456789""}","số lượng sản phẩm đó tăng lên thêm 1",U22
+"http://localhost:3000/gio-hang","xóa một sản phẩm khi đã đăng nhập","deleteProductInCart","{""email"": ""thai4@gmail.com"",""password"":""123456789"" }","sản phẩm trong giỏ hàng sẽ được xóa khỏi giỏ hàng",U23
+"http://localhost:3000/bang-dieu-khien/san-pham","quản lý sản phẩm khi đã đăng nhập với quyền là quản lý hoặc là nhân viên","showManagerProductHaveLogin","{""email"": ""thai4@gmail.com"",""password"":""123456789"" }","Hiển thị danh sách sản phẩm đúng như thiết kế ",U24
+"http://localhost:3000/bang-dieu-khien/san-pham/chinh-sua","quản lý sản phẩm khi đã đăng nhập với quyền là quản lý hoặc là nhân viên","showManagerProductHaveLogin","{""email"": ""thai4@gmail.com"",""password"":""123456789"" }","Hiển thị form chỉnh sửa sản phẩm ",U25
+"http://localhost:3000/bang-dieu-khien/san-pham/them","quản lý sản phẩm khi đã đăng nhập với quyền là quản lý hoặc là nhân viên","showManagerProductHaveLogin","{""email"": ""thai4@gmail.com"",""password"":""123456789"" }","Hiển thị form thêm sản phẩm",U26

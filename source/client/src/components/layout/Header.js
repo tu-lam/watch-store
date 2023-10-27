@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import { classNames } from "../../utils";
 import MobileMenu from "./MobileMenu";
 import { useSelector } from "react-redux";
-import { getAllCartProduct } from "../../queries/auth";
+import { getAllCartProduct } from "../../queries/cart";
 
 const currencies = ["CAD", "USD", "AUD", "EUR", "GBP"];
 const navigation = {
@@ -86,9 +86,9 @@ const Header = () => {
   const payload = useSelector((state) => state.auth);
   const [productsCount, setProductsCount] = useState(0);
 
-  const fetchData = async (token) => {
+  const fetchData = async () => {
     try {
-      const response = await getAllCartProduct(token);
+      const response = await getAllCartProduct();
       if (response.ok) {
         const data = await response.json();
         setProductsCount(data.length);
@@ -100,12 +100,12 @@ const Header = () => {
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
-      fetchData(localStorage.getItem("token")); // Lấy dữ liệu ban đầu
+      fetchData();
       const refreshInterval = setInterval(() => {
-        fetchData(localStorage.getItem("token")); // Lấy dữ liệu theo khoảng thời gian
-      }, 500); // Cập nhật dữ liệu mỗi 1 phút (có thể điều chỉnh thời gian cần thiết)
+        fetchData(); 
+      }, 500); 
       return () => {
-        clearInterval(refreshInterval); // Dọn dẹp interval khi component bị unmount
+        clearInterval(refreshInterval); 
       };
     }
   }, [payload]);

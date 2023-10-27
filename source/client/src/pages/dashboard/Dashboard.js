@@ -52,7 +52,7 @@ const adminNavigation = [
 const Dashboard = () => {
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
+  // const payload = useSelector((state) => state.auth);
   if (!localStorage.getItem("token")) {
     navigate("/dang-nhap");
   }

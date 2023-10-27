@@ -52,7 +52,7 @@ const router = createBrowserRouter([
     element: <Cart />,
   },
   {
-    path: "dang-xuat",
+    path: "/dang-xuat",
     element: <SignOut />,
   },
   {

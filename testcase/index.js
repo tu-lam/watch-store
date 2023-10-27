@@ -248,6 +248,7 @@ async function testCaseFE() {
             await browser.close();
             return;
         }
+        await page.goto('http://localhost:3000/dang-xuat');
         console.log(test.api);
         const requestBody = JSON.parse(test.inputBody);
         console.log(test.method);
@@ -256,6 +257,7 @@ async function testCaseFE() {
             await page.goto(test.api);
             switch (test.method) {
                 case 'login':
+                    await page.waitForSelector('input[type="email"]');
                     await page.type('input[type="email"]', requestBody.email);
                     await page.type('input[type="password"]', requestBody.password);
                     await page.click('button[type="submit"]');
@@ -291,6 +293,8 @@ async function testCaseFE() {
                     test.check = 'U' + count;
                     break;
                 case 'showCartNotLogin':
+                    await page.waitForTimeout(500);
+                    await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
                     test.check = 'U' + count;
                     break;
                 case 'showCartHaveLogin':
@@ -329,7 +333,6 @@ async function testCaseFE() {
                     await page.type('input[type="email"]', requestBody.email);
                     await page.type('input[type="password"]', requestBody.password);
                     await page.click('button[type="submit"]');
-                    await page.waitForTimeout(1500);
                     await page.click('a[href="/gio-hang"]');
                     await page.waitForTimeout(1000);
                     try {
@@ -341,6 +344,15 @@ async function testCaseFE() {
                         await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
                         test.check = 'U' + count;
                     }
+                    break;
+                case 'showManagerProductHaveLogin':
+                    await page.type('input[type="email"]', requestBody.email);
+                    await page.type('input[type="password"]', requestBody.password);
+                    await page.click('button[type="submit"]');
+                    await page.waitForTimeout(1500);
+                    await page.goto(test.api);
+                    test.check = 'U' + count;
+                    await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
                     break;
                 default:
                     break;
@@ -358,5 +370,5 @@ async function testCaseFE() {
     await browser.close();
 }
 deleteFilesInFolder('photo-test/');
-fetchData();
+// fetchData();
 testCaseFE();

@@ -3,10 +3,11 @@ import { Disclosure, RadioGroup, Tab } from "@headlessui/react";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { HeartIcon, MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import Layout from "../components/layout/Layout";
-import { addCartProduct, getProductDetail } from "../queries/auth";
+import { getProductDetail } from "../queries/auth";
 import CustomAlert from "../utils/CustomAlert";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { addCartProduct } from "../queries/cart";
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -81,7 +82,7 @@ export default function Product() {
       productId: Number(id),
       quantity: 1,
     };
-    addCartProduct(productData, localStorage.getItem("token"));
+    addCartProduct(productData);
     setAlertMessage("Đã thêm sản phẩm vào giỏ hàng!");
     setShowAlert(true);
     setSuccess(true);
@@ -190,14 +191,14 @@ export default function Product() {
                 </div>
               </div> */}
 
-              {/* <div className="mt-6">
+              <div className="mt-6">
                 <h3 className="sr-only">Description</h3>
 
                 <div
                   className="space-y-6 text-base text-gray-700"
                   dangerouslySetInnerHTML={{ __html: product.description }}
                 />
-              </div> */}
+              </div>
 
               <form className="mt-6">
                 {/* Colors */}
