@@ -86,24 +86,23 @@ const Header = () => {
   const payload = useSelector((state) => state.auth);
   const [productsCount, setProductsCount] = useState(0);
 
-  const fetchData = async () => {
+  const fetchData = async (token) => {
     try {
-      const response = await getAllCartProduct(payload.token);
+      const response = await getAllCartProduct(token);
       if (response.ok) {
         const data = await response.json();
         setProductsCount(data.length);
         console.log(data);
       }
     } catch (error) {
-      // Xử lý lỗi nếu cần
     }
   };
 
   useEffect(() => {
-    if (payload.token) {
-      fetchData(); // Lấy dữ liệu ban đầu
+    if (localStorage.getItem("token")) {
+      fetchData(localStorage.getItem("token")); // Lấy dữ liệu ban đầu
       const refreshInterval = setInterval(() => {
-        fetchData(); // Lấy dữ liệu theo khoảng thời gian
+        fetchData(localStorage.getItem("token")); // Lấy dữ liệu theo khoảng thời gian
       }, 500); // Cập nhật dữ liệu mỗi 1 phút (có thể điều chỉnh thời gian cần thiết)
       return () => {
         clearInterval(refreshInterval); // Dọn dẹp interval khi component bị unmount

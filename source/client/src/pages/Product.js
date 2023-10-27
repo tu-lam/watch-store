@@ -81,7 +81,7 @@ export default function Product() {
       productId: Number(id),
       quantity: 1,
     };
-    addCartProduct(productData, payload.token);
+    addCartProduct(productData, localStorage.getItem("token"));
     setAlertMessage("Đã thêm sản phẩm vào giỏ hàng!");
     setShowAlert(true);
     setSuccess(true);

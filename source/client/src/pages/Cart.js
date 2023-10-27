@@ -53,7 +53,7 @@ export default function Cart() {
   }, [payload]);
   const handleDeleteProductInCart = (productId) => {
     console.log(productId);
-    DeleteProductInCartById(productId, payload.token);
+    DeleteProductInCartById(productId, localStorage.getItem("token"));
     const updatedProducts = products.filter(
       (product) => product.id !== productId
     );
