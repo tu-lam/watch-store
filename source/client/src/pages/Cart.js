@@ -8,12 +8,15 @@ import Layout from "../components/layout/Layout";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { DeleteProductInCartById, getAllCartProduct } from "../queries/auth";
+import { DeleteProductInCartById, UpdateQuantityProductInCart, getAllCartProduct } from "../queries/cart";
 
 export default function Cart() {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const payload = useSelector((state) => state.auth);
+  const total = products.reduce((accumulator, currentProduct) => {
+    return accumulator + currentProduct.price * currentProduct.quantity;
+  }, 0);
   useEffect(() => {
     if (!localStorage.getItem("token")) {
       navigate("/dang-nhap");
@@ -46,22 +49,32 @@ export default function Cart() {
             console.log(data);
           } else {
           }
-        } catch (error) {}
+        } catch (error) { }
       };
       fetchData();
     }
-  }, [payload]);
+  }, [payload, total]);
   const handleDeleteProductInCart = (productId) => {
     console.log(productId);
-    DeleteProductInCartById(productId, payload.token);
+    DeleteProductInCartById(productId);
     const updatedProducts = products.filter(
       (product) => product.id !== productId
     );
     setProducts(updatedProducts);
   };
-  const total = products.reduce((accumulator, currentProduct) => {
-    return accumulator + currentProduct.price;
-  }, 0);
+  const handleEditProduct = (event, productId) => {
+    const quantity = event.target.value;
+    UpdateQuantityProductInCart({ id: productId, quantity });
+    const updatedProducts = products.map((product) => {
+      if (product.id === productId) {
+        return { ...product, quantity };
+      } else {
+        return product;
+      }
+    });
+    setProducts(updatedProducts);
+  }
+
   return (
     <Layout>
       <div className="bg-white">
@@ -130,6 +143,7 @@ export default function Cart() {
                             name={`quantity-${productIdx}`}
                             className="max-w-full rounded-md border border-gray-300 py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
                             defaultValue={product.quantity}
+                            onChange={(event) => handleEditProduct(event, product.id)}
                           >
                             <option value={1}>1</option>
                             <option value={2}>2</option>

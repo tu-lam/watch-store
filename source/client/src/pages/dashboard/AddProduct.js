@@ -25,7 +25,6 @@ const AddProduct = () => {
     reader.onloadend = () => {
       if (reader.result) setImage(reader.result.toString());
     };
-
     reader.readAsDataURL(file);
   };
 

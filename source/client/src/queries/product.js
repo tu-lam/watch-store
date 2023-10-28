@@ -12,7 +12,9 @@ export const createProductQuery = async (formData) => {
 
 export const getProductQuery = async ({ queryKey }) => {
   const res = await fetch(
-    `${process.env.REACT_APP_API_URL}/products/${queryKey[1]}`
+    `${process.env.REACT_APP_API_URL}/products/${queryKey[1]}`,{
+      method: "GET",
+    }
   );
   return res.json();
 };
@@ -23,9 +25,9 @@ export const updateProductQuery = async (data) => {
   return fetch(`${process.env.REACT_APP_API_URL}/products/${data.productId}`, {
     method: "PATCH",
     headers: {
-      // "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
     body: data.formData,
   });
 };
+
