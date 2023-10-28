@@ -9,7 +9,10 @@ const initialData = await (await getAllProduct()).json();
 const products = initialData.map(item => ({
   id: item.id,
   name: item.name,
-  price: `$${item.price}`,
+  price: `${item.price.toLocaleString("vi", {
+    style: "currency",
+    currency: "VND",
+  })}`,
   href: `/chi-tiet-san-pham?id=${item.id}`,
   imageSrc: `${process.env.REACT_APP_API_URL}/public/products/${item.image}`,
   imageAlt: `Product ${item.id}`,

@@ -44,7 +44,7 @@ export class ProductsController {
         messageCode: 'empty_image_product_err',
       });
     }
-    if (file.size > 5120) {
+    if (file.size > 5242880) {
       throw new BadRequestException({
         messageCode: 'invalid_file_size_product_err',
       });
