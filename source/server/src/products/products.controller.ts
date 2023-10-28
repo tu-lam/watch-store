@@ -109,7 +109,7 @@ export class ProductsController {
     @Body() updateProductDto: UpdateProductDto,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    if (file && file.size > 5120) {
+    if (file && file.size > 5242880) {
       throw new BadRequestException({
         messageCode: 'invalid_file_size_product_err',
       });
