@@ -19,7 +19,7 @@ api,description,method,inputBody,outputCode,check
 "http://localhost:4000/products","api thêm sản phẩm thiếu name","post-formData","{""name"": """",""price"": ""300"",""image"":""image-products-test/1.jpg""}","empty_name_product_err",true
 "http://localhost:4000/products","api thêm sản phẩm thiếu image","post-formData","{""name"": ""thai"",""price"": ""300"",""image"":""""}","empty_image_product_err",true
 "http://localhost:4000/products","api thêm sản phẩm có image quá lơn hơn 5mb","post-formData","{""name"": ""thai"",""price"": ""300"",""image"":""image-products-test/22.jpg""}","invalid_file_size_product_err",true
-"http://localhost:4000/products","api thêm sản phẩm có image sai định dạng","post-formData","{""name"": ""thai"",""price"": ""300"",""image"":""image-products-test/AMR.zip""}","invalid_file_size_product_err",true
+"http://localhost:4000/products","api thêm sản phẩm có image sai định dạng","post-formData","{""name"": ""thai"",""price"": ""300"",""image"":""image-products-test/testcaseRun.sh""}","invalid_file_size_product_err",true
 "http://localhost:4000/products","api thêm sản phẩm thiếu price","post-formData","{""name"": ""jjj"",""price"": """",""image"":""image-products-test/1.jpg""}","empty_price_product_err",false
 "http://localhost:4000/products","api thêm sản phẩm price có chữ","post-formData","{""name"": ""jjj"",""price"": ""30p0"",""image"":""image-products-test/1.jpg""}","invalid_price_product_err",false
 "http://localhost:4000/products","api thêm sản phẩm price có kí tự đặt biệt","post-formData","{""name"": ""jjj"",""price"": ""30#0"",""image"":""image-products-test/1.jpg""}","invalid_price_product_err",false
@@ -34,3 +34,13 @@ api,description,method,inputBody,outputCode,check
 "http://localhost:4000/products/12","api cập nhẩn thông tin sản phẩm price không hợp lệ","patch","{""name"": ""kkk"",""price"": ""2@@22"",""image"":""image-products-test/1.jpg""}","invalid_price_product_err",false
 "http://localhost:4000/products/1","api cập nhẩn thông tin với id không tồn tại ","patch","{""name"": ""kkk"",""price"": ""222"",""image"":""image-products-test/1.jpg""}","product_not_found_err",true
 "http://localhost:4000/products/12","api cập nhẩn thông tin sản phẩm  thành công","patch","{""name"": ""kkk"",""price"": ""222"",""image"":""image-products-test/1.jpg""}","edit_product_success",true
+"http://localhost:4000/users/cart","api lấy tất cả thông tin giỏ hàng của user đã đăng nhập (đã có token)","get","{""name"": ""kkk"",""price"": ""222"",""image"":""image-products-test/1.jpg""}","cart_product_success",false
+"http://localhost:4000/users/cart","api lấy tất cả thông tin giỏ hàng của user khí chưa đăng nhập hoặc token hết hạng thông báo lỗi ","get","{""name"": ""kkk"",""price"": ""222"",""image"":""image-products-test/1.jpg""}","cart_product_success",false
+"http://localhost:4000/users/cart","api lấy thêm sản phẩm khi đã đăng nhập (có token)","post","{""name"": ""kkk"",""price"": ""222"",""image"":""image-products-test/1.jpg""}","cart_product_success",false
+"http://localhost:4000/users/cart","api lấy thêm sản phẩm khi chưa đăng nhập","post","{""name"": ""kkk"",""price"": ""222"",""image"":""image-products-test/1.jpg""}","cart_product_success",false
+"http://localhost:4000/users/cart/16","api lấy xóa sản phẩm khi đã đăng nhập","delete","{""name"": ""kkk"",""price"": ""222"",""image"":""image-products-test/1.jpg""}","cart_product_success",false
+"http://localhost:4000/users/cart/1","api lấy xóa sản phẩm khi id sản phẩm trong giỏ hàng không tồn tại","delete","{""name"": ""kkk"",""price"": ""222"",""image"":""image-products-test/1.jpg""}","cart_product_success",false
+"http://localhost:4000/users/cart/16","api lấy xóa sản phẩm khi chưa đăng nhập","delete","{""name"": ""kkk"",""price"": ""222"",""image"":""image-products-test/1.jpg""}","cart_product_success",false
+"http://localhost:4000/users/cart/16","api lấy update số lượng sản phẩm khi đã đăng nhập","patch","{""name"": ""kkk"",""price"": ""222"",""image"":""image-products-test/1.jpg""}","cart_product_success",false
+"http://localhost:4000/users/cart/1","api lấy xóa sản phẩm khi id sản phẩm trong giỏ hàng không tồn tại","patch","{""name"": ""kkk"",""price"": ""222"",""image"":""image-products-test/1.jpg""}","cart_product_success",false
+"http://localhost:4000/users/cart/16","api lấy update số lượng sản phẩm khi chưa đăng nhập","patch","{""name"": ""kkk"",""price"": ""222"",""image"":""image-products-test/1.jpg""}","cart_product_success",false

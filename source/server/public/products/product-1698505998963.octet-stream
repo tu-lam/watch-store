@@ -1,0 +1,17 @@
+import os
+
+folder_path = '.'  # Đường dẫn đến thư mục hiện tại (sử dụng dấu chấm)
+
+# Kiểm tra xem folder_path là thư mục và tồn tại hay không
+if os.path.exists(folder_path) and os.path.isdir(folder_path):
+    for filename in os.listdir(folder_path):
+        file_path = os.path.join(folder_path, filename)
+        try:
+            if os.path.isfile(file_path):
+                os.remove(file_path)  # Xóa file
+                print(f"Đã xóa: {file_path}")
+            # Nếu bạn muốn xóa cả thư mục con, sử dụng os.rmdir(file_path) ở đây.
+        except Exception as e:
+            print(f"Không thể xóa {file_path}: {e}")
+else:
+    print("Thư mục không tồn tại hoặc không phải là thư mục.")
