@@ -23,6 +23,7 @@ import SignUp from "./pages/SignUp";
 import SignOut from "./pages/SignOut";
 import AddProduct from "./pages/dashboard/AddProduct";
 import EditProduct from "./pages/dashboard/EditProduct";
+import OrderManager from "./pages/dashboard/orderManager";
 
 const queryClient = new QueryClient();
 
@@ -64,7 +65,7 @@ const router = createBrowserRouter([
       { path: "san-pham", element: <ProductManager /> },
       // { path: "danh-muc", element: <CategoryManager /> },
       // { path: "thong-bao", element: <NotificationManager /> },
-      // { path: "hoa-don", element: <OrderManager /> },
+      { path: "hoa-don", element: <OrderManager /> },
       // { path: "hoa-don/:id", element: <EditOrder /> },
       // { path: "danh-muc/them", element: <AddCategory /> },
       { path: "san-pham/them", element: <AddProduct /> },
