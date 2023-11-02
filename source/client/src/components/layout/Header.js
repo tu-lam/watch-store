@@ -94,18 +94,17 @@ const Header = () => {
         setProductsCount(data.length);
         console.log(data);
       }
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
       fetchData();
       const refreshInterval = setInterval(() => {
-        fetchData(); 
-      }, 500); 
+        fetchData();
+      }, 3000);
       return () => {
-        clearInterval(refreshInterval); 
+        clearInterval(refreshInterval);
       };
     }
   }, [payload]);
