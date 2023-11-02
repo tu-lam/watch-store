@@ -50,6 +50,8 @@ export class OrdersService {
     order.total = cartItems.reduce((acc, cur) => {
       return acc + cur.product.price * cur.quantity;
     }, 0);
+
+    order.createdAt = new Date().toISOString();
     return this.repo.save(order);
   }
 

@@ -1,6 +1,7 @@
 import { OrderItem } from 'src/order-items/entities/order-item.entity';
 import { User } from 'src/users/entities/user.entity';
 import {
+  BeforeInsert,
   Column,
   Entity,
   ManyToOne,
@@ -31,6 +32,9 @@ export class Order {
 
   @Column({ default: 'pending' })
   status: string;
+
+  @Column({ type: 'datetime', nullable: true })
+  createdAt: string;
 
   @OneToMany(() => OrderItem, (orderItem) => orderItem.orderId)
   public orderItems: OrderItem[];
