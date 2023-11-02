@@ -10,12 +10,8 @@ export class CreateOrderDto {
   phone: string;
 
   @IsOptional()
-  @IsNumberString()
-  address: number;
-
-  @IsOptional()
-  @IsNumberString()
-  total: number;
+  @IsString()
+  address: string;
 
   @IsOptional()
   @IsString()

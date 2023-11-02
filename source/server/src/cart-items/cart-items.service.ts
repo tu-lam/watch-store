@@ -28,6 +28,10 @@ export class CartItemsService {
   }
 
   findWhere(query: any = {}) {
+    return this.repo.find({ where: query, relations: ['product'] });
+  }
+
+  findOneWhere(query: any = {}) {
     return this.repo.findOne({ where: query });
   }
 

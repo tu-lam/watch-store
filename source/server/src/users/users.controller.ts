@@ -22,6 +22,8 @@ import { SignInDto } from './dto/sign-in.dto';
 import { JwtService } from '@nestjs/jwt';
 import { AddItemToCartDto } from './dto/add-item-to-cart.dto';
 import { CartItemsService } from 'src/cart-items/cart-items.service';
+import { CreateOrderDto } from 'src/orders/dto/create-order.dto';
+import { OrdersService } from 'src/orders/orders.service';
 
 @Controller('users')
 export class UsersController {
@@ -30,6 +32,7 @@ export class UsersController {
     private authService: AuthService,
     private jwtService: JwtService,
     private cartItemService: CartItemsService,
+    private orderService: OrdersService,
   ) {}
 
   @Get('cart')
@@ -115,7 +118,7 @@ export class UsersController {
     @Body() addItemToCartDto: AddItemToCartDto,
     @CurrentUser() user: User,
   ) {
-    const existedCartItem = await this.cartItemService.findWhere({
+    const existedCartItem = await this.cartItemService.findOneWhere({
       userId: user.id,
       productId: addItemToCartDto.productId,
     });
@@ -151,5 +154,14 @@ export class UsersController {
   @UseGuards(AuthGuard)
   deleteCartItem(@Param('id') id: string) {
     return this.cartItemService.remove(+id);
+  }
+
+  @Post('order')
+  @UseGuards(AuthGuard)
+  createOrder(
+    @Body() createOrderDto: CreateOrderDto,
+    @CurrentUser() user: User,
+  ) {
+    return this.orderService.create(user.id, createOrderDto);
   }
 }

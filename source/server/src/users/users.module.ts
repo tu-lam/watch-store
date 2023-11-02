@@ -10,6 +10,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CartItemsService } from 'src/cart-items/cart-items.service';
 import { CartItemsModule } from 'src/cart-items/cart-items.module';
 import { ProductsModule } from 'src/products/products.module';
+import { OrdersModule } from 'src/orders/orders.module';
 @Module({
   imports: [
     TypeOrmModule.forFeature([User]),
@@ -24,6 +25,7 @@ import { ProductsModule } from 'src/products/products.module';
     }),
     CartItemsModule,
     ProductsModule,
+    OrdersModule,
   ],
   controllers: [UsersController],
   providers: [UsersService, AuthService],

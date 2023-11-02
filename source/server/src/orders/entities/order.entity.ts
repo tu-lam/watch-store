@@ -1,9 +1,11 @@
 import { OrderItem } from 'src/order-items/entities/order-item.entity';
+import { User } from 'src/users/entities/user.entity';
 import {
   Column,
   Entity,
   ManyToOne,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -24,7 +26,7 @@ export class Order {
   @Column()
   address: string;
 
-  @Column()
+  @Column({ default: 0 })
   total: number;
 
   @Column({ default: 'pending' })
@@ -32,4 +34,7 @@ export class Order {
 
   @OneToMany(() => OrderItem, (orderItem) => orderItem.orderId)
   public orderItems: OrderItem[];
+
+  @OneToOne(() => User)
+  public user: User;
 }
