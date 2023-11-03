@@ -30,6 +30,12 @@ const navigation = [
 
 const adminNavigation = [
   {
+    name: "Tài khoản",
+    href: "/bang-dieu-khien/tai-khoan",
+    icon: CubeIcon,
+    current: false,
+  },
+  {
     name: "Sản phẩm",
     href: "/bang-dieu-khien/san-pham",
     icon: CubeIcon,

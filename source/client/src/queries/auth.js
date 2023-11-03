@@ -84,3 +84,17 @@ export const createOrder = (data) => {
     body: JSON.stringify(data),
   });
 };
+
+export const getCurrentUser = async () => {
+  const token = localStorage.getItem("token");
+  const res = await fetch(`${process.env.REACT_APP_API_URL}/users/me`, {
+    method: "GET",
+    headers: {
+      Accept: "application.json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return res.json();
+};

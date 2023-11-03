@@ -24,6 +24,8 @@ import SignOut from "./pages/SignOut";
 import AddProduct from "./pages/dashboard/AddProduct";
 import EditProduct from "./pages/dashboard/EditProduct";
 import OrderManager from "./pages/dashboard/orderManager";
+import Protected from "./pages/Protected";
+import AccountManager from "./pages/dashboard/AccountManager";
 
 const queryClient = new QueryClient();
 
@@ -58,11 +60,16 @@ const router = createBrowserRouter([
   },
   {
     path: "/bang-dieu-khien",
-    element: <Dashboard />,
+    element: (
+      <Protected>
+        <Dashboard />
+      </Protected>
+    ),
     children: [
       { path: "", element: <Navigate to={"/bang-dieu-khien/san-pham"} /> },
       // { path: "tai-khoan", element: <Account /> },
       { path: "san-pham", element: <ProductManager /> },
+      { path: "tai-khoan", element: <AccountManager /> },
       // { path: "danh-muc", element: <CategoryManager /> },
       // { path: "thong-bao", element: <NotificationManager /> },
       { path: "hoa-don", element: <OrderManager /> },
