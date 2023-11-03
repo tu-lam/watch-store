@@ -3,6 +3,18 @@ import { DeleteProductById, getAllProduct } from "../../queries/auth";
 import { useEffect, useState } from "react";
 import { getAllUsers } from "../../queries/user";
 
+const formatRoleString = (role) => {
+  if (role == "manager") {
+    return "Quản lý";
+  } else if (role == "employee") {
+    return "Nhân viên";
+  } else if (role == "user") {
+    return "Người dùng";
+  }
+
+  return "";
+};
+
 const AccountManager = () => {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
@@ -80,7 +92,7 @@ const AccountManager = () => {
                       {user.email}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {user.role}
+                      {formatRoleString(user.role)}
                     </td>
                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                       <a
