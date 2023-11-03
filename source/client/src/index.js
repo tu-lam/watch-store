@@ -60,11 +60,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/bang-dieu-khien",
-    element: (
-      <Protected>
-        <Dashboard />
-      </Protected>
-    ),
+    element: <Dashboard />,
     children: [
       { path: "", element: <Navigate to={"/bang-dieu-khien/san-pham"} /> },
       // { path: "tai-khoan", element: <Account /> },

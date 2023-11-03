@@ -18,17 +18,10 @@ import {
 } from "@heroicons/react/24/outline";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { getCurrentUser } from "../../queries/auth";
+import { useQuery } from "@tanstack/react-query";
 
-const navigation = [
-  { name: "Dashboard", href: "#", icon: HomeIcon, current: true },
-  { name: "Team", href: "#", icon: UsersIcon, current: false },
-  { name: "Projects", href: "#", icon: FolderIcon, current: false },
-  { name: "Calendar", href: "#", icon: CalendarIcon, current: false },
-  { name: "Documents", href: "#", icon: DocumentDuplicateIcon, current: false },
-  { name: "Reports", href: "#", icon: ChartPieIcon, current: false },
-];
-
-const adminNavigation = [
+const managerNavigation = [
   {
     name: "Tài khoản",
     href: "/bang-dieu-khien/tai-khoan",
@@ -55,17 +48,81 @@ const adminNavigation = [
   },
 ];
 
+const employeeNavigation = [
+  {
+    name: "Sản phẩm",
+    href: "/bang-dieu-khien/san-pham",
+    icon: CubeIcon,
+    current: false,
+  },
+  {
+    name: "Hóa đơn",
+    href: "/bang-dieu-khien/hoa-don",
+    icon: DocumentTextIcon,
+    current: false,
+  },
+  {
+    name: "Đăng xuất",
+    href: "/dang-xuat",
+    icon: ArrowLeftOnRectangleIcon,
+    current: false,
+  },
+];
+
+const userNavigation = [
+  {
+    name: "Thông tin cá nhân",
+    href: "/bang-dieu-khien/thong-in",
+    icon: CubeIcon,
+    current: false,
+  },
+  {
+    name: "Hóa đơn",
+    href: "/bang-dieu-khien/hoa-don",
+    icon: DocumentTextIcon,
+    current: false,
+  },
+  {
+    name: "Đăng xuất",
+    href: "/dang-xuat",
+    icon: ArrowLeftOnRectangleIcon,
+    current: false,
+  },
+];
+
 const Dashboard = () => {
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  // const payload = useSelector((state) => state.auth);
-  if (!localStorage.getItem("token")) {
-    navigate("/dang-nhap");
+  const [navigation, setNavigation] = useState([]);
+  const query = useQuery({ queryKey: ["user"], queryFn: getCurrentUser });
+
+  const data = query.data;
+  const token = localStorage.getItem("token");
+
+  if (!token || token == "null" || token == "undefined") {
+    navigate("/dang-nhap", { replace: true });
   }
+  useEffect(() => {
+    // console.log("data", data);
+    if (data && data.messageCode == "get_current_user_success") {
+      const user = data.data.user;
+      if (user.role == "manager") {
+        setNavigation(managerNavigation);
+      } else if (user.role == "employee") {
+        setNavigation(employeeNavigation);
+      } else {
+        setNavigation(userNavigation);
+      }
+    }
+    //  else {
+    //   localStorage.removeItem("token");
+    //   navigate("/dang-nhap", { replace: true });
+    // }
+  }, [data]);
 
   return (
     <SidebarLayout
-      navigation={adminNavigation}
+      navigation={navigation}
       sidebarOpen={sidebarOpen}
       setSidebarOpen={setSidebarOpen}
     >

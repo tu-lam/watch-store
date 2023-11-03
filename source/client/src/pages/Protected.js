@@ -18,8 +18,9 @@ const Protected = ({ children }) => {
   }
   useEffect(() => {
     // console.log("data", data);
-    if (data && data.messageCode !== "get_current_user_success") {
+    if (data && data.messageCode != "get_current_user_success") {
       //   dispatch(signIn({ token, user: data.data.user }));
+      localStorage.removeItem("token");
       navigate("/dang-nhap", { replace: true });
     }
   }, [data]);
