@@ -97,7 +97,7 @@ const AccountManager = () => {
                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                       <a
                         onClick={() => {
-                          navigate("/bang-dieu-khien/san-pham/chinh-sua", {
+                          navigate("/bang-dieu-khien/tai-khoan/chinh-sua", {
                             state: { userId: user.id },
                           });
                         }}
