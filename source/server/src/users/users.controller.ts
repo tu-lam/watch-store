@@ -16,7 +16,6 @@ import { AuthService } from './auth.service';
 import { AuthGuard } from 'guards/auth.guard';
 import { CurrentUser } from './decorators/current-user.decorator';
 import { User } from './entities/user.entity';
-import { AdminGuard } from 'guards/admin.guard';
 import session from 'express-session';
 import { SignInDto } from './dto/sign-in.dto';
 import { JwtService } from '@nestjs/jwt';
@@ -24,6 +23,7 @@ import { AddItemToCartDto } from './dto/add-item-to-cart.dto';
 import { CartItemsService } from 'src/cart-items/cart-items.service';
 import { CreateOrderDto } from 'src/orders/dto/create-order.dto';
 import { OrdersService } from 'src/orders/orders.service';
+import { ManagerGuard } from 'guards/manager.guard';
 
 @Controller('users')
 export class UsersController {
@@ -96,7 +96,7 @@ export class UsersController {
   }
 
   @Get()
-  @UseGuards(AdminGuard)
+  @UseGuards(ManagerGuard)
   findAll() {
     return this.usersService.findAll();
   }
@@ -107,7 +107,7 @@ export class UsersController {
   }
 
   @Delete(':id')
-  @UseGuards(AdminGuard)
+  @UseGuards(ManagerGuard)
   remove(@Param('id') id: string) {
     return this.usersService.remove(+id);
   }
