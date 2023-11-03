@@ -111,4 +111,16 @@ export class AuthService {
 
     return user;
   }
+
+  async signupManager(email: string, password: string) {
+    const manager = await this.signup('manager', email, password);
+    manager.role = 'manager';
+    this.usersService.update(manager.id, manager);
+  }
+
+  async signupEmployee(email: string, password: string) {
+    const employee = await this.signup('employee', email, password);
+    employee.role = 'employee';
+    this.usersService.update(employee.id, employee);
+  }
 }

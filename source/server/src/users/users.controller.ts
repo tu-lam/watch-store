@@ -51,7 +51,28 @@ export class UsersController {
   @Get('/me')
   @UseGuards(AuthGuard)
   getCurrentUser(@CurrentUser() user: User) {
-    return user;
+    return {
+      messageCode: 'get_current_user_success',
+      data: { user },
+    };
+  }
+
+  @Post('/signup/manager')
+  async createManager() {
+    const manager = await this.authService.signupManager(
+      'manager@gmail.com',
+      'manager',
+    );
+    return manager;
+  }
+
+  @Post('/signup/employee')
+  async createEmployee() {
+    const employee = await this.authService.signupEmployee(
+      'employee@gmail.com',
+      'employee',
+    );
+    return employee;
   }
 
   @Post('/signup')
