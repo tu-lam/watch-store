@@ -131,9 +131,13 @@ export class UsersController {
 
   @Patch(':id')
   @UseInterceptors(FileInterceptor('file'))
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     console.log('updateUserDto', updateUserDto);
-    return this.usersService.update(+id, updateUserDto);
+    const user = await this.usersService.update(+id, updateUserDto);
+    return {
+      messageCode: 'update_user_success',
+      data: { user },
+    };
   }
 
   @Delete(':id')
