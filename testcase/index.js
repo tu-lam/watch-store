@@ -6,7 +6,7 @@ const fs = require('fs');
 const path = require('path');
 const filePath = 'testcase - Trang tính1.csv';
 const fileTestFE = 'testcase - FE.csv';
-
+let TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIyLCJpYXQiOjE2OTg5MjYxNzV9.FfbFaIASDWeuSUBEf1CWz3WtPpV3vNWml_SwCAPOUNc";
 const readFileCSV = async (filePath) => {
     return new Promise((resolve, reject) => {
         const data = [];
@@ -86,10 +86,12 @@ async function fetchData() {
     try {
         let data = await readFileCSV(filePath);
         console.log(data);
+        const count = 0;
         for (const test of data) {
             if (isObjectEmpty(test))
                 return;
-            console.log(test.api);
+            console.log(test.method);
+            console.log(test.description);
             const requestBody = JSON.parse(test.inputBody);
             console.log(test.method);
             let response;
@@ -99,14 +101,16 @@ async function fetchData() {
                     try {
                         response = await axios.get(test.api, requestBody);
                     } catch (error) {
-                        console.log(error.response.data.messageCode);
-                        error.response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
+                        console.log(error.response.data?.messageCode);
+                        error.response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
+                        console.log(test.check);
                         break;
                     }
                     console.log("test.outputCode: ", test.outputCode);
-                    console.log("response.data.code: ", response.data.messageCode);
-                    console.log(response.data.messageCode == test.outputCode);
-                    response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
+                    console.log("response.data?.code: ", response.data?.messageCode);
+                    console.log(response.data?.messageCode == test.outputCode);
+                    response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
+                    console.log(test.check);
                     break;
                 case "getProduct":
                     console.log(requestBody);
@@ -114,25 +118,31 @@ async function fetchData() {
                         response = await axios.get(test.api, requestBody);
                     } catch (error) {
                         test.check = false;
+                        console.log(test.check);
                         break;
                     }
                     console.log("test.outputCode: ", test.outputCode);
                     console.log(checkType(test.outputCode, response.data));
                     test.check = checkType(test.outputCode, response.data);
+                    console.log(test.check);
                     break;
+
                 case "post":
                     console.log(requestBody);
                     try {
                         response = await axios.post(test.api, requestBody);
                     } catch (error) {
-                        console.log(error.response.data.messageCode);
-                        error.response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
+                        console.log(error.response.data?.messageCode);
+                        error.response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
+                        console.log(test.check);
                         break;
                     }
                     console.log(test.outputCode);
-                    console.log(response.data.messageCode);
-                    console.log(response.data.messageCode == test.outputCode);
-                    response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
+                    console.log(response.data?.messageCode);
+                    console.log(response.data?.messageCode == test.outputCode);
+                    if (response.data?.messageCode === 'signin_success') TOKEN = response.data?.token;
+                    response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
+                    console.log(test.check);
                     break;
                 case "post-formData":
                     console.log(requestBody);
@@ -154,17 +164,17 @@ async function fetchData() {
                         });
                     } catch (error) {
                         console.log(test.outputCode);
-                        console.log(error.response.data.messageCode);
-                        console.log(error.response.data.messageCode == test.outputCode);
-                        error.response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
+                        console.log(error.response.data?.messageCode);
+                        console.log(error.response.data?.messageCode == test.outputCode);
+                        error.response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
                         break;
                     }
                     console.log(test.outputCode);
-                    console.log(response.data.messageCode);
-                    console.log(response.data.messageCode == test.outputCode);
-                    response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
+                    console.log(response.data?.messageCode);
+                    console.log(response.data?.messageCode == test.outputCode);
+                    response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
                     if (test.check) {
-                        await axios.delete('http://localhost:4000/products/' + response.data.data.product.id);
+                        await axios.delete('http://localhost:4000/products/' + response.data?.data.product.id);
                     }
                     break;
 
@@ -174,16 +184,19 @@ async function fetchData() {
                         response = await axios.delete(test.api, requestBody);
                     } catch (error) {
                         console.log(test.outputCode);
-                        console.log(error.response.data.code);
-                        if (!error.response.data.code) {
+                        console.log(error.response.data?.code);
+                        if (!error.response.data?.code) {
                             test.check = false;
                         }
-                        error.response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
+                        error.response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
+                        console.log(test.check);
+
                         break;
                     }
                     console.log(test.outputCode);
-                    console.log(response.data.code);
-                    response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
+                    console.log(response.data?.code);
+                    response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
+                    console.log(test.check);
                     break;
                 case "patch":
                     console.log(requestBody);
@@ -191,13 +204,14 @@ async function fetchData() {
                         response = await axios.patch(test.api, requestBody);
                     } catch (error) {
                         console.log(test.outputCode);
-                        console.log(error.response.data.code);
-                        error.response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
+                        console.log(error.response.data?.code);
+                        error.response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
+                        console.log(test.check);
                         break;
                     }
                     console.log(test.outputCode);
-                    console.log(response.data.code);
-                    response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
+                    console.log(response.data?.code);
+                    response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
                     break;
                 case "put":
                     console.log(requestBody);
@@ -205,13 +219,39 @@ async function fetchData() {
                         response = await axios.put(test.api, requestBody);
                     } catch (error) {
                         console.log(test.outputCode);
-                        console.log(response.data.code);
-                        response.data.messageCode == test.outputCode ? test.check = true : test.check = false;
+                        console.log(response.data?.code);
+                        response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
+
                         break;
                     }
                     console.log(test.outputCode);
-                    console.log(response.data.code);
-                    response.data.code == test.outputCode ? test.check = true : test.check = false;
+                    console.log(response.data?.code);
+                    response.data?.code == test.outputCode ? test.check = true : test.check = false;
+
+                    break;
+                case "getHaveToken":
+                    console.log(requestBody);
+                    console.log(test.api);
+                    try {
+                        response = await axios.get(test.api, {
+                            headers: {
+                                'Authorization': `Bearer ${TOKEN}`
+                            }
+                        });
+
+                    } catch (error) {
+                        console.log(error);
+                        console.log(error.response.data?.messageCode);
+                        error.response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
+                        console.log(test.check);
+                        break;
+                    }
+                    console.log("test.outputCode: ", test.outputCode);
+                    console.log("response.data?.code: ", response.data?.messageCode);
+                    console.log(response.data?.messageCode == test.outputCode);
+                    response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
+                    console.log(test.check);
+
                     break;
                 default:
                     break;
@@ -221,7 +261,7 @@ async function fetchData() {
         // console.log(data);
         writeFileCSV(data, filePath)
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         if (error.response) {
             // The request was made, but the server responded with a status code that falls out of the range of 2xx
             console.error('Response Error Status:', error.response.status);
@@ -377,6 +417,6 @@ async function testCaseFE() {
     writeFileCSV(data, fileTestFE);
     await browser.close();
 }
-deleteFilesInFolder('photo-test/');
-// fetchData();
-testCaseFE();
+// deleteFilesInFolder('photo-test/');
+fetchData();
+// testCaseFE();
