@@ -23,6 +23,11 @@ import SignUp from "./pages/SignUp";
 import SignOut from "./pages/SignOut";
 import AddProduct from "./pages/dashboard/AddProduct";
 import EditProduct from "./pages/dashboard/EditProduct";
+import OrderManager from "./pages/dashboard/orderManager";
+import Protected from "./pages/Protected";
+import AccountManager from "./pages/dashboard/AccountManager";
+import EditAccount from "./pages/dashboard/EditAccount";
+import EditOrder from "./pages/dashboard/EditOrder";
 
 const queryClient = new QueryClient();
 
@@ -62,15 +67,17 @@ const router = createBrowserRouter([
       { path: "", element: <Navigate to={"/bang-dieu-khien/san-pham"} /> },
       // { path: "tai-khoan", element: <Account /> },
       { path: "san-pham", element: <ProductManager /> },
+      { path: "tai-khoan", element: <AccountManager /> },
       // { path: "danh-muc", element: <CategoryManager /> },
       // { path: "thong-bao", element: <NotificationManager /> },
-      // { path: "hoa-don", element: <OrderManager /> },
-      // { path: "hoa-don/:id", element: <EditOrder /> },
+      { path: "hoa-don", element: <OrderManager /> },
+      { path: "hoa-don/:id", element: <EditOrder /> },
       // { path: "danh-muc/them", element: <AddCategory /> },
       { path: "san-pham/them", element: <AddProduct /> },
       // { path: "thong-bao/them", element: <AddNotification /> },
       // { path: "danh-muc/chinh-sua", element: <EditCategory /> },
       { path: "san-pham/chinh-sua", element: <EditProduct /> },
+      { path: "tai-khoan/chinh-sua", element: <EditAccount /> },
       // // { path: "san-pham/chinh-sua", element: <EditProduct /> },
       // { path: "thong-bao/chinh-sua", element: <EditNotification /> },
     ],

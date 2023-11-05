@@ -60,4 +60,41 @@ export const DeleteProductById = (productId) => {
   });
 };
 
+export const getAllOrders = () => {
+  const token = localStorage.getItem("token");
+  return fetch(`${process.env.REACT_APP_API_URL}/orders`, {
+    method: "GET",
+    headers: {
+      Accept: "application.json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
 
+export const createOrder = (data) => {
+  const token = localStorage.getItem("token");
+  return fetch(`${process.env.REACT_APP_API_URL}/users/order`, {
+    method: "POST",
+    headers: {
+      Accept: "application.json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  });
+};
+
+export const getCurrentUser = async () => {
+  const token = localStorage.getItem("token");
+  const res = await fetch(`${process.env.REACT_APP_API_URL}/users/me`, {
+    method: "GET",
+    headers: {
+      Accept: "application.json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return res.json();
+};

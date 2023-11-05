@@ -28,11 +28,12 @@ export class OrdersController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.ordersService.findOne(+id);
+    return this.ordersService.findOneRelation(+id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
+    console.log(updateOrderDto);
     return this.ordersService.update(+id, updateOrderDto);
   }
 

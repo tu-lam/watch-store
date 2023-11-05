@@ -12,7 +12,7 @@ export class OrderItemsService {
   ) {}
 
   findWhere(query: any = {}) {
-    return this.repo.find({ where: query });
+    return this.repo.find({ where: query, relations: ['product'] });
   }
 
   create(createOrderItemDto: CreateOrderItemDto) {

@@ -50,6 +50,8 @@ export class OrdersService {
     order.total = cartItems.reduce((acc, cur) => {
       return acc + cur.product.price * cur.quantity;
     }, 0);
+
+    order.createdAt = new Date().toISOString();
     return this.repo.save(order);
   }
 
@@ -64,6 +66,22 @@ export class OrdersService {
     return this.repo.findOne({
       where: { id: id },
     });
+  }
+
+  async findOneRelation(id: number) {
+    if (!id) {
+      return null;
+    }
+    const order = await this.repo.findOne({
+      where: { id: id },
+    });
+
+    const orderItems = await this.orderItemsService.findWhere({
+      orderId: order.id,
+    });
+
+    order.orderItems = orderItems;
+    return order;
   }
 
   async update(id: number, updateOrderDto: UpdateOrderDto) {

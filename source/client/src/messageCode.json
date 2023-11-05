@@ -13,6 +13,7 @@
   "empty_price_product_err": "Giá không được để trống",
   "empty_slug_product_err": "Slug không được để trống",
   "add_product_success": " Thêm sản phẩm thành công",
-  "signup_success": "đăng ký thành công",
-  "signin_success": "đăng nhập thành công"
+  "signup_success": "Đăng ký thành công",
+  "signin_success": "Đăng nhập thành công",
+  "update_user_success": "Cập nhật tài khoản thành công"
 }

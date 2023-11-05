@@ -8,6 +8,7 @@ import {
   Delete,
   Session,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -16,7 +17,6 @@ import { AuthService } from './auth.service';
 import { AuthGuard } from 'guards/auth.guard';
 import { CurrentUser } from './decorators/current-user.decorator';
 import { User } from './entities/user.entity';
-import { AdminGuard } from 'guards/admin.guard';
 import session from 'express-session';
 import { SignInDto } from './dto/sign-in.dto';
 import { JwtService } from '@nestjs/jwt';
@@ -24,6 +24,8 @@ import { AddItemToCartDto } from './dto/add-item-to-cart.dto';
 import { CartItemsService } from 'src/cart-items/cart-items.service';
 import { CreateOrderDto } from 'src/orders/dto/create-order.dto';
 import { OrdersService } from 'src/orders/orders.service';
+import { ManagerGuard } from 'guards/manager.guard';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('users')
 export class UsersController {
@@ -51,7 +53,28 @@ export class UsersController {
   @Get('/me')
   @UseGuards(AuthGuard)
   getCurrentUser(@CurrentUser() user: User) {
-    return user;
+    return {
+      messageCode: 'get_current_user_success',
+      data: { user },
+    };
+  }
+
+  @Post('/signup/manager')
+  async createManager() {
+    const manager = await this.authService.signupManager(
+      'manager@gmail.com',
+      'manager',
+    );
+    return manager;
+  }
+
+  @Post('/signup/employee')
+  async createEmployee() {
+    const employee = await this.authService.signupEmployee(
+      'employee@gmail.com',
+      'employee',
+    );
+    return employee;
   }
 
   @Post('/signup')
@@ -96,18 +119,29 @@ export class UsersController {
   }
 
   @Get()
-  @UseGuards(AdminGuard)
+  @UseGuards(ManagerGuard)
   findAll() {
     return this.usersService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string) {
     return this.usersService.findOne(+id);
   }
 
+  @Patch(':id')
+  @UseInterceptors(FileInterceptor('file'))
+  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    console.log('updateUserDto', updateUserDto);
+    const user = await this.usersService.update(+id, updateUserDto);
+    return {
+      messageCode: 'update_user_success',
+      data: { user },
+    };
+  }
+
   @Delete(':id')
-  @UseGuards(AdminGuard)
+  @UseGuards(ManagerGuard)
   remove(@Param('id') id: string) {
     return this.usersService.remove(+id);
   }

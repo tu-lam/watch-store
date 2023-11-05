@@ -8,12 +8,49 @@ import Layout from "../components/layout/Layout";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { DeleteProductInCartById, UpdateQuantityProductInCart, getAllCartProduct } from "../queries/cart";
+import {
+  DeleteProductInCartById,
+  UpdateQuantityProductInCart,
+  getAllCartProduct,
+} from "../queries/cart";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import { myAlert } from "../utils";
+import { useMutation } from "@tanstack/react-query";
+import { createOrder } from "../queries/auth";
+
+const schema = yup.object({
+  name: yup.string().required("Vui lòng nhập tên"),
+  phone: yup.string().required("Vui lòng nhập số điện thoại"),
+  address: yup.string().required("Vui lòng nhập địa chỉ"),
+  // .min(8, "Mật khẩu phải có ít nhất 8 ký tự"),
+});
 
 export default function Cart() {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const payload = useSelector((state) => state.auth);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ resolver: yupResolver(schema) });
+
+  const mutation = useMutation({
+    mutationFn: createOrder,
+    // mutationFn: () => {},
+    onSuccess: async (response, _, __) => {
+      const data = await response.json();
+      console.log(data);
+      myAlert(data.messageCode);
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+  });
+
   const total = products.reduce((accumulator, currentProduct) => {
     return accumulator + currentProduct.price * currentProduct.quantity;
   }, 0);
@@ -27,10 +64,10 @@ export default function Cart() {
             localStorage.getItem("token")
           );
 
-          console.log(response);
+          // console.log(response);
           if (response.ok) {
             const inputData = await response.json();
-            console.log(inputData);
+            // console.log(inputData);
             const data = inputData.map((item) => {
               return {
                 id: item.id,
@@ -46,10 +83,10 @@ export default function Cart() {
               };
             });
             setProducts(data);
-            console.log(data);
+            // console.log(data);
           } else {
           }
-        } catch (error) { }
+        } catch (error) {}
       };
       fetchData();
     }
@@ -73,7 +110,11 @@ export default function Cart() {
       }
     });
     setProducts(updatedProducts);
-  }
+  };
+
+  const submitHandler = (data) => {
+    mutation.mutate(data);
+  };
 
   return (
     <Layout>
@@ -82,7 +123,7 @@ export default function Cart() {
           <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
             Giỏ hàng
           </h1>
-          <form className="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
+          <div className="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
             <section aria-labelledby="cart-heading" className="lg:col-span-7">
               <h2 id="cart-heading" className="sr-only">
                 Items in your shopping cart
@@ -143,7 +184,9 @@ export default function Cart() {
                             name={`quantity-${productIdx}`}
                             className="max-w-full rounded-md border border-gray-300 py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
                             defaultValue={product.quantity}
-                            onChange={(event) => handleEditProduct(event, product.id)}
+                            onChange={(event) =>
+                              handleEditProduct(event, product.id)
+                            }
                           >
                             <option value={1}>1</option>
                             <option value={2}>2</option>
@@ -276,17 +319,116 @@ export default function Cart() {
                   </dd>
                 </div>
               </dl>
+              <h2
+                id="summary-heading"
+                className="mt-6 text-lg font-medium text-gray-900"
+              >
+                Thông tin đơn hàng
+              </h2>
 
-              <div className="mt-6">
+              <form
+                className="space-y-6"
+                onSubmit={handleSubmit(submitHandler)}
+              >
+                <div>
+                  <label
+                    htmlFor="name"
+                    className="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Tên
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      id="name"
+                      autoComplete="name"
+                      type="text"
+                      className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      {...register("name")}
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="phone"
+                    className="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Số điện thoại
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      id="phone"
+                      autoComplete="phone"
+                      type="text"
+                      className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      {...register("phone")}
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="address"
+                    className="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Địa chỉ
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      id="address"
+                      autoComplete="address"
+                      type="text"
+                      className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      {...register("address")}
+                    />
+                  </div>
+                </div>
+
+                {/* <div className="flex items-center justify-between">
+                  <div className="flex items-center">
+                    <input
+                      id="remember-me"
+                      name="remember-me"
+                      type="checkbox"
+                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                    />
+                    <label
+                      htmlFor="remember-me"
+                      className="ml-2 block text-sm text-gray-900"
+                    >
+                      Ghi nhớ đăng nhập
+                    </label>
+                  </div>
+
+                  <div className="text-sm">
+                    <Link
+                      to="/dang-ky"
+                      className="font-medium text-indigo-600 hover:text-indigo-500"
+                    >
+                      bạn chưa có tài khoản?
+                    </Link>
+                  </div>
+                </div> */}
+
+                <div>
+                  <button
+                    type="submit"
+                    className="flex w-full justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  >
+                    Đặt hàng
+                  </button>
+                </div>
+              </form>
+              {/* <div className="mt-6">
                 <button
                   type="submit"
                   className="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
                 >
                   Đặt hàng
                 </button>
-              </div>
+              </div> */}
             </section>
-          </form>
+          </div>
         </div>
       </div>
     </Layout>
