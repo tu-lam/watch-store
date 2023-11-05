@@ -6,9 +6,9 @@ import { Link } from "react-router-dom";
 import moment from "moment";
 
 const formatOrderStatus = (status) => {
-  if (status == "new") return "Mới";
-  else if (status == "pending") return "Chờ xác nhận";
-  else if (status == "canceled") return "Đã đơn";
+  if (status == "pending") return "Chờ xác nhận";
+  else if (status == "confirmed") return "Đã xác nhận";
+  else if (status == "canceled") return "Đã hủy";
 
   return "";
 };
@@ -116,7 +116,7 @@ const OrderManager = () => {
                     </td>
                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                       <Link
-                        to={`/bang-dieu-khien/hoa-don/${order._id}`}
+                        to={`/bang-dieu-khien/hoa-don/${order.id}`}
                         className="text-indigo-600 hover:text-indigo-900"
                       >
                         Chỉnh sửa<span className="sr-only">, {order._id}</span>

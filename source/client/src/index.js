@@ -27,6 +27,7 @@ import OrderManager from "./pages/dashboard/orderManager";
 import Protected from "./pages/Protected";
 import AccountManager from "./pages/dashboard/AccountManager";
 import EditAccount from "./pages/dashboard/EditAccount";
+import EditOrder from "./pages/dashboard/EditOrder";
 
 const queryClient = new QueryClient();
 
@@ -70,7 +71,7 @@ const router = createBrowserRouter([
       // { path: "danh-muc", element: <CategoryManager /> },
       // { path: "thong-bao", element: <NotificationManager /> },
       { path: "hoa-don", element: <OrderManager /> },
-      // { path: "hoa-don/:id", element: <EditOrder /> },
+      { path: "hoa-don/:id", element: <EditOrder /> },
       // { path: "danh-muc/them", element: <AddCategory /> },
       { path: "san-pham/them", element: <AddProduct /> },
       // { path: "thong-bao/them", element: <AddNotification /> },
