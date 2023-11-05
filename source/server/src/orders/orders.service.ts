@@ -68,6 +68,22 @@ export class OrdersService {
     });
   }
 
+  async findOneRelation(id: number) {
+    if (!id) {
+      return null;
+    }
+    const order = await this.repo.findOne({
+      where: { id: id },
+    });
+
+    const orderItems = await this.orderItemsService.findWhere({
+      orderId: order.id,
+    });
+
+    order.orderItems = orderItems;
+    return order;
+  }
+
   async update(id: number, updateOrderDto: UpdateOrderDto) {
     const order = await this.findOne(id);
 
