@@ -7,6 +7,8 @@ const path = require('path');
 const filePath = 'testcase - Trang tính1.csv';
 const fileTestFE = 'testcase - FE.csv';
 let TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIyLCJpYXQiOjE2OTg5MjYxNzV9.FfbFaIASDWeuSUBEf1CWz3WtPpV3vNWml_SwCAPOUNc";
+let PRODUCT_IN_CART_ID;
+const STATUS = ['pending', 'confirmed', 'canceled'];
 const readFileCSV = async (filePath) => {
     return new Promise((resolve, reject) => {
         const data = [];
@@ -144,9 +146,43 @@ async function fetchData() {
                     response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
                     console.log(test.check);
                     break;
-                case "post-formData":
+                case "post-formDataHaveToken":
                     console.log(requestBody);
                     let formData = new FormData();
+                    formData.append('name', requestBody.name);
+                    formData.append('price', requestBody.price);
+                    if (requestBody.image) {
+                        const fileImage = path.resolve('/home/anhthai/PTIT/watch-store/testcase/' + requestBody.image);
+                        formData.append('image', fs.createReadStream(fileImage));
+                    } else {
+                        formData.append('image', '');
+                    }
+
+                    try {
+                        response = await axios.post(test.api, formData, {
+                            headers: {
+                                ...formData.getHeaders(),
+                                'Authorization': `Bearer ${TOKEN}`
+                            },
+                        });
+                    } catch (error) {
+                        console.log(test.outputCode);
+                        console.log(error.response.data?.messageCode);
+                        console.log(error.response.data?.messageCode == test.outputCode);
+                        error.response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
+                        break;
+                    }
+                    console.log(test.outputCode);
+                    console.log(response.data?.messageCode);
+                    console.log(response.data?.messageCode == test.outputCode);
+                    response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
+                    if (test.check) {
+                        await axios.delete('http://localhost:4000/products/' + response.data?.data.product.id);
+                    }
+                    break;
+                case "post-formData":
+                    console.log(requestBody);
+                    formData = new FormData();
                     formData.append('name', requestBody.name);
                     formData.append('price', requestBody.price);
                     if (requestBody.image) {
@@ -177,7 +213,6 @@ async function fetchData() {
                         await axios.delete('http://localhost:4000/products/' + response.data?.data.product.id);
                     }
                     break;
-
                 case "delete":
                     console.log(requestBody);
                     try {
@@ -251,7 +286,73 @@ async function fetchData() {
                     console.log(response.data?.messageCode == test.outputCode);
                     response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
                     console.log(test.check);
+                    break;
+                case "postHaveToken":
+                    console.log(requestBody);
+                    console.log(test.api);
+                    try {
+                        response = await axios.post(test.api, requestBody, {
+                            headers: {
+                                'Authorization': `Bearer ${TOKEN}`
+                            }
+                        });
 
+                    } catch (error) {
+                        console.log(error);
+                        console.log(error.response.data?.messageCode);
+                        error.response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
+                        console.log(test.check);
+                        break;
+                    }
+                    console.log("test.outputCode: ", test.outputCode);
+                    console.log("response.data?.code: ", response.data?.messageCode);
+                    console.log(response.data?.messageCode == test.outputCode);
+                    response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
+                    console.log(test.check);
+                    break;
+                case "deleteHaveToken":
+                    console.log(requestBody);
+                    console.log(test.api);
+                    try {
+                        response = await axios.delete(test.api, {
+                            headers: {
+                                'Authorization': `Bearer ${TOKEN}`
+                            }
+                        });
+
+                    } catch (error) {
+                        console.log(error.response.data?.messageCode);
+                        error.response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
+                        console.log(test.check);
+                        break;
+                    }
+                    console.log("test.outputCode: ", test.outputCode);
+                    console.log("response.data?.code: ", response.data?.messageCode);
+                    console.log(response.data?.messageCode == test.outputCode);
+                    response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
+                    console.log(test.check);
+                    break;
+                case "patchHaveToken":
+                    console.log(requestBody);
+                    console.log(test.api);
+                    try {
+                        response = await axios.patch(test.api, requestBody, {
+                            headers: {
+                                'Authorization': `Bearer ${TOKEN}`
+                            }
+                        });
+
+                    } catch (error) {
+                        console.log(error.response.data?.messageCode);
+                        error.response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
+                        console.log(test.check);
+                        break;
+                    }
+                    console.log("test.outputCode: ", test.outputCode);
+                    console.log("response.data?.code: ", response.data?.messageCode);
+                    console.log(response.data?.messageCode == test.outputCode);
+                    response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
+                    console.log(test.check);
                     break;
                 default:
                     break;
@@ -334,6 +435,7 @@ async function testCaseFE() {
                     test.check = 'U' + count;
                     break;
                 case 'showCartHaveLogin':
+                    await page.goto('http://localhost:3000/dang-nhap');
                     await page.type('input[type="email"]', requestBody.email);
                     await page.type('input[type="password"]', requestBody.password);
                     await page.click('button[type="submit"]');
@@ -344,6 +446,7 @@ async function testCaseFE() {
                     test.check = 'U' + count;
                     break;
                 case 'addProductCartHaveLogin':
+                    await page.goto('http://localhost:3000/dang-nhap');
                     await page.type('input[type="email"]', requestBody.email);
                     await page.type('input[type="password"]', requestBody.password);
                     await page.click('button[type="submit"]');
@@ -365,7 +468,24 @@ async function testCaseFE() {
                     await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
                     test.check = 'U' + count;
                     break;
+                case 'orderProductInCart':
+                    await page.goto('http://localhost:3000/dang-nhap');
+                    await page.type('input[type="email"]', requestBody.email);
+                    await page.type('input[type="password"]', requestBody.password);
+                    await page.click('button[type="submit"]');
+                    await page.waitForTimeout(600);
+                    await page.goto(test.api);
+                    await page.type('input[id="name"]', requestBody.name);
+                    await page.type('input[id="phone"]', requestBody.phone);
+                    await page.type('input[id="address"]', requestBody.address);
+                    await page.waitForTimeout(3000);
+                    await page.click('button[type="submit"]');
+                    await page.waitForTimeout(600);
+                    await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
+                    test.check = 'U' + count;
+                    break;
                 case 'deleteProductInCart':
+                    await page.goto('http://localhost:3000/dang-nhap');
                     await page.type('input[type="email"]', requestBody.email);
                     await page.type('input[type="password"]', requestBody.password);
                     await page.click('button[type="submit"]');
@@ -376,16 +496,16 @@ async function testCaseFE() {
                     await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
                     test.check = 'U' + count;
                     break;
-                case 'showManagerProductHaveLogin':
+                case 'showManageHaveLogin':
                     await page.goto('http://localhost:3000/dang-nhap');
                     await page.waitForSelector('input[type="email"]');
                     await page.type('input[type="email"]', requestBody.email);
                     await page.type('input[type="password"]', requestBody.password);
                     await page.click('button[type="submit"]');
-                    await page.waitForTimeout(1500);
+                    await page.waitForTimeout(3000);
                     await page.goto(test.api);
                     test.check = 'U' + count;
-                    await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
+                    await page.screenshot({ path: 'photo-test/U' + count + '.png' });
                     break;
                 case 'FormEditManagerProductHaveLogin':
                     await page.goto('http://localhost:3000/dang-nhap');
@@ -393,12 +513,74 @@ async function testCaseFE() {
                     await page.type('input[type="email"]', requestBody.email);
                     await page.type('input[type="password"]', requestBody.password);
                     await page.click('button[type="submit"]');
-                    await page.waitForSelector('a[href="/bang-dieu-khien"]');
-                    await page.waitForTimeout(500);
-                    await page.click('a[href="/bang-dieu-khien"]');
-                    await page.waitForTimeout(500);
+                    await page.waitForTimeout(3000); 
+                    await page.goto('http://localhost:3000/bang-dieu-khien/san-pham');
                     elements = await page.$$('a[name="editProduct"]');
                     await elements[Math.floor(Math.random() * elements.length)].click();
+                    await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
+                    test.check = 'U' + count;
+                    break;
+                case 'addProductHaveLogin':
+                    await page.goto('http://localhost:3000/dang-nhap');
+                    await page.waitForSelector('input[type="email"]');
+                    await page.type('input[type="email"]', requestBody.email);
+                    await page.type('input[type="password"]', requestBody.password);
+                    await page.click('button[type="submit"]');
+                    await page.waitForTimeout(3000);
+                    await page.goto(test.api);
+                    await page.waitForSelector('input[type="file"]');
+                    elements = await page.$("input[type=file]");
+                    await elements.uploadFile('/home/anhthai/PTIT/watch-store/testcase/' + requestBody.image);
+                    await page.type('input[id="name"]', requestBody.name);
+                    await page.type('input[id="price"]', requestBody.price);
+                    await page.type('textarea[id="description"]', requestBody.description);
+                    await page.click('button[type="submit"]');
+                    await page.waitForTimeout(1500);
+                    await page.screenshot({ path: 'photo-test/U' + count + '.png' });
+                    test.check = 'U' + count;
+                    break;
+                case 'updateProductHaveLogin':
+                    await page.goto('http://localhost:3000/dang-nhap');
+                    await page.waitForSelector('input[type="email"]');
+                    await page.type('input[type="email"]', requestBody.email);
+                    await page.type('input[type="password"]', requestBody.password);
+                    await page.click('button[type="submit"]');
+                    await page.waitForTimeout(3000);
+                    await page.goto(test.api);
+                    await page.waitForSelector('input[type="file"]');
+                    elements = await page.$("input[type=file]");
+                    await elements.uploadFile('/home/anhthai/PTIT/watch-store/testcase/' + requestBody.image);
+                    await page.type('input[id="name"]', requestBody.name);
+                    await page.type('input[id="price"]', requestBody.price);
+                    await page.type('textarea[id="description"]', requestBody.description);
+                    await page.click('button[type="submit"]');
+                    await page.waitForTimeout(1500);
+                    await page.screenshot({ path: 'photo-test/U' + count + '.png'});
+                    test.check = 'U' + count;
+                    break;
+                case 'showFormUpdateStatusOrderHaveLogin':
+                    await page.goto('http://localhost:3000/dang-nhap');
+                    await page.waitForSelector('input[type="email"]');
+                    await page.type('input[type="email"]', requestBody.email);
+                    await page.type('input[type="password"]', requestBody.password);
+                    await page.click('button[type="submit"]');
+                    await page.waitForTimeout(3000);
+                    await page.goto(test.api);
+                    elements = await page.$$('a[name="editOrder"]');
+                    await elements[Math.floor(Math.random() * elements.length)].click();
+                    await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
+                    test.check = 'U' + count;
+                    break;
+                case 'updateStatusOrderHaveLogin':
+                    await page.goto('http://localhost:3000/dang-nhap');
+                    await page.waitForSelector('input[type="email"]');
+                    await page.type('input[type="email"]', requestBody.email);
+                    await page.type('input[type="password"]', requestBody.password);
+                    await page.click('button[type="submit"]');
+                    await page.waitForTimeout(3000);
+                    await page.goto(test.api);
+                    await page.select('#status', STATUS[+requestBody.status]);
+                    await page.click('button[type="submit"]');
                     await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
                     test.check = 'U' + count;
                     break;
@@ -417,6 +599,6 @@ async function testCaseFE() {
     writeFileCSV(data, fileTestFE);
     await browser.close();
 }
-// deleteFilesInFolder('photo-test/');
-fetchData();
-// testCaseFE();
+deleteFilesInFolder('photo-test/');
+// fetchData();
+testCaseFE();

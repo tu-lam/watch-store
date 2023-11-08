@@ -118,6 +118,7 @@ const OrderManager = () => {
                       <Link
                         to={`/bang-dieu-khien/hoa-don/${order.id}`}
                         className="text-indigo-600 hover:text-indigo-900"
+                        name="editOrder"
                       >
                         Chỉnh sửa<span className="sr-only">, {order._id}</span>
                       </Link>
