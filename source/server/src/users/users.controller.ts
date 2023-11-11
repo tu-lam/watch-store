@@ -41,7 +41,6 @@ export class UsersController {
   @UseGuards(AuthGuard)
   async getHistoryOrders(@CurrentUser() user: User) {
     const orders = await this.orderService.findWhere({ userId: user.id });
-    console.log('orders', orders);
     return {
       messageCode: 'get_history_orders_success',
       data: { orders },
@@ -67,6 +66,22 @@ export class UsersController {
     return {
       messageCode: 'get_current_user_success',
       data: { user },
+    };
+  }
+
+  @Patch('/me')
+  @UseGuards(AuthGuard)
+  @UseInterceptors(FileInterceptor('file'))
+  async updateCurrentUser(
+    @Body() body: UpdateUserDto,
+    @CurrentUser() user: User,
+  ) {
+    console.log(body);
+    const updatedUser = await this.usersService.update(user.id, body);
+    console.log(updatedUser);
+    return {
+      messageCode: 'update_current_user_success',
+      data: { user: updatedUser },
     };
   }
 
