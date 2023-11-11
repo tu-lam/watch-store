@@ -60,6 +60,18 @@ export const DeleteProductById = (productId) => {
   });
 };
 
+export const getHistoryOrders = () => {
+  const token = localStorage.getItem("token");
+  return fetch(`${process.env.REACT_APP_API_URL}/users/orders`, {
+    method: "GET",
+    headers: {
+      Accept: "application.json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
 export const getAllOrders = () => {
   const token = localStorage.getItem("token");
   return fetch(`${process.env.REACT_APP_API_URL}/orders`, {

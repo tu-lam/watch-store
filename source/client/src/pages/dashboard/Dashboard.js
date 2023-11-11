@@ -78,7 +78,7 @@ const userNavigation = [
   },
   {
     name: "Hóa đơn",
-    href: "/bang-dieu-khien/hoa-don",
+    href: "/bang-dieu-khien/lich-su-don-hang",
     icon: DocumentTextIcon,
     current: false,
   },
@@ -94,8 +94,10 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [navigation, setNavigation] = useState([]);
+  // const [data, setData] = useState();
   const query = useQuery({ queryKey: ["user"], queryFn: getCurrentUser });
 
+  // setData(query.data);
   const data = query.data;
   const token = localStorage.getItem("token");
 
@@ -103,8 +105,8 @@ const Dashboard = () => {
     navigate("/dang-nhap", { replace: true });
   }
   useEffect(() => {
-    // console.log("data", data);
-    if (data && data.messageCode == "get_current_user_success") {
+    console.log("data", data);
+    if (data?.messageCode == "get_current_user_success") {
       const user = data.data.user;
       if (user.role == "manager") {
         setNavigation(managerNavigation);
@@ -114,11 +116,12 @@ const Dashboard = () => {
         setNavigation(userNavigation);
       }
     }
-    //  else {
-    //   localStorage.removeItem("token");
-    //   navigate("/dang-nhap", { replace: true });
-    // }
   }, [data]);
+
+  if (data == undefined) {
+    return <></>;
+  }
+  // return <></>;
 
   return (
     <SidebarLayout

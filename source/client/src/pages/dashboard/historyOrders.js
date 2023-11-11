@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getAllOrders } from "../../queries/auth";
+import { getAllOrders, getHistoryOrders } from "../../queries/auth";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -13,14 +13,15 @@ const formatOrderStatus = (status) => {
   return "";
 };
 
-const OrderManager = () => {
+const HistoryOrders = () => {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
     const fetchOrders = async () => {
-      const response = await getAllOrders();
+      const response = await getHistoryOrders();
       const data = await response.json();
-      setOrders(data);
+      setOrders(data?.data.orders);
+      console.log(orders);
     };
 
     fetchOrders();
@@ -132,4 +133,4 @@ const OrderManager = () => {
   );
 };
 
-export default OrderManager;
+export default HistoryOrders;
