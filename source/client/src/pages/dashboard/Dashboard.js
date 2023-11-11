@@ -72,7 +72,7 @@ const employeeNavigation = [
 const userNavigation = [
   {
     name: "Thông tin cá nhân",
-    href: "/bang-dieu-khien/thong-in",
+    href: "/bang-dieu-khien/thong-tin-ca-nhan",
     icon: CubeIcon,
     current: false,
   },

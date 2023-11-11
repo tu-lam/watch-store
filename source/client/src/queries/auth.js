@@ -30,6 +30,18 @@ export const getAllProduct = () => {
   });
 };
 
+export const updateCurrentUser = async (data) => {
+  const token = localStorage.getItem("token");
+
+  return fetch(`${process.env.REACT_APP_API_URL}/users/me`, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: data.formData,
+  });
+};
+
 export const createProduct = (productData) => {
   return fetch(`${process.env.REACT_APP_API_URL}/products`, {
     method: "POST",

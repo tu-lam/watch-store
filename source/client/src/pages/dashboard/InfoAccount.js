@@ -7,28 +7,22 @@ import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { myAlert } from "../../utils";
 import { getUser, updateUser } from "../../queries/user";
+import { getCurrentUser, updateCurrentUser } from "../../queries/auth";
 
 const schema = yup.object().shape({
-  name: yup.mixed().required("Vui lòng nhập tên"),
-  email: yup.string().required("Vui lòng nhập email"),
-  role: yup.string().required("Vui lòng nhập vai trò"),
+  name: yup.string().required("Vui lòng nhập tên"),
+  // email: yup.string().required("Vui lòng nhập email"),
+  // role: yup.string().required("Vui lòng nhập vai trò"),
 });
 
 const InfoAccount = () => {
   const navigate = useNavigate();
-  const location = useLocation();
 
-  const userId = location.state.userId;
-  console.log("userId", userId);
+  const userQuery = useQuery({ queryKey: ["user"], queryFn: getCurrentUser });
+  // console.log(userQuery.data);
 
-  const userQuery = useQuery({
-    queryKey: ["user", userId],
-    queryFn: getUser,
-  });
-  console.log(userQuery.data);
-
-  const user = userQuery.data || null;
-  console.log(user);
+  const user = userQuery.data?.data.user || null;
+  // console.log(user);
   const {
     watch,
     register,
@@ -39,9 +33,9 @@ const InfoAccount = () => {
   });
 
   const mutation = useMutation({
-    mutationFn: updateUser,
+    mutationFn: updateCurrentUser,
     onSuccess: async (response, _, __) => {
-      console.log(response);
+      console.log("response", response);
       const data = await response.json();
       console.log("data", data);
       myAlert(data.messageCode);
@@ -59,14 +53,13 @@ const InfoAccount = () => {
   });
 
   const submitHandler = (data) => {
+    console.log(123);
     console.log(data);
 
     const formData = new FormData();
     formData.append("name", data.name);
-    formData.append("email", data.email);
-    formData.append("role", data.role);
 
-    mutation.mutate({ userId: userId, formData: formData });
+    mutation.mutate({ formData: formData });
   };
 
   return (
@@ -123,43 +116,9 @@ const InfoAccount = () => {
                           className="block w-full flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                           defaultValue={user.email}
                           {...register("email")}
+                          disabled
                         />
                       </div>
-                    </div>
-                  </div>
-
-                  <div className="col-span-full">
-                    <label
-                      htmlFor="role"
-                      className="block text-sm font-medium leading-6 text-gray-900"
-                    >
-                      Vai trò
-                    </label>
-                    <div className="mt-2">
-                      <select
-                        id="role"
-                        // name="category"
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        defaultValue={user.role}
-                        {...register("role")}
-                      >
-                        {user.role == "employee" && (
-                          <>
-                            <option value="employee" selected>
-                              Nhân viên
-                            </option>
-                            <option value="user">Người dùng</option>
-                          </>
-                        )}
-                        {user.role == "user" && (
-                          <>
-                            <option value="employee">Nhân viên</option>
-                            <option value="user" selected>
-                              Người dùng
-                            </option>
-                          </>
-                        )}
-                      </select>
                     </div>
                   </div>
                 </div>
@@ -177,7 +136,7 @@ const InfoAccount = () => {
                 type="submit"
                 className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Cập nhật sản phẩm
+                Cập nhật
               </button>
             </div>
           </form>
