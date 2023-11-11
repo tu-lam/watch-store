@@ -59,6 +59,10 @@ export class OrdersService {
     return this.repo.find();
   }
 
+  findWhere(query: any = {}) {
+    return this.repo.find({ where: query });
+  }
+
   findOne(id: number) {
     if (!id) {
       return null;

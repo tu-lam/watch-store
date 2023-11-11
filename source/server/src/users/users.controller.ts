@@ -37,6 +37,17 @@ export class UsersController {
     private orderService: OrdersService,
   ) {}
 
+  @Get('orders')
+  @UseGuards(AuthGuard)
+  async getHistoryOrders(@CurrentUser() user: User) {
+    const orders = await this.orderService.findWhere({ userId: user.id });
+    console.log('orders', orders);
+    return {
+      messageCode: 'get_history_orders_success',
+      data: { orders },
+    };
+  }
+
   @Get('cart')
   @UseGuards(AuthGuard)
   getCart(@CurrentUser() user: User) {
