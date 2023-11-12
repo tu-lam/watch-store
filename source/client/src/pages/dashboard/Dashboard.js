@@ -106,11 +106,11 @@ const Dashboard = () => {
   }
   useEffect(() => {
     console.log("data", data);
-    if (data?.messageCode == "get_current_user_success") {
-      const user = data.data.user;
-      if (user.role == "manager") {
+    if (data != "undefined" || data.messageCode != "get_current_user_success") {
+      const user = data?.data.user;
+      if (user?.role == "manager") {
         setNavigation(managerNavigation);
-      } else if (user.role == "employee") {
+      } else if (user?.role == "employee") {
         setNavigation(employeeNavigation);
       } else {
         setNavigation(userNavigation);
