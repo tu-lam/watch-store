@@ -91,7 +91,7 @@ const SidebarLayout = ({
                   </ul>
                 </li>
 
-                <li className="-mx-6 mt-auto">
+                {/* <li className="-mx-6 mt-auto">
                   <a
                     href="#"
                     className="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-white hover:bg-gray-800"
@@ -104,7 +104,7 @@ const SidebarLayout = ({
                     <span className="sr-only">Your profile</span>
                     <span aria-hidden="true">{user?.name}</span>
                   </a>
-                </li>
+                </li> */}
               </ul>
             </nav>
           </div>
