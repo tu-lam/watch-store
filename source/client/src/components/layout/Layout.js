@@ -1,3 +1,4 @@
+import Footer from "./Footer";
 import Header from "./Header";
 
 //create layout react
@@ -6,6 +7,7 @@ const Layout = ({ children }) => {
     <>
       <Header />
       <main>{children}</main>
+      <Footer />
     </>
   );
 };
