@@ -15,6 +15,8 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
+import * as path from 'path';
+import * as fs from 'fs';
 
 @Controller('products')
 export class ProductsController {
@@ -44,9 +46,21 @@ export class ProductsController {
         messageCode: 'empty_image_product_err',
       });
     }
+    const filePath = path.join('public', 'products', file.filename);
     if (file.size > 5242880) {
+      fs.unlinkSync(filePath);
       throw new BadRequestException({
         messageCode: 'invalid_file_size_product_err',
+      });
+    }
+
+    if (
+      !file.originalname.match(/\.(jpg|jpeg|png|gif)$/) ||
+      !file.mimetype.startsWith('image/')
+    ) {
+      fs.unlinkSync(filePath);
+      throw new BadRequestException({
+        messageCode: 'invalid_file_product_err',
       });
     }
     if (!createProductDto.name) {
@@ -109,6 +123,7 @@ export class ProductsController {
     @Body() updateProductDto: UpdateProductDto,
     @UploadedFile() file: Express.Multer.File,
   ) {
+    console.log(file);
     if (file && file.size > 5242880) {
       throw new BadRequestException({
         messageCode: 'invalid_file_size_product_err',

@@ -76,7 +76,6 @@ export class UsersController {
     @Body() body: UpdateUserDto,
     @CurrentUser() user: User,
   ) {
-    console.log(body);
     const updatedUser = await this.usersService.update(user.id, body);
     console.log(updatedUser);
     return {
