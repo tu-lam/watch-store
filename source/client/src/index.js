@@ -56,7 +56,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/gio-hang",
-    element: <Cart />,
+    element: (
+      <Protected>
+        <Cart />
+      </Protected>
+    ),
   },
   {
     path: "/dang-xuat",
