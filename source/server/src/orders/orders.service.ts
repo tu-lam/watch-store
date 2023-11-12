@@ -56,7 +56,11 @@ export class OrdersService {
   }
 
   findAll() {
-    return this.repo.find();
+    return this.repo.find({
+      order: {
+        id: 'DESC',
+      },
+    });
   }
 
   findWhere(query: any = {}) {
