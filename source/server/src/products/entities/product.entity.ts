@@ -20,6 +20,9 @@ export class Product {
   @Column({ default: '' })
   description: string;
 
+  @Column({ default: 'active' })
+  status: string;
+
   @OneToMany(() => CartItem, (cartItem) => cartItem.productId)
   public cartItems: CartItem[];
 
