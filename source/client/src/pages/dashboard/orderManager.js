@@ -102,7 +102,10 @@ const OrderManager = () => {
                         )}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {order.total}
+                      {order.total.toLocaleString("vi", {
+                        style: "currency",
+                        currency: "VND",
+                      })}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                       {formatOrderStatus(order.status)}
@@ -113,7 +116,7 @@ const OrderManager = () => {
                         className="text-indigo-600 hover:text-indigo-900"
                         name="editOrder"
                       >
-                        Chỉnh sửa<span className="sr-only">, {order._id}</span>
+                        Cập nhật<span className="sr-only">, {order._id}</span>
                       </Link>
                     </td>
                     {/* <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
