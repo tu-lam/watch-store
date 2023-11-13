@@ -182,20 +182,20 @@ async function fetchData() {
                     break;
                 case "post-formData":
                     console.log(requestBody);
-                    formData = new FormData();
-                    formData.append('name', requestBody.name);
-                    formData.append('price', requestBody.price);
+                    let fData = new FormData();
+                    fData.append('name', requestBody.name);
+                    fData.append('price', requestBody.price);
                     if (requestBody.image) {
                         const fileImage = path.resolve('/home/anhthai/PTIT/watch-store/testcase/' + requestBody.image);
-                        formData.append('image', fs.createReadStream(fileImage));
+                        fData.append('image', fs.createReadStream(fileImage));
                     } else {
-                        formData.append('image', '');
+                        fData.append('image', '');
                     }
 
                     try {
-                        response = await axios.post(test.api, formData, {
+                        response = await axios.post(test.api, fData, {
                             headers: {
-                                ...formData.getHeaders(),
+                                ...fData.getHeaders(),
                             },
                         });
                     } catch (error) {
@@ -368,6 +368,7 @@ async function fetchData() {
             console.error('Response Error Status:', error.response.status);
             console.error('Response Data:', error.response.data);
         }
+        console.log(error);
         console.log("can't connect server");
 
     }
@@ -379,7 +380,7 @@ async function testCaseFE() {
     let count = 0;
     const browser = await puppeteer.launch({ headless: true, args: ['--start-maximized'] });
     const page = await browser.newPage();
-    await page.setViewport({ width: 2560, height: 1600 });
+    await page.setViewport({ width: 1920, height: 1080 });
     page.on('dialog', async (dialog) => {
         await dialog.accept();
     });
@@ -398,192 +399,196 @@ async function testCaseFE() {
         try {
             await page.goto(test.api);
             switch (test.method) {
-                case 'login':
-                    await page.waitForSelector('input[type="email"]');
-                    await page.type('input[type="email"]', requestBody.email);
-                    await page.type('input[type="password"]', requestBody.password);
-                    await page.click('button[type="submit"]');
-                    await page.waitForTimeout(1000);
-                    const fileImage = 'photo-test/U' + count + '.png';
-                    await page.screenshot({ path: fileImage, fullPage: true });
-                    test.check = 'U' + count;
-                    break;
-                case 'signup':
-                    await page.type('input[id="name"]', requestBody.name);
-                    await page.type('input[id="email"]', requestBody.email);
-                    await page.type('input[id="password"]', requestBody.password);
-                    await page.click('button[type="submit"]');
-                    await page.waitForTimeout(1000);
-                    await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
-                    test.check = 'U' + count;
-                    break;
-                case 'showProduct':
-                    await page.waitForTimeout(1000);
-                    await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
-                    test.check = 'U' + count;
-                    break;
-                case 'showProductDetail':
-                    elements = await page.$$('.group');
-                    await elements[Math.floor(Math.random() * elements.length)].click();
-                    await page.waitForTimeout(1000);
-                    await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
-                    test.check = 'U' + count;
-                    break;
-                case 'showCartNotLogin':
-                    await page.waitForTimeout(500);
-                    await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
-                    test.check = 'U' + count;
-                    break;
-                case 'showCartHaveLogin':
-                    await page.goto('http://localhost:3000/dang-nhap');
-                    await page.type('input[type="email"]', requestBody.email);
-                    await page.type('input[type="password"]', requestBody.password);
-                    await page.click('button[type="submit"]');
-                    await page.waitForTimeout(1500);
-                    await page.click('a[href="/gio-hang"]');
-                    await page.waitForTimeout(1000);
-                    await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
-                    test.check = 'U' + count;
-                    break;
-                case 'addProductCartHaveLogin':
-                    await page.goto('http://localhost:3000/dang-nhap');
-                    await page.type('input[type="email"]', requestBody.email);
-                    await page.type('input[type="password"]', requestBody.password);
-                    await page.click('button[type="submit"]');
-                    await page.waitForTimeout(1500);
-                    elements = await page.$$('.group');
-                    await elements[3].click();
-                    await page.waitForTimeout(500);
-                    await page.click('button[name="addProductInCart"]');
-                    await page.waitForTimeout(600);
-                    await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
-                    test.check = 'U' + count;
-                    break;
-                case 'addProductCartNotLogin':
-                    elements = await page.$$('.group');
-                    await elements[3].click();
-                    await page.waitForTimeout(500);
-                    await page.click('button[name="addProductInCart"]');
-                    await page.waitForTimeout(500);
-                    await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
-                    test.check = 'U' + count;
-                    break;
+                // case 'login':
+                //     await page.waitForSelector('input[type="email"]');
+                //     await page.type('input[type="email"]', requestBody.email);
+                //     await page.type('input[type="password"]', requestBody.password);
+                //     await page.click('button[type="submit"]');
+                //     await page.waitForTimeout(1000);
+                //     const fileImage = 'photo-test/U' + count + '.png';
+                //     await page.screenshot({ path: fileImage, fullPage: true });
+                //     test.check = 'U' + count;
+                //     break;
+                // case 'signup':
+                //     await page.type('input[id="name"]', requestBody.name);
+                //     await page.type('input[id="email"]', requestBody.email);
+                //     await page.type('input[id="password"]', requestBody.password);
+                //     await page.click('button[type="submit"]');
+                //     await page.waitForTimeout(1000);
+                //     await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
+                //     test.check = 'U' + count;
+                //     break;
+                // case 'showProduct':
+                //     await page.waitForTimeout(1000);
+                //     await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
+                //     test.check = 'U' + count;
+                //     break;
+                // case 'showProductDetail':
+                //     elements = await page.$$('.group');
+                //     await elements[Math.floor(Math.random() * elements.length)].click();
+                //     await page.waitForTimeout(1000);
+                //     await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
+                //     test.check = 'U' + count;
+                //     break;
+                // case 'showCartNotLogin':
+                //     await page.waitForTimeout(500);
+                //     await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
+                //     test.check = 'U' + count;
+                //     break;
+                // case 'showCartHaveLogin':
+                //     await page.goto('http://localhost:3000/dang-nhap');
+                //     await page.type('input[type="email"]', requestBody.email);
+                //     await page.type('input[type="password"]', requestBody.password);
+                //     await page.click('button[type="submit"]');
+                //     await page.waitForTimeout(1500);
+                //     await page.click('a[href="/gio-hang"]');
+                //     await page.waitForTimeout(1000);
+                //     await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
+                //     test.check = 'U' + count;
+                //     break;
+                // case 'addProductCartHaveLogin':
+                //     await page.goto('http://localhost:3000/dang-nhap');
+                //     await page.type('input[type="email"]', requestBody.email);
+                //     await page.type('input[type="password"]', requestBody.password);
+                //     await page.click('button[type="submit"]');
+                //     await page.waitForTimeout(1500);
+                //     elements = await page.$$('.group');
+                //     await elements[3].click();
+                //     await page.waitForTimeout(500);
+                //     await page.click('button[name="addProductInCart"]');
+                //     await page.waitForTimeout(600);
+                //     await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
+                //     test.check = 'U' + count;
+                //     break;
+                // case 'addProductCartNotLogin':
+                //     elements = await page.$$('.group');
+                //     await elements[3].click();
+                //     await page.waitForTimeout(500);
+                //     await page.click('button[name="addProductInCart"]');
+                //     await page.waitForTimeout(500);
+                //     await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
+                //     test.check = 'U' + count;
+                //     break;
                 case 'orderProductInCart':
                     await page.goto('http://localhost:3000/dang-nhap');
                     await page.type('input[type="email"]', requestBody.email);
                     await page.type('input[type="password"]', requestBody.password);
                     await page.click('button[type="submit"]');
-                    await page.waitForTimeout(600);
+                    await page.waitForTimeout(1500);
                     await page.goto(test.api);
+                    await page.waitForSelector('input[id="name"]');
                     await page.type('input[id="name"]', requestBody.name);
                     await page.type('input[id="phone"]', requestBody.phone);
                     await page.type('input[id="address"]', requestBody.address);
-                    await page.waitForTimeout(3000);
                     await page.click('button[type="submit"]');
                     await page.waitForTimeout(600);
                     await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
                     test.check = 'U' + count;
                     break;
-                case 'deleteProductInCart':
-                    await page.goto('http://localhost:3000/dang-nhap');
-                    await page.type('input[type="email"]', requestBody.email);
-                    await page.type('input[type="password"]', requestBody.password);
-                    await page.click('button[type="submit"]');
-                    await page.waitForTimeout(600);
-                    await page.goto(test.api);
-                    await page.click('button[name="deleteProductInCart"]');
-                    await page.waitForTimeout(600);
-                    await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
-                    test.check = 'U' + count;
-                    break;
-                case 'showManageHaveLogin':
-                    await page.goto('http://localhost:3000/dang-nhap');
-                    await page.waitForSelector('input[type="email"]');
-                    await page.type('input[type="email"]', requestBody.email);
-                    await page.type('input[type="password"]', requestBody.password);
-                    await page.click('button[type="submit"]');
-                    await page.waitForTimeout(3000);
-                    await page.goto(test.api);
-                    test.check = 'U' + count;
-                    await page.screenshot({ path: 'photo-test/U' + count + '.png' });
-                    break;
-                case 'FormEditManagerProductHaveLogin':
-                    await page.goto('http://localhost:3000/dang-nhap');
-                    await page.waitForSelector('input[type="email"]');
-                    await page.type('input[type="email"]', requestBody.email);
-                    await page.type('input[type="password"]', requestBody.password);
-                    await page.click('button[type="submit"]');
-                    await page.waitForTimeout(3000); 
-                    await page.goto('http://localhost:3000/bang-dieu-khien/san-pham');
-                    elements = await page.$$('a[name="editProduct"]');
-                    await elements[Math.floor(Math.random() * elements.length)].click();
-                    await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
-                    test.check = 'U' + count;
-                    break;
-                case 'addProductHaveLogin':
-                    await page.goto('http://localhost:3000/dang-nhap');
-                    await page.waitForSelector('input[type="email"]');
-                    await page.type('input[type="email"]', requestBody.email);
-                    await page.type('input[type="password"]', requestBody.password);
-                    await page.click('button[type="submit"]');
-                    await page.waitForTimeout(3000);
-                    await page.goto(test.api);
-                    await page.waitForSelector('input[type="file"]');
-                    elements = await page.$("input[type=file]");
-                    await elements.uploadFile('/home/anhthai/PTIT/watch-store/testcase/' + requestBody.image);
-                    await page.type('input[id="name"]', requestBody.name);
-                    await page.type('input[id="price"]', requestBody.price);
-                    await page.type('textarea[id="description"]', requestBody.description);
-                    await page.click('button[type="submit"]');
-                    await page.waitForTimeout(1500);
-                    await page.screenshot({ path: 'photo-test/U' + count + '.png' });
-                    test.check = 'U' + count;
-                    break;
-                case 'updateProductHaveLogin':
-                    await page.goto('http://localhost:3000/dang-nhap');
-                    await page.waitForSelector('input[type="email"]');
-                    await page.type('input[type="email"]', requestBody.email);
-                    await page.type('input[type="password"]', requestBody.password);
-                    await page.click('button[type="submit"]');
-                    await page.waitForTimeout(3000);
-                    await page.goto(test.api);
-                    await page.waitForSelector('input[type="file"]');
-                    elements = await page.$("input[type=file]");
-                    await elements.uploadFile('/home/anhthai/PTIT/watch-store/testcase/' + requestBody.image);
-                    await page.type('input[id="name"]', requestBody.name);
-                    await page.type('input[id="price"]', requestBody.price);
-                    await page.type('textarea[id="description"]', requestBody.description);
-                    await page.click('button[type="submit"]');
-                    await page.waitForTimeout(1500);
-                    await page.screenshot({ path: 'photo-test/U' + count + '.png'});
-                    test.check = 'U' + count;
-                    break;
-                case 'showFormUpdateStatusOrderHaveLogin':
-                    await page.goto('http://localhost:3000/dang-nhap');
-                    await page.waitForSelector('input[type="email"]');
-                    await page.type('input[type="email"]', requestBody.email);
-                    await page.type('input[type="password"]', requestBody.password);
-                    await page.click('button[type="submit"]');
-                    await page.waitForTimeout(3000);
-                    await page.goto(test.api);
-                    elements = await page.$$('a[name="editOrder"]');
-                    await elements[Math.floor(Math.random() * elements.length)].click();
-                    await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
-                    test.check = 'U' + count;
-                    break;
-                case 'updateStatusOrderHaveLogin':
-                    await page.goto('http://localhost:3000/dang-nhap');
-                    await page.waitForSelector('input[type="email"]');
-                    await page.type('input[type="email"]', requestBody.email);
-                    await page.type('input[type="password"]', requestBody.password);
-                    await page.click('button[type="submit"]');
-                    await page.waitForTimeout(3000);
-                    await page.goto(test.api);
-                    await page.select('#status', STATUS[+requestBody.status]);
-                    await page.click('button[type="submit"]');
-                    await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
-                    test.check = 'U' + count;
-                    break;
+                // case 'deleteProductInCart':
+                //     await page.goto('http://localhost:3000/dang-nhap');
+                //     await page.type('input[type="email"]', requestBody.email);
+                //     await page.type('input[type="password"]', requestBody.password);
+                //     await page.click('button[type="submit"]');
+                //     await page.waitForTimeout(600);
+                //     await page.goto(test.api);
+                //     await page.waitForSelector('button[name="deleteProductInCart"]');
+                //     await page.click('button[name="deleteProductInCart"]');
+                //     await page.waitForTimeout(600);
+                //     await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
+                //     test.check = 'U' + count;
+                //     break;
+                // case 'showManageHaveLogin':
+                //     await page.goto('http://localhost:3000/dang-nhap');
+                //     await page.waitForSelector('input[type="email"]');
+                //     await page.type('input[type="email"]', requestBody.email);
+                //     await page.type('input[type="password"]', requestBody.password);
+                //     await page.click('button[type="submit"]');
+                //     await page.waitForTimeout(3000);
+                //     await page.goto(test.api);
+                //     test.check = 'U' + count;
+                //     await page.screenshot({ path: 'photo-test/U' + count + '.png' });
+                //     break;
+                // case 'FormEditManagerProductHaveLogin':
+                //     await page.goto('http://localhost:3000/dang-nhap');
+                //     await page.waitForSelector('input[type="email"]');
+                //     await page.type('input[type="email"]', requestBody.email);
+                //     await page.type('input[type="password"]', requestBody.password);
+                //     await page.click('button[type="submit"]');
+                //     await page.waitForTimeout(3000);
+                //     await page.goto('http://localhost:3000/bang-dieu-khien/san-pham');
+                //     await page.waitForSelector('a[name="editProduct"]');
+                //     elements = await page.$$('a[name="editProduct"]');
+                //     await elements[Math.floor(Math.random() * elements.length)].click();
+                //     await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
+                //     test.check = 'U' + count;
+                //     break;
+                // case 'addProductHaveLogin':
+                //     await page.goto('http://localhost:3000/dang-nhap');
+                //     await page.waitForSelector('input[type="email"]');
+                //     await page.type('input[type="email"]', requestBody.email);
+                //     await page.type('input[type="password"]', requestBody.password);
+                //     await page.click('button[type="submit"]');
+                //     await page.waitForTimeout(3000);
+                //     await page.goto(test.api);
+                //     await page.waitForSelector('input[type="file"]');
+                //     elements = await page.$("input[type=file]");
+                //     await elements.uploadFile('/home/anhthai/PTIT/watch-store/testcase/' + requestBody.image);
+                //     await page.type('input[id="name"]', requestBody.name);
+                //     await page.type('input[id="price"]', requestBody.price);
+                //     await page.type('textarea[id="description"]', requestBody.description);
+                //     await page.click('button[type="submit"]');
+                //     await page.waitForTimeout(1500);
+                //     await page.screenshot({ path: 'photo-test/U' + count + '.png' });
+                //     test.check = 'U' + count;
+                //     break;
+                // case 'updateProductHaveLogin':
+                //     await page.goto('http://localhost:3000/dang-nhap');
+                //     await page.waitForSelector('input[type="email"]');
+                //     await page.type('input[type="email"]', requestBody.email);
+                //     await page.type('input[type="password"]', requestBody.password);
+                //     await page.click('button[type="submit"]');
+                //     await page.waitForTimeout(3000);
+                //     await page.goto(test.api);
+                //     await page.waitForSelector('input[type="file"]');
+                //     elements = await page.$("input[type=file]");
+                //     await elements.uploadFile('/home/anhthai/PTIT/watch-store/testcase/' + requestBody.image);
+                //     await page.type('input[id="name"]', requestBody.name);
+                //     await page.type('input[id="price"]', requestBody.price);
+                //     await page.type('textarea[id="description"]', requestBody.description);
+                //     await page.click('button[type="submit"]');
+                //     await page.waitForTimeout(1500);
+                //     await page.screenshot({ path: 'photo-test/U' + count + '.png'});
+                //     test.check = 'U' + count;
+                //     break;
+                // case 'showFormUpdateStatusOrderHaveLogin':
+                //     await page.goto('http://localhost:3000/dang-nhap');
+                //     await page.waitForSelector('input[type="email"]');
+                //     await page.type('input[type="email"]', requestBody.email);
+                //     await page.type('input[type="password"]', requestBody.password);
+                //     await page.click('button[type="submit"]');
+                //     await page.waitForTimeout(1000);
+                //     await page.goto(test.api);
+                //     await page.waitForTimeout(3000);
+                //     elements = await page.$$('a[name="editOrder"]');
+                //     await elements[Math.floor(Math.random() * elements.length)].click();
+                //     await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
+                //     test.check = 'U' + count;
+                //     break;
+                // case 'updateStatusOrderHaveLogin':
+                //     await page.goto('http://localhost:3000/dang-nhap');
+                //     await page.waitForSelector('input[type="email"]');
+                //     await page.type('input[type="email"]', requestBody.email);
+                //     await page.type('input[type="password"]', requestBody.password);
+                //     await page.click('button[type="submit"]');
+                //     await page.waitForTimeout(1000);
+                //     await page.goto(test.api);
+                //     await page.waitForTimeout(3000);
+                //     await page.select('#status', STATUS[+requestBody.status]);
+                //     await page.click('button[type="submit"]');
+                //     await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
+                //     test.check = 'U' + count;
+                //     break;
                 default:
                     break;
             }
@@ -599,6 +604,6 @@ async function testCaseFE() {
     writeFileCSV(data, fileTestFE);
     await browser.close();
 }
-deleteFilesInFolder('photo-test/');
-// fetchData();
-testCaseFE();
+// deleteFilesInFolder('photo-test/');
+fetchData();
+// testCaseFE();

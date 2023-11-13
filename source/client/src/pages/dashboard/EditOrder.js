@@ -306,7 +306,7 @@ const EditOrder = () => {
                   </option>
                   <option
                     value="confirmed"
-                    {...{ selected: order?.status == "confirmed" }}
+                    {...{ selected: order?.uy == "confirmed" }}
                   >
                     Đã xác nhận
                   </option>
