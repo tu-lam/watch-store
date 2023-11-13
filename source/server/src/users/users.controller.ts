@@ -246,4 +246,15 @@ export class UsersController {
     const order = await this.orderService.create(user.id, createOrderDto);
     return { messageCode: 'create_order_success', data: { order } };
   }
+
+  @Patch('cancel-order/:id')
+  @UseGuards(AuthGuard)
+  async cancelOrder(@Param('id') id: string, @CurrentUser() user: User) {
+    const order = await this.orderService.findOne(+id);
+    if (order.userId != user.id) {
+      throw new BadRequestException({ messageCode: 'not_your_order_err' });
+    }
+    await this.orderService.update(+id, { status: 'canceled' });
+    return { messageCode: 'cancel_order_success' };
+  }
 }
