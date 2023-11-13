@@ -172,7 +172,7 @@ export class UsersController {
 
   @Get(':id')
   // @UseGuards(AuthGuard)
-  // @UseGuards(ManagerGuard)
+  @UseGuards(ManagerGuard)
   async findOne(@Param('id') id: string) {
     return this.usersService.findOne(+id);
   }
