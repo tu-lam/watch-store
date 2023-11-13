@@ -12,4 +12,8 @@ export class CreateUserDto {
   @IsOptional()
   @IsString()
   password: string;
+
+  @IsOptional()
+  @IsString()
+  role: string;
 }
