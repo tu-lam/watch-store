@@ -13,6 +13,7 @@ const schema = yup.object().shape({
   name: yup.string().required("Vui lòng nhập mật khẩu"),
   description: yup.string(),
   price: yup.number().required("Vui lòng nhập giá sản phẩm"),
+  status: yup.string(),
 });
 
 const EditProduct = () => {
@@ -76,7 +77,7 @@ const EditProduct = () => {
     if (data.image && data.image.length > 0)
       formData.append("image", data.image[0]);
     formData.append("name", data.name);
-    formData.append("description", data.description);
+    // formData.append("description", data.description);
     formData.append("price", data.price);
     formData.append("status", data.status);
 
@@ -199,7 +200,7 @@ const EditProduct = () => {
                     </div>
                   </div>
 
-                  <div className="col-span-full">
+                  {/* <div className="col-span-full">
                     <label
                       htmlFor="description"
                       className="block text-sm font-medium leading-6 text-gray-900"
@@ -215,7 +216,7 @@ const EditProduct = () => {
                         {...register("description")}
                       />
                     </div>
-                  </div>
+                  </div> */}
                   <div className="col-span-full">
                     <label
                       htmlFor="status"
