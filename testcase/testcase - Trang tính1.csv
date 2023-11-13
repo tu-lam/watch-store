@@ -5,8 +5,10 @@ api,description,method,inputBody,outputCode,check
 "http://localhost:4000/users/signin","api login đúng tài khoang, sai mật khẩu","post","{""email"": ""admin@gmail.com"",""password"":""adjsb""}","incorrect_password_err",true
 "http://localhost:4000/users/signin","api login đúng tài khoang, check mật khẩu chữ hoa có khác chữ thường thông","post","{""email"": ""admin@gmail.com"",""password"":""ADmin""}","incorrect_password_err",true
 "http://localhost:4000/users/signin","api login đúng tài khoang và mật khẩu có đâu cách cuối thì sao","post","{""email"": ""admin@gmail.com"",""password"":""admin  ""}","incorrect_password_err",true
-"http://localhost:4000/users/signin","api login đúng tài khoang,đúng mật khẩu","post","{""email"": ""thai4@gmail.com"",""password"":""123456789""}","signin_success",true
 "http://localhost:4000/users/signin","api login check SQL injection","post","{""email"": ""admin@gmail.com"",""password"":"" OR '1'='1'""}","incorrect_password_err",true
+"http://localhost:4000/users/signin","api login đúng tài khoang,đúng mật khẩu","post","{""email"": ""thai4@gmail.com"",""password"":""123456789""}","signin_success",true
+"http://localhost:4000/users/signin","api login tài khoản quản lý","post","{""email"": ""manager@gmail.com"",""password"":""manager""}","signin_success",false
+"http://localhost:4000/users/signin","api login tài khoản nhân viên","post","{""email"": ""attack1@gmail.com"",""password"":""12312321123""}","signin_success",false
 "http://localhost:4000/users/signup","api đăng ký với email không đúng cấu trúc","post","{""name"": ""thai"",""email"": ""adc"",""password"":""222as""}","invalid_email_err",true
 "http://localhost:4000/users/signup","api đăng ký trùng email","post","{""name"": ""thai"",""email"": ""admin@gmail.com"",""password"":""222as""}","existing_email_err",true
 "http://localhost:4000/users/signup","api đăng ký bỏ trống email","post","{""name"": ""thai"",""email"": """",""password"":""222as""}","empty_email_err",true
@@ -15,52 +17,53 @@ api,description,method,inputBody,outputCode,check
 "http://localhost:4000/users/signup","api đăng ký bỏ trống password","post","{""name"": ""thai"",""email"": ""adc@gmail.com"",""password"":""""}","empty_password_err",true
 "http://localhost:4000/users/signup","api đăng ký bỏ trống tên","post","{""name"": """",""email"": ""adc@gmail.com"",""password"":""222as""}","empty_name_err",true
 "http://localhost:4000/users/signup","api đăng ký đúng","post","{""name"": ""thai"",""email"": ""admin@gmail.com"",""password"":""admin""}","signup_success",false
-"http://localhost:4000/products","api thêm sản phảm nhập đúng","post-formDataHaveToken","{""name"": ""jjj"",""price"": ""300"",""image"":""image-products-test/1.jpg""}","add_product_success",true
-"http://localhost:4000/products","api thêm sản phẩm thiếu name","post-formDataHaveToken","{""name"": """",""price"": ""300"",""image"":""image-products-test/1.jpg""}","empty_name_product_err",true
-"http://localhost:4000/products","api thêm sản phẩm thiếu image","post-formDataHaveToken","{""name"": ""thai"",""price"": ""300"",""image"":""""}","empty_image_product_err",true
-"http://localhost:4000/products","api thêm sản phẩm có image quá lơn hơn 5mb","post-formDataHaveToken","{""name"": ""thai"",""price"": ""300"",""image"":""image-products-test/22.jpg""}","invalid_file_size_product_err",true
-"http://localhost:4000/products","api thêm sản phẩm có image sai định dạng","post-formDataHaveToken","{""name"": ""thai"",""price"": ""300"",""image"":""image-products-test/testcaseRun.sh""}","invalid_file_size_product_err",false
-"http://localhost:4000/products","api thêm sản phẩm thiếu price","post-formDataHaveToken","{""name"": ""jjj"",""price"": """",""image"":""image-products-test/1.jpg""}","empty_price_product_err",false
-"http://localhost:4000/products","api thêm sản phẩm price có chữ","post-formDataHaveToken","{""name"": ""jjj"",""price"": ""30p0"",""image"":""image-products-test/1.jpg""}","invalid_price_product_err",false
-"http://localhost:4000/products","api thêm sản phẩm price có kí tự đặt biệt","post-formDataHaveToken","{""name"": ""jjj"",""price"": ""30#0"",""image"":""image-products-test/1.jpg""}","invalid_price_product_err",false
-"http://localhost:4000/products","api thêm sản phẩm khi chưa đăng nhập (chưa có token)","post-formData","{""name"": ""jjj"",""price"": ""300"",""image"":""image-products-test/1.jpg""}","empty_token_err",false
+"http://localhost:4000/products","api thêm sản phảm nhập đúng","post-formDataHaveTokenAdmin","{""name"": ""jjj"",""price"": ""300"",""image"":""image-products-test/1.jpg""}","add_product_success",false
+"http://localhost:4000/products","api thêm sản phẩm thiếu name","post-formDataHaveTokenAdmin","{""name"": """",""price"": ""300"",""image"":""image-products-test/1.jpg""}","empty_name_product_err",false
+"http://localhost:4000/products","api thêm sản phẩm thiếu image","post-formDataHaveTokenAdmin","{""name"": ""thai"",""price"": ""300"",""image"":""""}","empty_image_product_err",false
+"http://localhost:4000/products","api thêm sản phẩm có image quá lơn hơn 5mb","post-formDataHaveTokenAdmin","{""name"": ""thai"",""price"": ""300"",""image"":""image-products-test/22.jpg""}","invalid_file_size_product_err",false
+"http://localhost:4000/products","api thêm sản phẩm có image sai định dạng","post-formDataHaveTokenAdmin","{""name"": ""thai"",""price"": ""300"",""image"":""image-products-test/testcaseRun.sh""}","invalid_file_product_err",false
+"http://localhost:4000/products","api thêm sản phẩm thiếu price","post-formDataHaveTokenAdmin","{""name"": ""jjj"",""price"": """",""image"":""image-products-test/1.jpg""}","empty_price_product_err",false
+"http://localhost:4000/products","api thêm sản phẩm price có chữ","post-formDataHaveTokenAdmin","{""name"": ""jjj"",""price"": ""30p0"",""image"":""image-products-test/1.jpg""}","invalid_price_product_err",false
+"http://localhost:4000/products","api thêm sản phẩm price có kí tự đặt biệt","post-formDataHaveTokenAdmin","{""name"": ""jjj"",""price"": ""30#0"",""image"":""image-products-test/1.jpg""}","invalid_price_product_err",false
+"http://localhost:4000/products","api thêm sản phẩm khi chưa đăng nhập (chưa có token)","post-formData","{""name"": ""jjj"",""price"": ""300"",""image"":""image-products-test/1.jpg""}","unauthorized_err",true
+"http://localhost:4000/products","api thêm sản phẩm khi chưa đăng nhập (chưa có token)","post-formData","{""name"": ""jjj"",""price"": ""300"",""image"":""image-products-test/1.jpg""}","unauthorized_err",true
+"http://localhost:4000/products","api thêm sản phẩm khi chưa đăng nhập (token nhân viên)","post-formDataHaveTokenStaff","{""name"": ""jjj"",""price"": ""300"",""image"":""image-products-test/1.jpg""}","add_product_success",false
+"http://localhost:4000/products","api thêm sản phẩm khi chưa đăng nhập (token của khách hàng)","post-formDataHaveToken","{""name"": ""jjj"",""price"": ""300"",""image"":""image-products-test/1.jpg""}","unauthorized_err",true
 "http://localhost:4000/products","api lấy tất cả sản phẩm trong database","getProduct","{}","List",true
 "http://localhost:4000/products/15","api lấy một sản phẩm","getProduct","{}","Object",true
-"http://localhost:4000/products/1","tìm sản phẩm không tồn tại, không trả về gì hết","getProduct","{}","Null",false
-"http://localhost:4000/products/1","api xóa một sản phẩm không tông tại","delete","{}","product_not_found_err",true
-"http://localhost:4000/products/51","xóa một sản phẩm thành công","delete","{}","delete_product_success",false
+"http://localhost:4000/products/1","tìm sản phẩm không tồn tại, không trả về gì hết","get","{}","find_product_success",true
 "http://localhost:4000/products/12","api cập nhẩn thông tin sản phẩm không để name","patchHaveToken","{""name"": """",""price"": ""300"",""image"":""image-products-test/1.jpg""}","empty_name_product_err",false
 "http://localhost:4000/products/12","api cập nhẩn thông tin sản phẩm không để price","patchHaveToken","{""name"": ""kkk"",""price"": """",""image"":""image-products-test/1.jpg""}","empty_price_product_err",false
 "http://localhost:4000/products/12","api cập nhẩn thông tin sản phẩm không để image","patchHaveToken","{""name"": ""kkk"",""price"": ""222"",""image"":""""}","empty_image_product_err",false
 "http://localhost:4000/products/12","() api cập nhẩn thông tin sản phẩm khi chưa đăng nhập ","patch","{""name"": ""kkk"",""price"": ""222"",""image"":""""}","empty_token_err",false
 "http://localhost:4000/products/12","api cập nhẩn thông tin sản phẩm price không hợp lệ","patchHaveToken","{""name"": ""kkk"",""price"": ""2@@22"",""image"":""image-products-test/1.jpg""}","invalid_price_product_err",false
-"http://localhost:4000/products/1","api cập nhẩn thông tin với id không tồn tại ","patchHaveToken","{""name"": ""kkk"",""price"": ""222"",""image"":""image-products-test/1.jpg""}","product_not_found_err",true
-"http://localhost:4000/products/12","api cập nhẩn thông tin sản phẩm  thành công","patchHaveToken","{""name"": ""kkk"",""price"": ""222"",""image"":""image-products-test/1.jpg""}","edit_product_success",true
-"http://localhost:4000/users/cart","api lấy tất cả thông tin giỏ hàng của user đã đăng nhập (đã có token)","getHaveToken","{}","cart_product_success",false
+"http://localhost:4000/products/1","api cập nhẩn thông tin với id không tồn tại ","patchHaveToken","{""name"": ""kkk"",""price"": ""222"",""image"":""image-products-test/1.jpg""}","product_not_found_err",false
+"http://localhost:4000/products/12","api cập nhẩn thông tin sản phẩm  thành công","patchHaveToken","{""name"": ""kkk"",""price"": ""222"",""image"":""image-products-test/1.jpg""}","edit_product_success",false
+"http://localhost:4000/users/cart","api lấy tất cả thông tin giỏ hàng của user đã đăng nhập (đã có token)","getTypeHaveToken","{}","List",true
 "http://localhost:4000/users/cart","api lấy tất cả thông tin giỏ hàng của user khí chưa đăng nhập hoặc token hết hạng thông báo lỗi","get","{}","empty_token_err",true
 "http://localhost:4000/users/cart","api thêm sản phẩm khi đã đăng nhập (có token)","postHaveToken","{""productId"": 16,""quantity"": 1}","ss",false
 "http://localhost:4000/users/cart","api thêm sản phẩm khi chưa đăng nhập","post","{""productId"": 16,""quantity"": 1}","ss",false
 "http://localhost:4000/users/cart/60","api update số lượng sản phẩm khi đã đăng nhập","patchHaveToken","{""quantity"":""10""}","ss",false
 "http://localhost:4000/users/cart/1","api update phẩm khi id sản phẩm trong giỏ hàng không tồn tại","patchHaveToken","{""quantity"":""10""}","cart_item_not_found_err",true
-"http://localhost:4000/users/cart/","()api update khi không truyền vào id","patchHaveToken","{""quantity"":""10""}","user_not_found_err",true
+"http://localhost:4000/users/cart/","()api update khi không truyền vào id","patchHaveToken","{""quantity"":""10""}","user_not_found_err",false
 "http://localhost:4000/users/cart/16","api update số lượng sản phẩm khi chưa đăng nhập","patch","{""quantity"":""10""}","empty_token_err",true
 "http://localhost:4000/users/cart/59","api xóa sản phẩm khi đã đăng nhập (nhập id muốn xóa)","deleteHaveToken","{}","ss",false
 "http://localhost:4000/users/cart/1","api xóa sản phẩm khi id sản phẩm trong giỏ hàng không tồn tại","deleteHaveToken","{}","cart_item_not_found_err",true
 "http://localhost:4000/users/cart/","()api xóa sản phẩm khi không có id truyền vào","deleteHaveToken","{}","unauthorized_err",true
-"http://localhost:4000/users/cart/16","api xóa sản phẩm khi chưa đăng nhập","delete","{}","empty_token_err",true
+"http://localhost:4000/users/cart/16","api xóa sản phẩm trong giỏ hàng khi chưa đăng nhập","delete","{}","empty_token_err",true
 "http://localhost:4000/orders","api lấy tất cả sản phẩm khi đã đang nhập (đã có token user) ","getHaveToken","{}","ss",false
 "http://localhost:4000/orders","()api lấy tất cả sản phẩm khi đã đang nhập (đã có token admin) ","getHaveToken","{}","ss",false
-"http://localhost:4000/orders","api lấy tất cả sản phẩm khi chưa có token","get","{}","empty_token_err",false
+"http://localhost:4000/orders","api lấy tất cả sản phẩm khi chưa có token","get","{}","empty_token_err",true
 "http://localhost:4000/orders/1","api lấy chi tiết sản phẩm khi đã đang nhập (đã có token user) ","getHaveToken","{}","ss",false
 "http://localhost:4000/orders/1","()api lấy chi tiết sản phẩm khi đã đang nhập (đã có token admin) ","getHaveToken","{}","ss",false
 "http://localhost:4000/orders/9999","api lấy chi tiết sản phẩm id không tồn tại trong hệ thống","getHaveToken","{}","ss",false
-"http://localhost:4000/orders/1","api lấy chi tiết sản phẩm khi chưa có token","get","{}","empty_token_err",false
+"http://localhost:4000/orders/1","api lấy chi tiết sản phẩm khi chưa có token","get","{}","empty_token_err",true
 "http://localhost:4000/orders/1","api lấy update trạng thái sản phẩm khi đã đang nhập (đã có token user) ","patchHaveToken","{ ""status"":""pending""}","ss",false
 "http://localhost:4000/orders/1","()api lấy update trạng thái sản phẩm khi đã đang nhập (đã có token admin) ","patchHaveToken","{ ""status"":""pending""}","ss",false
 "http://localhost:4000/orders/1","()api lấy update trạng thái sản phẩm khi đã đang nhập (đã có token admin) ","patchHaveToken","{ ""status"":""canceled""}","ss",false
 "http://localhost:4000/orders/1","api lấy update trạng thái sản phẩm khi cố truyền các thuộc tính khác","patchHaveToken","{""name"":""canceled"",""total"":""0""}","ss",false
 "http://localhost:4000/orders/9999","api update trạng thái sản phẩm id không tồn tại trong hệ thống","patchHaveToken","{}","ss",false
-"http://localhost:4000/orders/1","api lấy update trạng thái sản phẩm khi chưa có token","patch","{}","empty_token_err",false
+"http://localhost:4000/orders/1","api lấy update trạng thái sản phẩm khi chưa có token","patch","{}","empty_token_err",true
 "http://localhost:4000/orders","api order sản phẩm khi đã đang nhập (đã có token)","postHaveToken","{""name"":""pending"",""phone"":""0922"",""address"":""119 binh hung hoa""}","ss",false
 "http://localhost:4000/orders","api order sản phẩm không có name (đã có token)","postHaveToken","{""name"":"""",""phone"":""0922"",""address"":""119 binh hung hoa""}","ss",false
 "http://localhost:4000/orders","api order sản phẩm không có phone (đã có token)","postHaveToken","{""name"":""pending"",""phone"":"""",""address"":""119 binh hung hoa""}","ss",false
