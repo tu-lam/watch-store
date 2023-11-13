@@ -15,5 +15,9 @@
   "add_product_success": " Thêm sản phẩm thành công",
   "signup_success": "Đăng ký thành công",
   "signin_success": "Đăng nhập thành công",
-  "update_user_success": "Cập nhật tài khoản thành công"
+  "update_user_success": "Cập nhật tài khoản thành công",
+  "empty_name_order_err": "Tên không được để trống",
+  "empty_phone_order_err": "Số điện thoại không được để trống",
+  "empty_address_order_err": "Địa chỉ không được để trống",
+  "invalid_phone_order_err": "Số điện thoại không hợp lệ"
 }

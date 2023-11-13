@@ -8,6 +8,7 @@ import CustomAlert from "../utils/CustomAlert";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { addCartProduct } from "../queries/cart";
+import Policy from "../components/ui/Policy";
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -247,7 +248,7 @@ export default function Product() {
                   <button
                     name="addProductInCart"
                     type="button"
-                    className="flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full"
+                    className="flex max-w-full flex-1 items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full"
                     onClick={addToCart}
                   >
                     Thêm vào giỏ hàng
@@ -317,6 +318,9 @@ export default function Product() {
                   ))}
                 </div>
               </section> */}
+              <div className="mt-12">
+                <Policy />
+              </div>
             </div>
           </div>
         </div>

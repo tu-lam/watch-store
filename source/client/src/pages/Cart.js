@@ -21,9 +21,9 @@ import { useMutation } from "@tanstack/react-query";
 import { createOrder } from "../queries/auth";
 
 const schema = yup.object({
-  name: yup.string().required("Vui lòng nhập tên"),
-  phone: yup.string().required("Vui lòng nhập số điện thoại"),
-  address: yup.string().required("Vui lòng nhập địa chỉ"),
+  // name: yup.string().required("Vui lòng nhập tên"),
+  // phone: yup.string().required("Vui lòng nhập số điện thoại"),
+  // address: yup.string().required("Vui lòng nhập địa chỉ"),
   // .min(8, "Mật khẩu phải có ít nhất 8 ký tự"),
 });
 
