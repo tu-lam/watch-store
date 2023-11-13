@@ -11,7 +11,7 @@ import { myAlert } from "../../utils";
 const schema = yup.object().shape({
   image: yup.mixed(),
   name: yup.string().required("Vui lòng nhập mật khẩu"),
-  description: yup.string(),
+  // description: yup.string(),
   price: yup.number().required("Vui lòng nhập mật khẩu"),
   status: yup.string(),
 });
@@ -58,7 +58,7 @@ const AddProduct = () => {
     const formData = new FormData();
     formData.append("image", data.image[0]);
     formData.append("name", data.name);
-    formData.append("description", data.description);
+    // formData.append("description", data.description);
     formData.append("price", data.price);
     formData.append("status", data.status);
 
@@ -168,7 +168,7 @@ const AddProduct = () => {
                 </div>
               </div>
 
-              <div className="col-span-full">
+              {/* <div className="col-span-full">
                 <label
                   htmlFor="description"
                   className="block text-sm font-medium leading-6 text-gray-900"
@@ -184,7 +184,7 @@ const AddProduct = () => {
                     {...register("description")}
                   />
                 </div>
-              </div>
+              </div> */}
 
               <div className="col-span-full">
                 <label
