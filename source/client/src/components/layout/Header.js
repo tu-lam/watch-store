@@ -14,6 +14,7 @@ import { classNames } from "../../utils";
 import MobileMenu from "./MobileMenu";
 import { useSelector } from "react-redux";
 import { getAllCartProduct } from "../../queries/cart";
+import { getCurrentUser } from "../../queries/auth";
 
 const currencies = ["CAD", "USD", "AUD", "EUR", "GBP"];
 const navigation = {
@@ -374,7 +375,7 @@ const Header = () => {
 
                         <div className="flex">
                           <Link
-                            to="/bang-dieu-khien"
+                            to="/bang-dieu-khien/thong-tin-ca-nhan"
                             className="-m-2 p-2 text-gray-400 hover:text-gray-500"
                           >
                             <span className="sr-only">Account</span>
