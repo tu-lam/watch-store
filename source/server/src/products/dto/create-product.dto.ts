@@ -17,4 +17,8 @@ export class CreateProductDto {
   @IsOptional()
   @IsNumberString()
   price: number;
+
+  @IsOptional()
+  @IsString()
+  status: string;
 }
