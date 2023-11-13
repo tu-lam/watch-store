@@ -12,6 +12,7 @@ const schema = yup.object().shape({
   name: yup.mixed().required("Vui lòng nhập tên"),
   email: yup.string().required("Vui lòng nhập email"),
   role: yup.string().required("Vui lòng nhập vai trò"),
+  status: yup.string(),
 });
 
 const EditAccount = () => {
@@ -65,7 +66,6 @@ const EditAccount = () => {
     formData.append("name", data.name);
     formData.append("email", data.email);
     formData.append("role", data.role);
-
     mutation.mutate({ userId: userId, formData: formData });
   };
 

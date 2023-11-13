@@ -84,6 +84,12 @@ const ProductManager = () => {
                   >
                     Giá
                   </th>
+                  <th
+                    scope="col"
+                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                  >
+                    Trạng thái
+                  </th>
                   <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
                     <span className="sr-only">Chỉnh sửa</span>
                   </th>
@@ -106,6 +112,11 @@ const ProductManager = () => {
                         style: "currency",
                         currency: "VND",
                       })}
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      {product.status == "active"
+                        ? "Đang hoạt động"
+                        : "Không hoạt động"}
                     </td>
                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                       <a
