@@ -30,6 +30,7 @@ import EditAccount from "./pages/dashboard/EditAccount";
 import EditOrder from "./pages/dashboard/EditOrder";
 import HistoryOrders from "./pages/dashboard/historyOrders";
 import InfoAccount from "./pages/dashboard/InfoAccount";
+import OrderDetail from "./pages/dashboard/OrderDetail";
 
 const queryClient = new QueryClient();
 
@@ -79,6 +80,7 @@ const router = createBrowserRouter([
 
       { path: "thong-tin-ca-nhan", element: <InfoAccount /> },
       { path: "lich-su-don-hang", element: <HistoryOrders /> },
+      { path: "lich-su-don-hang/:id", element: <OrderDetail /> },
       { path: "hoa-don", element: <OrderManager /> },
       { path: "hoa-don/:id", element: <EditOrder /> },
       // { path: "danh-muc/them", element: <AddCategory /> },

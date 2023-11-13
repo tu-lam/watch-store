@@ -15,8 +15,17 @@ import {
 import { useForm } from "react-hook-form";
 import { myAlert } from "../../utils";
 import moment from "moment";
+import { cancelOrder } from "../../queries/auth";
 
-const EditOrder = () => {
+const formatOrderStatus = (status) => {
+  if (status == "pending") return "Chờ xác nhận";
+  else if (status == "confirmed") return "Đã xác nhận";
+  else if (status == "canceled") return "Đã hủy";
+
+  return "";
+};
+
+const OrderDetail = () => {
   const navigate = useNavigate();
   const { id: orderId } = useParams();
 
@@ -33,9 +42,9 @@ const EditOrder = () => {
 
   const mutation = useMutation({
     // mutationFn: updateOrderStatusQuery,
-    mutationFn: updateOrder,
-    onSuccess: async (response, _, __) => {
-      const data = await response.json();
+    mutationFn: cancelOrder,
+    onSuccess: async (data, _, __) => {
+      // const data = await response.json();
       console.log("response", data);
       myAlert(data.messageCode);
     },
@@ -48,7 +57,7 @@ const EditOrder = () => {
   const submitHandler = (data) => {
     console.log(data);
     // console.log(mutation.status);
-    mutation.mutate({ orderId, body: data });
+    mutation.mutate({ orderId });
   };
 
   return (
@@ -294,37 +303,25 @@ const EditOrder = () => {
                   // name="status"
                   className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   {...register("status")}
+                  disabled
                 >
-                  <option
-                    value="pending"
-                    {...{ selected: order?.status == "pending" }}
-                  >
-                    Chờ xác nhận
-                  </option>
-                  <option
-                    value="confirmed"
-                    {...{ selected: order?.uy == "confirmed" }}
-                  >
-                    Đã xác nhận
-                  </option>
-                  <option
-                    value="canceled"
-                    {...{ selected: order?.status == "canceled" }}
-                  >
-                    Đã hủy
+                  <option {...{ selected: order?.status == "pending" }}>
+                    {formatOrderStatus(order?.status)}
                   </option>
                 </select>
               </div>
             </dl>
 
-            <div className="mt-6">
-              <button
-                type="submit"
-                className="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
-              >
-                Cập nhật
-              </button>
-            </div>
+            {order?.status == "pending" && (
+              <div className="mt-6">
+                <button
+                  type="submit"
+                  className="w-full rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
+                >
+                  Hủy đơn
+                </button>
+              </div>
+            )}
           </section>
         </form>
       </div>
@@ -332,4 +329,4 @@ const EditOrder = () => {
   );
 };
 
-export default EditOrder;
+export default OrderDetail;

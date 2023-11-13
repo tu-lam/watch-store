@@ -135,3 +135,20 @@ export const getCurrentUser = async () => {
 
   return res.json();
 };
+
+export const cancelOrder = async (data) => {
+  const token = localStorage.getItem("token");
+  const res = await fetch(
+    `${process.env.REACT_APP_API_URL}/users/cancel-order/${data.orderId}`,
+    {
+      method: "PATCH",
+      headers: {
+        Accept: "application.json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  return res.json();
+};

@@ -21,5 +21,6 @@
   "empty_phone_order_err": "Số điện thoại không được để trống",
   "empty_address_order_err": "Địa chỉ không được để trống",
   "invalid_phone_order_err": "Số điện thoại không hợp lệ",
-  "update_my_password_success": "Đổi mật khẩu thành công"
+  "update_my_password_success": "Đổi mật khẩu thành công",
+  "cancel_order_success": "Hủy đơn thành công"
 }
