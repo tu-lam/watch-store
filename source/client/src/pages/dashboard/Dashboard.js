@@ -23,19 +23,31 @@ import { useQuery } from "@tanstack/react-query";
 
 const managerNavigation = [
   {
-    name: "Tài khoản",
+    name: "Thông tin cá nhân",
+    href: "/bang-dieu-khien/thong-tin-ca-nhan",
+    icon: CubeIcon,
+    current: false,
+  },
+  {
+    name: "Lịch sử đơn hàng",
+    href: "/bang-dieu-khien/lich-su-don-hang",
+    icon: DocumentTextIcon,
+    current: false,
+  },
+  {
+    name: "Quản lý tài khoản",
     href: "/bang-dieu-khien/tai-khoan",
     icon: CubeIcon,
     current: false,
   },
   {
-    name: "Sản phẩm",
+    name: "Quản lý sản phẩm",
     href: "/bang-dieu-khien/san-pham",
     icon: CubeIcon,
     current: false,
   },
   {
-    name: "Hóa đơn",
+    name: "Quản lý đơn hàng",
     href: "/bang-dieu-khien/hoa-don",
     icon: DocumentTextIcon,
     current: false,
@@ -50,13 +62,25 @@ const managerNavigation = [
 
 const employeeNavigation = [
   {
-    name: "Sản phẩm",
+    name: "Thông tin cá nhân",
+    href: "/bang-dieu-khien/thong-tin-ca-nhan",
+    icon: CubeIcon,
+    current: false,
+  },
+  {
+    name: "Lịch sử đơn hàng",
+    href: "/bang-dieu-khien/lich-su-don-hang",
+    icon: DocumentTextIcon,
+    current: false,
+  },
+  {
+    name: "Quản lý sản phẩm",
     href: "/bang-dieu-khien/san-pham",
     icon: CubeIcon,
     current: false,
   },
   {
-    name: "Hóa đơn",
+    name: "Quản lý đơn hàng",
     href: "/bang-dieu-khien/hoa-don",
     icon: DocumentTextIcon,
     current: false,
@@ -77,7 +101,7 @@ const userNavigation = [
     current: false,
   },
   {
-    name: "Hóa đơn",
+    name: "Lịch sử đơn hàng",
     href: "/bang-dieu-khien/lich-su-don-hang",
     icon: DocumentTextIcon,
     current: false,

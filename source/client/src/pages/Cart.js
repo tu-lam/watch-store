@@ -251,7 +251,7 @@ export default function Cart() {
                 id="summary-heading"
                 className="text-lg font-medium text-gray-900"
               >
-                Tóm tắt đơn hàng
+                Tóm tắt
               </h2>
 
               <dl className="mt-6 space-y-4">
