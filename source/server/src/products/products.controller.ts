@@ -9,6 +9,7 @@ import {
   BadRequestException,
   UseInterceptors,
   UploadedFile,
+  UseGuards,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -17,8 +18,10 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import * as path from 'path';
 import * as fs from 'fs';
+import { EmployeeOrManagerGuard } from 'guards/empolyee-or-manager.guard';
 
 @Controller('products')
+@UseGuards(EmployeeOrManagerGuard)
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 

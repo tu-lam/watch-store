@@ -40,6 +40,7 @@ export class UsersController {
   ) {}
 
   @Post('update-my-password')
+  @UseGuards(AuthGuard)
   async updateMyPassword(
     @CurrentUser() user: User,
     @Body() updateMyPasswordDto: UpdateMyPasswordDto,
@@ -74,6 +75,7 @@ export class UsersController {
   }
 
   @Post('/signout')
+  @UseGuards(AuthGuard)
   signOut(@Session() session: any) {
     session.userId = null;
   }
@@ -168,11 +170,13 @@ export class UsersController {
   }
 
   @Get(':id')
+  @UseGuards(ManagerGuard)
   async findOne(@Param('id') id: string) {
     return this.usersService.findOne(+id);
   }
 
   @Patch(':id')
+  @UseGuards(ManagerGuard)
   @UseInterceptors(FileInterceptor('file'))
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     console.log('updateUserDto', updateUserDto);
