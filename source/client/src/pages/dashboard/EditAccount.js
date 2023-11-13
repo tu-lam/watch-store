@@ -4,7 +4,7 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { myAlert } from "../../utils";
 import { getUser, updateUser } from "../../queries/user";
 
@@ -167,17 +167,18 @@ const EditAccount = () => {
             </div>
 
             <div className="mt-6 flex items-center justify-end gap-x-6">
-              <button
-                type="button"
+              <Link
+                to={"/bang-dieu-khien/tai-khoan"}
+                // type="button"
                 className="text-sm font-semibold leading-6 text-gray-900"
               >
                 Hủy bỏ
-              </button>
+              </Link>
               <button
                 type="submit"
                 className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Cập nhật sản phẩm
+                Cập nhật
               </button>
             </div>
           </form>
