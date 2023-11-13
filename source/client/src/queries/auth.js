@@ -109,6 +109,19 @@ export const createOrder = (data) => {
   });
 };
 
+export const updateMyPassword = (updateMyPasswordData) => {
+  const token = localStorage.getItem("token");
+  return fetch(`${process.env.REACT_APP_API_URL}/users/update-my-password`, {
+    method: "POST",
+    headers: {
+      Accept: "application.json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(updateMyPasswordData),
+  });
+};
+
 export const getCurrentUser = async () => {
   const token = localStorage.getItem("token");
   const res = await fetch(`${process.env.REACT_APP_API_URL}/users/me`, {

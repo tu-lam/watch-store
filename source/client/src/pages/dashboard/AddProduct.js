@@ -12,7 +12,7 @@ const schema = yup.object().shape({
   image: yup.mixed(),
   name: yup.string().required("Vui lòng nhập mật khẩu"),
   description: yup.string(),
-  price: yup.number().required("Vui lòng nhập giá sản phẩm"),
+  price: yup.number().required("Vui lòng nhập mật khẩu"),
   status: yup.string(),
 });
 

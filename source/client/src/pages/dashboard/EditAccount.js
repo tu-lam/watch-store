@@ -63,8 +63,8 @@ const EditAccount = () => {
     console.log(data);
 
     const formData = new FormData();
-    formData.append("name", data.name);
-    formData.append("email", data.email);
+    // formData.append("name", data.name);
+    // formData.append("email", data.email);
     formData.append("role", data.role);
     mutation.mutate({ userId: userId, formData: formData });
   };
@@ -102,6 +102,7 @@ const EditAccount = () => {
                           id="name"
                           className="block w-full flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                           defaultValue={user.name}
+                          disabled
                           {...register("name")}
                         />
                       </div>
@@ -122,6 +123,7 @@ const EditAccount = () => {
                           id="email"
                           className="block w-full flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                           defaultValue={user.email}
+                          disabled
                           {...register("email")}
                         />
                       </div>
