@@ -63,7 +63,6 @@ const EditAccount = () => {
       setAlertMessage(data.messageCode);
       setShowAlert(true);
       setSuccess(true);
-      myAlert(data.messageCode);
       //   if (data.messageCode === "edit_message_code") {
       //     navigate("/bang-dieu-khien/san-pham");
       //   }
@@ -99,12 +98,13 @@ const EditAccount = () => {
         - `onClose`: Provides the `handleAlertClose` function as a callback for closing the alert when needed.
         - `success`: Specifies whether the alert should have a success (true) or error (false) appearance.
       */}
-          <CustomAlert show={showAlert} messageCode={alertMessage} onClose={handleAlertClose} success={success} />
 
           <form
             className="flex-1 max-w-xl"
             onSubmit={handleSubmit(submitHandler)}
           >
+            <CustomAlert show={showAlert} messageCode={alertMessage} onClose={handleAlertClose} success={success} />
+
             <div className="space-y-12">
               <div className="border-b border-gray-900/10 pb-12">
                 <h2 className="text-base font-semibold leading-7 text-gray-900">
