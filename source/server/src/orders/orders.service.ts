@@ -22,6 +22,24 @@ export class OrdersService {
     private productsService: ProductsService,
   ) {}
   async create(userId: number, createOrderDto: CreateOrderDto) {
+    if (!createOrderDto.name) {
+      throw new BadRequestException({ messageCode: 'empty_name_order_err' });
+    }
+    if (!createOrderDto.phone) {
+      throw new BadRequestException({ messageCode: 'empty_phone_order_err' });
+    }
+    if (createOrderDto.phone) {
+      const regex = /^(0|\+84)\d{9,10}$/;
+      if (!regex.test(createOrderDto.phone)) {
+        throw new BadRequestException({
+          messageCode: 'invalid_phone_order_err',
+        });
+      }
+    }
+    if (!createOrderDto.address) {
+      throw new BadRequestException({ messageCode: 'empty_address_order_err' });
+    }
+
     const order = await this.repo.save({ userId, ...createOrderDto });
 
     const cartItems = await this.cartItemsService.findWhere({ userId });
