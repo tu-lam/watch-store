@@ -83,9 +83,10 @@ const EditOrder = () => {
                   </div>
 
                   <div className="ml-4 flex flex-1 flex-col justify-between sm:ml-6">
-                    <div className="relative pr-9 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:pr-0">
-                      <div>
-                        <div className="flex justify-between">
+                    <div className="relative pr-9 sm:pr-0">
+                      <div className="">
+                        {/* <div className="flex flex-1 justify-between"> */}
+                        <div className="">
                           <h3 className="text-sm">
                             <a
                               href={item.id}
@@ -103,15 +104,21 @@ const EditOrder = () => {
                               </p>
                             ) : null}
                           </div> */}
+
                         <p className="mt-1 text-sm font-medium text-gray-900">
-                          {item.product.price.toLocaleString("vi", {
-                            style: "currency",
-                            currency: "VND",
-                          })}
+                          {"Số lượng: " + item.quantity}
+                        </p>
+                        <p className="mt-1 text-sm font-medium text-gray-900">
+                          {"Giá: " +
+                            item.product.price.toLocaleString("vi", {
+                              style: "currency",
+                              currency: "VND",
+                            }) +
+                            "/1"}
                         </p>
                       </div>
 
-                      <div className="mt-4 sm:mt-0 sm:pr-9">
+                      {/* <div className="mt-4 sm:mt-0 sm:pr-9">
                         <label
                           htmlFor={`quantity-${itemIdx}`}
                           className="sr-only"
@@ -125,26 +132,9 @@ const EditOrder = () => {
                           className="max-w-full rounded-md border border-gray-300 py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
                         >
                           <option value={1}>{item.quantity}</option>
-                          {/* <option value={1}>1</option>
-                            <option value={2}>2</option>
-                            <option value={3}>3</option>
-                            <option value={4}>4</option>
-                            <option value={5}>5</option>
-                            <option value={6}>6</option>
-                            <option value={7}>7</option>
-                            <option value={8}>8</option> */}
+                    
                         </select>
-
-                        {/* <div className="absolute right-0 top-0">
-                            <button
-                              type="button"
-                              className="-m-2 inline-flex p-2 text-gray-400 hover:text-gray-500"
-                            >
-                              <span className="sr-only">Remove</span>
-                              <XMarkIcon className="h-5 w-5" aria-hidden="true" />
-                            </button>
-                          </div> */}
-                      </div>
+                      </div> */}
                     </div>
 
                     {/* <p className="mt-4 flex space-x-2 text-sm text-gray-700">
