@@ -20,14 +20,15 @@ import * as path from 'path';
 import * as fs from 'fs';
 import { EmployeeOrManagerGuard } from 'guards/empolyee-or-manager.guard';
 import { AuthGuard } from 'guards/auth.guard';
+import { ManagerGuard } from 'guards/manager.guard';
 
 @Controller('products')
-@UseGuards(AuthGuard)
-@UseGuards(EmployeeOrManagerGuard)
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Post()
+  @UseGuards(AuthGuard)
+  @UseGuards(EmployeeOrManagerGuard)
   @UseInterceptors(
     FileInterceptor('image', {
       storage: diskStorage({
@@ -110,6 +111,8 @@ export class ProductsController {
   }
 
   @Patch(':id')
+  @UseGuards(AuthGuard)
+  @UseGuards(EmployeeOrManagerGuard)
   @UseInterceptors(
     FileInterceptor('image', {
       storage: diskStorage({
@@ -174,6 +177,8 @@ export class ProductsController {
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard)
+  @UseGuards(ManagerGuard)
   remove(@Param('id') id: string) {
     return this.productsService.remove(+id);
   }

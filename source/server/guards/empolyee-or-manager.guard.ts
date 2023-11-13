@@ -10,12 +10,15 @@ export class EmployeeOrManagerGuard implements CanActivate {
 
     if (
       !request.currentUser ||
-      request.currentUser.role !== 'manager' ||
-      request.currentUser.role !== 'employee'
+      (request.currentUser.role != 'manager' &&
+        request.currentUser.role != 'employee')
     ) {
       throw new UnauthorizedException({ messageCode: 'unauthorized_err' });
     }
 
-    return request.currentUser.role == 'manager';
+    return (
+      request.currentUser.role == 'manager' ||
+      request.currentUser.role == 'employee'
+    );
   }
 }
