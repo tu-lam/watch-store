@@ -1,27 +1,21 @@
 const navigation = {
-  solutions: [
-    { name: "Marketing", href: "#" },
-    { name: "Analytics", href: "#" },
-    { name: "Commerce", href: "#" },
-    { name: "Insights", href: "#" },
+  about: [
+    { name: "Giới thiệu", href: "#" },
+    { name: "Câu chuyện", href: "#" },
   ],
   support: [
-    { name: "Pricing", href: "#" },
-    { name: "Documentation", href: "#" },
-    { name: "Guides", href: "#" },
-    { name: "API Status", href: "#" },
+    { name: "Trải nghiệm mua sắm", href: "#" },
+    { name: "Hỏi đáp - FAQs", href: "#" },
   ],
-  company: [
-    { name: "About", href: "#" },
+  knowledge: [
+    { name: "Hướng dẫn lựa sản phẩm", href: "#" },
     { name: "Blog", href: "#" },
-    { name: "Jobs", href: "#" },
-    { name: "Press", href: "#" },
-    { name: "Partners", href: "#" },
+    { name: "Group", href: "#" },
   ],
-  legal: [
-    { name: "Claim", href: "#" },
-    { name: "Privacy", href: "#" },
-    { name: "Terms", href: "#" },
+  policy: [
+    { name: "Chính sách khuyến mãi", href: "#" },
+    { name: "Chính sách bảo mật", href: "#" },
+    { name: "Chính sách giao hàng", href: "#" },
   ],
 };
 
@@ -37,10 +31,10 @@ export default function Footer() {
             <div className="md:grid md:grid-cols-2 md:gap-8">
               <div>
                 <h3 className="text-sm font-semibold leading-6 text-white">
-                  Solutions
+                  Về chúng tôi
                 </h3>
                 <ul role="list" className="mt-6 space-y-4">
-                  {navigation.solutions.map((item) => (
+                  {navigation.about.map((item) => (
                     <li key={item.name}>
                       <a
                         href={item.href}
@@ -54,7 +48,7 @@ export default function Footer() {
               </div>
               <div className="mt-10 md:mt-0">
                 <h3 className="text-sm font-semibold leading-6 text-white">
-                  Support
+                  Chăm sóc khách hàng
                 </h3>
                 <ul role="list" className="mt-6 space-y-4">
                   {navigation.support.map((item) => (
@@ -73,10 +67,10 @@ export default function Footer() {
             <div className="md:grid md:grid-cols-2 md:gap-8">
               <div>
                 <h3 className="text-sm font-semibold leading-6 text-white">
-                  Company
+                  Kiến thức
                 </h3>
                 <ul role="list" className="mt-6 space-y-4">
-                  {navigation.company.map((item) => (
+                  {navigation.knowledge.map((item) => (
                     <li key={item.name}>
                       <a
                         href={item.href}
@@ -90,10 +84,10 @@ export default function Footer() {
               </div>
               <div className="mt-10 md:mt-0">
                 <h3 className="text-sm font-semibold leading-6 text-white">
-                  Legal
+                  Chính sách
                 </h3>
                 <ul role="list" className="mt-6 space-y-4">
-                  {navigation.legal.map((item) => (
+                  {navigation.policy.map((item) => (
                     <li key={item.name}>
                       <a
                         href={item.href}
