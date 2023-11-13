@@ -40,15 +40,15 @@ export class OrdersService {
       throw new BadRequestException({ messageCode: 'empty_address_order_err' });
     }
 
-    const order = await this.repo.save({ userId, ...createOrderDto });
-
     const cartItems = await this.cartItemsService.findWhere({ userId });
-    console.log(cartItems);
+
     if (!cartItems || cartItems.length == 0) {
       throw new BadRequestException({
         messageCode: 'empty_cart_err',
       });
     }
+
+    const order = await this.repo.save({ userId, ...createOrderDto });
 
     const orderItems = [];
     for (const cartItem of cartItems) {
