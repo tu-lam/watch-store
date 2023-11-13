@@ -19,8 +19,10 @@ import { diskStorage } from 'multer';
 import * as path from 'path';
 import * as fs from 'fs';
 import { EmployeeOrManagerGuard } from 'guards/empolyee-or-manager.guard';
+import { AuthGuard } from 'guards/auth.guard';
 
 @Controller('products')
+@UseGuards(AuthGuard)
 @UseGuards(EmployeeOrManagerGuard)
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
