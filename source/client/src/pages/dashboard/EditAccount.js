@@ -9,10 +9,10 @@ import { myAlert } from "../../utils";
 import { getUser, updateUser } from "../../queries/user";
 
 const schema = yup.object().shape({
-  name: yup.mixed().required("Vui lòng nhập tên"),
-  email: yup.string().required("Vui lòng nhập email"),
-  role: yup.string().required("Vui lòng nhập vai trò"),
-  status: yup.string(),
+  name: yup.string(),
+  email: yup.string(),
+  role: yup.string(),
+  // status: yup.string(),
 });
 
 const EditAccount = () => {
@@ -66,6 +66,7 @@ const EditAccount = () => {
     // formData.append("name", data.name);
     // formData.append("email", data.email);
     formData.append("role", data.role);
+    console.log(formData);
     mutation.mutate({ userId: userId, formData: formData });
   };
 
