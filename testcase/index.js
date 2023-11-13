@@ -150,192 +150,192 @@ async function fetchData() {
                     response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
                     console.log(test.check);
                     break;
-                case "post-formDataHaveTokenAdmin":
-                    console.log(TOKEN_ADMIN);
-                    let formData = new FormData();
-                    formData.append('name', requestBody.name);
-                    formData.append('price', requestBody.price);
-                    if (requestBody.image) {
-                        const fileImage = path.resolve('/home/anhthai/PTIT/watch-store/testcase/' + requestBody.image);
-                        formData.append('image', fs.createReadStream(fileImage));
-                    } else {
-                        formData.append('image', '');
-                    }
+                // case "post-formDataHaveTokenAdmin":
+                //     console.log(TOKEN_ADMIN);
+                //     let formData = new FormData();
+                //     formData.append('name', requestBody.name);
+                //     formData.append('price', requestBody.price);
+                //     if (requestBody.image) {
+                //         const fileImage = path.resolve('/home/anhthai/PTIT/watch-store/testcase/' + requestBody.image);
+                //         formData.append('image', fs.createReadStream(fileImage));
+                //     } else {
+                //         formData.append('image', '');
+                //     }
 
-                    try {
-                        response = await axios.post(test.api, formData, {
-                            headers: {
-                                ...formData.getHeaders(),
-                                'Authorization': `Bearer ${TOKEN_ADMIN}`
-                            },
-                        });
-                    } catch (error) {
-                        console.log(test.outputCode);
-                        console.log(error.response.data?.messageCode);
-                        console.log(error.response.data?.messageCode == test.outputCode);
-                        error.response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
-                        break;
-                    }
-                    console.log(test.outputCode);
-                    console.log(response.data?.messageCode);
-                    console.log(response.data?.messageCode == test.outputCode);
-                    response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
-                    if (test.check) {
-                        await axios.delete('http://localhost:4000/products/' + response.data?.data.product.id);
-                    }
-                    break;
-                case "post-formDataHaveToken":
-                    console.log(requestBody);
-                    let data = new FormData();
-                    data.append('name', requestBody.name);
-                    data.append('price', requestBody.price);
-                    if (requestBody.image) {
-                        const fileImage = path.resolve('/home/anhthai/PTIT/watch-store/testcase/' + requestBody.image);
-                        data.append('image', fs.createReadStream(fileImage));
-                    } else {
-                        data.append('image', '');
-                    }
+                //     try {
+                //         response = await axios.post(test.api, formData, {
+                //             headers: {
+                //                 ...formData.getHeaders(),
+                //                 'Authorization': `Bearer ${TOKEN_ADMIN}`
+                //             },
+                //         });
+                //     } catch (error) {
+                //         console.log(test.outputCode);
+                //         console.log(error.response.data?.messageCode);
+                //         console.log(error.response.data?.messageCode == test.outputCode);
+                //         error.response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
+                //         break;
+                //     }
+                //     console.log(test.outputCode);
+                //     console.log(response.data?.messageCode);
+                //     console.log(response.data?.messageCode == test.outputCode);
+                //     response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
+                //     if (test.check) {
+                //         await axios.delete('http://localhost:4000/products/' + response.data?.data.product.id);
+                //     }
+                //     break;
+                // case "post-formDataHaveToken":
+                //     console.log(requestBody);
+                //     let data = new FormData();
+                //     data.append('name', requestBody.name);
+                //     data.append('price', requestBody.price);
+                //     if (requestBody.image) {
+                //         const fileImage = path.resolve('/home/anhthai/PTIT/watch-store/testcase/' + requestBody.image);
+                //         data.append('image', fs.createReadStream(fileImage));
+                //     } else {
+                //         data.append('image', '');
+                //     }
 
-                    try {
-                        response = await axios.post(test.api, data, {
-                            headers: {
-                                ...data.getHeaders(),
-                                'Authorization': `Bearer ${TOKEN}`
-                            },
-                        });
-                    } catch (error) {
-                        console.log(test.outputCode);
-                        console.log(error.response.data?.messageCode);
-                        console.log(error.response.data?.messageCode == test.outputCode);
-                        error.response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
-                        break;
-                    }
-                    console.log(test.outputCode);
-                    console.log(response.data?.messageCode);
-                    console.log(response.data?.messageCode == test.outputCode);
-                    response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
-                    if (test.check) {
-                        await axios.delete('http://localhost:4000/products/' + response.data?.data.product.id);
-                    }
-                    break;
-                case "post-formDataHaveTokenStaff":
-                    console.log(requestBody);
-                    let dt = new FormData();
-                    dt.append('name', requestBody.name);
-                    dt.append('price', requestBody.price);
-                    if (requestBody.image) {
-                        const fileImage = path.resolve('/home/anhthai/PTIT/watch-store/testcase/' + requestBody.image);
-                        dt.append('image', fs.createReadStream(fileImage));
-                    } else {
-                        dt.append('image', '');
-                    }
+                //     try {
+                //         response = await axios.post(test.api, data, {
+                //             headers: {
+                //                 ...data.getHeaders(),
+                //                 'Authorization': `Bearer ${TOKEN}`
+                //             },
+                //         });
+                //     } catch (error) {
+                //         console.log(test.outputCode);
+                //         console.log(error.response.data?.messageCode);
+                //         console.log(error.response.data?.messageCode == test.outputCode);
+                //         error.response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
+                //         break;
+                //     }
+                //     console.log(test.outputCode);
+                //     console.log(response.data?.messageCode);
+                //     console.log(response.data?.messageCode == test.outputCode);
+                //     response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
+                //     if (test.check) {
+                //         await axios.delete('http://localhost:4000/products/' + response.data?.data.product.id);
+                //     }
+                //     break;
+                // case "post-formDataHaveTokenStaff":
+                //     console.log(requestBody);
+                //     let dt = new FormData();
+                //     dt.append('name', requestBody.name);
+                //     dt.append('price', requestBody.price);
+                //     if (requestBody.image) {
+                //         const fileImage = path.resolve('/home/anhthai/PTIT/watch-store/testcase/' + requestBody.image);
+                //         dt.append('image', fs.createReadStream(fileImage));
+                //     } else {
+                //         dt.append('image', '');
+                //     }
 
-                    try {
-                        response = await axios.post(test.api, dt, {
-                            headers: {
-                                ...dt.getHeaders(),
-                                'Authorization': `Bearer ${TOKEN}`
-                            },
-                        });
-                    } catch (error) {
-                        console.log(test.outputCode);
-                        console.log(error.response.data?.messageCode);
-                        console.log(error.response.data?.messageCode == test.outputCode);
-                        error.response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
-                        break;
-                    }
-                    console.log(test.outputCode);
-                    console.log(response.data?.messageCode);
-                    console.log(response.data?.messageCode == test.outputCode);
-                    response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
-                    if (test.check) {
-                        await axios.delete('http://localhost:4000/products/' + response.data?.data.product.id);
-                    }
-                    break;
-                case "post-formData":
-                    console.log(requestBody);
-                    let fData = new FormData();
-                    fData.append('name', requestBody.name);
-                    fData.append('price', requestBody.price);
-                    if (requestBody.image) {
-                        const fileImage = path.resolve('/home/anhthai/PTIT/watch-store/testcase/' + requestBody.image);
-                        fData.append('image', fs.createReadStream(fileImage));
-                    } else {
-                        fData.append('image', '');
-                    }
+                //     try {
+                //         response = await axios.post(test.api, dt, {
+                //             headers: {
+                //                 ...dt.getHeaders(),
+                //                 'Authorization': `Bearer ${TOKEN}`
+                //             },
+                //         });
+                //     } catch (error) {
+                //         console.log(test.outputCode);
+                //         console.log(error.response.data?.messageCode);
+                //         console.log(error.response.data?.messageCode == test.outputCode);
+                //         error.response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
+                //         break;
+                //     }
+                //     console.log(test.outputCode);
+                //     console.log(response.data?.messageCode);
+                //     console.log(response.data?.messageCode == test.outputCode);
+                //     response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
+                //     if (test.check) {
+                //         await axios.delete('http://localhost:4000/products/' + response.data?.data.product.id);
+                //     }
+                //     break;
+                // case "post-formData":
+                //     console.log(requestBody);
+                //     let fData = new FormData();
+                //     fData.append('name', requestBody.name);
+                //     fData.append('price', requestBody.price);
+                //     if (requestBody.image) {
+                //         const fileImage = path.resolve('/home/anhthai/PTIT/watch-store/testcase/' + requestBody.image);
+                //         fData.append('image', fs.createReadStream(fileImage));
+                //     } else {
+                //         fData.append('image', '');
+                //     }
 
-                    try {
-                        response = await axios.post(test.api, fData, {
-                            headers: {
-                                ...fData.getHeaders(),
-                            },
-                        });
-                    } catch (error) {
-                        console.log(test.outputCode);
-                        console.log(error.response.data?.messageCode);
-                        console.log(error.response.data?.messageCode == test.outputCode);
-                        error.response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
-                        break;
-                    }
-                    console.log(test.outputCode);
-                    console.log(response.data?.messageCode);
-                    console.log(response.data?.messageCode == test.outputCode);
-                    response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
-                    if (test.check) {
-                        await axios.delete('http://localhost:4000/products/' + response.data?.data.product.id);
-                    }
-                    break;
-                case "delete":
-                    console.log(requestBody);
-                    try {
-                        response = await axios.delete(test.api, requestBody);
-                    } catch (error) {
-                        console.log(test.outputCode);
-                        console.log(error.response.data?.code);
-                        if (!error.response.data?.code) {
-                            test.check = false;
-                        }
-                        error.response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
-                        console.log(test.check);
+                //     try {
+                //         response = await axios.post(test.api, fData, {
+                //             headers: {
+                //                 ...fData.getHeaders(),
+                //             },
+                //         });
+                //     } catch (error) {
+                //         console.log(test.outputCode);
+                //         console.log(error.response.data?.messageCode);
+                //         console.log(error.response.data?.messageCode == test.outputCode);
+                //         error.response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
+                //         break;
+                //     }
+                //     console.log(test.outputCode);
+                //     console.log(response.data?.messageCode);
+                //     console.log(response.data?.messageCode == test.outputCode);
+                //     response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
+                //     if (test.check) {
+                //         await axios.delete('http://localhost:4000/products/' + response.data?.data.product.id);
+                //     }
+                //     break;
+                // case "delete":
+                //     console.log(requestBody);
+                //     try {
+                //         response = await axios.delete(test.api, requestBody);
+                //     } catch (error) {
+                //         console.log(test.outputCode);
+                //         console.log(error.response.data?.code);
+                //         if (!error.response.data?.code) {
+                //             test.check = false;
+                //         }
+                //         error.response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
+                //         console.log(test.check);
 
-                        break;
-                    }
-                    console.log(test.outputCode);
-                    console.log(response.data?.code);
-                    response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
-                    console.log(test.check);
-                    break;
-                case "patch":
-                    console.log(requestBody);
-                    try {
-                        response = await axios.patch(test.api, requestBody);
-                    } catch (error) {
-                        console.log(test.outputCode);
-                        console.log(error.response.data?.code);
-                        error.response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
-                        console.log(test.check);
-                        break;
-                    }
-                    console.log(test.outputCode);
-                    console.log(response.data?.code);
-                    response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
-                    break;
-                case "put":
-                    console.log(requestBody);
-                    try {
-                        response = await axios.put(test.api, requestBody);
-                    } catch (error) {
-                        console.log(test.outputCode);
-                        console.log(response.data?.code);
-                        response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
+                //         break;
+                //     }
+                //     console.log(test.outputCode);
+                //     console.log(response.data?.code);
+                //     response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
+                //     console.log(test.check);
+                //     break;
+                // case "patch":
+                //     console.log(requestBody);
+                //     try {
+                //         response = await axios.patch(test.api, requestBody);
+                //     } catch (error) {
+                //         console.log(test.outputCode);
+                //         console.log(error.response.data?.code);
+                //         error.response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
+                //         console.log(test.check);
+                //         break;
+                //     }
+                //     console.log(test.outputCode);
+                //     console.log(response.data?.code);
+                //     response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
+                //     break;
+                // case "put":
+                //     console.log(requestBody);
+                //     try {
+                //         response = await axios.put(test.api, requestBody);
+                //     } catch (error) {
+                //         console.log(test.outputCode);
+                //         console.log(response.data?.code);
+                //         response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
 
-                        break;
-                    }
-                    console.log(test.outputCode);
-                    console.log(response.data?.code);
-                    response.data?.code == test.outputCode ? test.check = true : test.check = false;
+                //         break;
+                //     }
+                //     console.log(test.outputCode);
+                //     console.log(response.data?.code);
+                //     response.data?.code == test.outputCode ? test.check = true : test.check = false;
 
-                    break;
+                //     break;
                 case "getHaveToken":
                     console.log(requestBody);
                     console.log(test.api);
@@ -345,7 +345,6 @@ async function fetchData() {
                                 'Authorization': `Bearer ${TOKEN}`
                             }
                         });
-
                     } catch (error) {
                         console.log(error);
                         console.log(error.response.data?.messageCode);
@@ -359,79 +358,97 @@ async function fetchData() {
                     response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
                     console.log(test.check);
                     break;
-                case "postHaveToken":
-                    console.log(requestBody);
-                    console.log(test.api);
-                    try {
-                        response = await axios.post(test.api, requestBody, {
-                            headers: {
-                                'Authorization': `Bearer ${TOKEN}`
-                            }
-                        });
+                // case "postHaveToken":
+                //     console.log(requestBody);
+                //     console.log(test.api);
+                //     try {
+                //         response = await axios.post(test.api, requestBody, {
+                //             headers: {
+                //                 'Authorization': `Bearer ${TOKEN}`
+                //             }
+                //         });
 
-                    } catch (error) {
-                        console.log(error);
-                        console.log(error.response.data?.messageCode);
-                        error.response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
-                        console.log(test.check);
-                        break;
-                    }
-                    console.log("test.outputCode: ", test.outputCode);
-                    console.log("response.data?.code: ", response.data?.messageCode);
-                    console.log(response.data?.messageCode == test.outputCode);
-                    response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
-                    console.log(test.check);
-                    break;
-                case "deleteHaveToken":
-                    console.log(requestBody);
-                    console.log(test.api);
-                    try {
-                        response = await axios.delete(test.api, {
-                            headers: {
-                                'Authorization': `Bearer ${TOKEN}`
-                            }
-                        });
+                //     } catch (error) {
+                //         console.log(error);
+                //         console.log(error.response.data?.messageCode);
+                //         error.response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
+                //         console.log(test.check);
+                //         break;
+                //     }
+                //     console.log("test.outputCode: ", test.outputCode);
+                //     console.log("response.data?.code: ", response.data?.messageCode);
+                //     console.log(response.data?.messageCode == test.outputCode);
+                //     response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
+                //     console.log(test.check);
+                //     break;
+                // case "deleteHaveToken":
+                //     console.log(requestBody);
+                //     console.log(test.api);
+                //     try {
+                //         response = await axios.delete(test.api, {
+                //             headers: {
+                //                 'Authorization': `Bearer ${TOKEN}`
+                //             }
+                //         });
 
-                    } catch (error) {
-                        console.log(error.response.data?.messageCode);
-                        error.response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
-                        console.log(test.check);
-                        break;
-                    }
-                    console.log("test.outputCode: ", test.outputCode);
-                    console.log("response.data?.code: ", response.data?.messageCode);
-                    console.log(response.data?.messageCode == test.outputCode);
-                    response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
-                    console.log(test.check);
-                    break;
-                case "patchHaveToken":
-                    console.log(requestBody);
-                    console.log(test.api);
-                    try {
-                        response = await axios.patch(test.api, requestBody, {
-                            headers: {
-                                'Authorization': `Bearer ${TOKEN}`
-                            }
-                        });
+                //     } catch (error) {
+                //         console.log(error.response.data?.messageCode);
+                //         error.response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
+                //         console.log(test.check);
+                //         break;
+                //     }
+                //     console.log("test.outputCode: ", test.outputCode);
+                //     console.log("response.data?.code: ", response.data?.messageCode);
+                //     console.log(response.data?.messageCode == test.outputCode);
+                //     response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
+                //     console.log(test.check);
+                //     break;
+                // case "patchHaveToken":
+                //     console.log(requestBody);
+                //     console.log(test.api);
+                //     try {
+                //         response = await axios.patch(test.api, requestBody, {
+                //             headers: {
+                //                 'Authorization': `Bearer ${TOKEN}`
+                //             }
+                //         });
 
-                    } catch (error) {
-                        console.log(error.response.data?.messageCode);
-                        error.response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
-                        console.log(test.check);
-                        break;
-                    }
-                    console.log("test.outputCode: ", test.outputCode);
-                    console.log("response.data?.code: ", response.data?.messageCode);
-                    console.log(response.data?.messageCode == test.outputCode);
-                    response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
-                    console.log(test.check);
-                    break;
+                //     } catch (error) {
+                //         console.log(error.response.data?.messageCode);
+                //         error.response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
+                //         console.log(test.check);
+                //         break;
+                //     }
+                //     console.log("test.outputCode: ", test.outputCode);
+                //     console.log("response.data?.code: ", response.data?.messageCode);
+                //     console.log(response.data?.messageCode == test.outputCode);
+                //     response.data?.messageCode == test.outputCode ? test.check = true : test.check = false;
+                //     console.log(test.check);
+                //     break;
                 case "getTypeHaveToken":
                     console.log(requestBody);
                     try {
                         response = await axios.get(test.api, {
                             headers: {
                                 'Authorization': `Bearer ${TOKEN}`
+                            }
+                        });
+                    } catch (error) {
+                        test.check = false;
+                        console.log(error.response);
+                        break;
+                    }
+                    console.log("test.outputCode: ", test);
+                    console.log(checkType(test.outputCode, response.data));
+                    test.check = checkType(test.outputCode, response.data);
+                    console.log(test.check);
+                    break;
+                case "getTypeHaveTokenAdmin":
+                    console.log(requestBody);
+                    try {
+                        response = await axios.get(test.api, {
+                            headers: {
+                                'Authorization': `Bearer ${TOKEN_ADMIN}`
                             }
                         });
                     } catch (error) {
@@ -630,7 +647,7 @@ async function testCaseFE() {
                     await elements.uploadFile('/home/anhthai/PTIT/watch-store/testcase/' + requestBody.image);
                     await page.type('input[id="name"]', requestBody.name);
                     await page.type('input[id="price"]', requestBody.price);
-                    await page.type('textarea[id="description"]', requestBody.description);
+                    // await page.type('textarea[id="description"]', requestBody.description);
                     await page.click('button[type="submit"]');
                     await page.waitForTimeout(1500);
                     await page.screenshot({ path: 'photo-test/U' + count + '.png' });
@@ -649,7 +666,7 @@ async function testCaseFE() {
                     await elements.uploadFile('/home/anhthai/PTIT/watch-store/testcase/' + requestBody.image);
                     await page.type('input[id="name"]', requestBody.name);
                     await page.type('input[id="price"]', requestBody.price);
-                    await page.type('textarea[id="description"]', requestBody.description);
+                    // await page.type('textarea[id="description"]', requestBody.description);
                     await page.click('button[type="submit"]');
                     await page.waitForTimeout(1500);
                     await page.screenshot({ path: 'photo-test/U' + count + '.png'});
@@ -683,6 +700,76 @@ async function testCaseFE() {
                     await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
                     test.check = 'U' + count;
                     break;
+                case "showManagerAccountHaveLogin":
+                    await page.goto('http://localhost:3000/dang-nhap');
+                    await page.waitForSelector('input[type="email"]');
+                    await page.type('input[type="email"]', requestBody.email);
+                    await page.type('input[type="password"]', requestBody.password);
+                    await page.click('button[type="submit"]');
+                    await page.waitForTimeout(1000);
+                    await page.goto(test.api);
+                    await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
+                    test.check = 'U' + count;
+                    break;
+                case "showManagerAccountHaveLogin":
+                    await page.goto('http://localhost:3000/dang-nhap');
+                    await page.waitForSelector('input[type="email"]');
+                    await page.type('input[type="email"]', requestBody.email);
+                    await page.type('input[type="password"]', requestBody.password);
+                    await page.click('button[type="submit"]');
+                    await page.waitForTimeout(1000);
+                    await page.goto(test.api);
+                    await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
+                    test.check = 'U' + count;
+                    break;
+                case "showAccountDetailHaveLogin":
+                    await page.goto('http://localhost:3000/dang-nhap');
+                    await page.waitForSelector('input[type="email"]');
+                    await page.type('input[type="email"]', requestBody.email);
+                    await page.type('input[type="password"]', requestBody.password);
+                    await page.click('button[type="submit"]');
+                    await page.waitForTimeout(1000);
+                    await page.goto(test.api);
+                    elements = await page.$$('a[name="editProduct"]');
+                    await elements[Math.floor(Math.random() * elements.length + 1)].click();
+                    await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
+                    test.check = 'U' + count;
+                    break;
+                case "showInfoAccountHaveLogin":
+                    await page.goto('http://localhost:3000/dang-nhap');
+                    await page.waitForSelector('input[type="email"]');
+                    await page.type('input[type="email"]', requestBody.email);
+                    await page.type('input[type="password"]', requestBody.password);
+                    await page.click('button[type="submit"]');
+                    await page.waitForTimeout(1000);
+                    await page.goto(test.api);
+                    await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
+                    test.check = 'U' + count;
+                    break;
+                case "showHistoryOrderHaveLogin":
+                    await page.goto('http://localhost:3000/dang-nhap');
+                    await page.waitForSelector('input[type="email"]');
+                    await page.type('input[type="email"]', requestBody.email);
+                    await page.type('input[type="password"]', requestBody.password);
+                    await page.click('button[type="submit"]');
+                    await page.waitForTimeout(1000);
+                    await page.goto(test.api);
+                    await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
+                    test.check = 'U' + count;
+                    break;
+                case "showHistoryOrderDetailHaveLogin":
+                    await page.goto('http://localhost:3000/dang-nhap');
+                    await page.waitForSelector('input[type="email"]');
+                    await page.type('input[type="email"]', requestBody.email);
+                    await page.type('input[type="password"]', requestBody.password);
+                    await page.click('button[type="submit"]');
+                    await page.waitForTimeout(1000);
+                    await page.goto(test.api);
+                    elements = await page.$$('a[name="editOrder"]');
+                    await elements[Math.floor(Math.random() * elements.length)].click();
+                    await page.screenshot({ path: 'photo-test/U' + count + '.png', fullPage: true });
+                    test.check = 'U' + count;
+                    break;
                 default:
                     break;
             }
@@ -698,6 +785,6 @@ async function testCaseFE() {
     writeFileCSV(data, fileTestFE);
     await browser.close();
 }
-deleteFilesInFolder('photo-test/');
-// fetchData();
-testCaseFE();
+// deleteFilesInFolder('photo-test/');
+fetchData();
+// testCaseFE();

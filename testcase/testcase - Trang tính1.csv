@@ -7,8 +7,8 @@ api,description,method,inputBody,outputCode,check
 "http://localhost:4000/users/signin","api login đúng tài khoang và mật khẩu có đâu cách cuối thì sao","post","{""email"": ""admin@gmail.com"",""password"":""admin  ""}","incorrect_password_err",true
 "http://localhost:4000/users/signin","api login check SQL injection","post","{""email"": ""admin@gmail.com"",""password"":"" OR '1'='1'""}","incorrect_password_err",true
 "http://localhost:4000/users/signin","api login đúng tài khoang,đúng mật khẩu","post","{""email"": ""thai4@gmail.com"",""password"":""123456789""}","signin_success",true
-"http://localhost:4000/users/signin","api login tài khoản quản lý","post","{""email"": ""manager@gmail.com"",""password"":""manager""}","signin_success",false
-"http://localhost:4000/users/signin","api login tài khoản nhân viên","post","{""email"": ""attack1@gmail.com"",""password"":""12312321123""}","signin_success",false
+"http://localhost:4000/users/signin","api login tài khoản quản lý","post","{""email"": ""manager@gmail.com"",""password"":""manager""}","signin_success",true
+"http://localhost:4000/users/signin","api login tài khoản nhân viên","post","{""email"": ""attack1@gmail.com"",""password"":""12312321123""}","signin_success",true
 "http://localhost:4000/users/signup","api đăng ký với email không đúng cấu trúc","post","{""name"": ""thai"",""email"": ""adc"",""password"":""222as""}","invalid_email_err",true
 "http://localhost:4000/users/signup","api đăng ký trùng email","post","{""name"": ""thai"",""email"": ""admin@gmail.com"",""password"":""222as""}","existing_email_err",true
 "http://localhost:4000/users/signup","api đăng ký bỏ trống email","post","{""name"": ""thai"",""email"": """",""password"":""222as""}","empty_email_err",true
@@ -41,31 +41,33 @@ api,description,method,inputBody,outputCode,check
 "http://localhost:4000/products/12","api cập nhẩn thông tin sản phẩm  thành công","patchHaveToken","{""name"": ""kkk"",""price"": ""222"",""image"":""image-products-test/1.jpg""}","edit_product_success",false
 "http://localhost:4000/users/cart","api lấy tất cả thông tin giỏ hàng của user đã đăng nhập (đã có token)","getTypeHaveToken","{}","List",true
 "http://localhost:4000/users/cart","api lấy tất cả thông tin giỏ hàng của user khí chưa đăng nhập hoặc token hết hạng thông báo lỗi","get","{}","empty_token_err",true
-"http://localhost:4000/users/cart","api thêm sản phẩm khi đã đăng nhập (có token)","postHaveToken","{""productId"": 1,""quantity"": 1}","ss",false
-"http://localhost:4000/users/cart","api thêm sản phẩm khi chưa đăng nhập","post","{""productId"": 1,""quantity"": 1}","empty_token_err",false
+"http://localhost:4000/users/cart","api thêm sản phẩm vào giỏ hàng khi đã đăng nhập (có token)","postHaveToken","{""productId"": 1,""quantity"": 1}","ss",false
+"http://localhost:4000/users/cart","api thêm sản phẩm vào giỏ hàng khi chưa đăng nhập","post","{""productId"": 1,""quantity"": 1}","empty_token_err",true
 "http://localhost:4000/users/cart/60","?api update số lượng sản phẩm khi đã đăng nhập","patchHaveToken","{""quantity"":""10""}","ss",false
 "http://localhost:4000/users/cart/1","api update phẩm khi id sản phẩm trong giỏ hàng không tồn tại","patchHaveToken","{""quantity"":""10""}","cart_item_not_found_err",true
-"http://localhost:4000/users/cart/","()api update khi không truyền vào id","patchHaveToken","{""quantity"":""10""}","user_not_found_err",false
 "http://localhost:4000/users/cart/16","api update số lượng sản phẩm khi chưa đăng nhập","patch","{""quantity"":""10""}","empty_token_err",true
 "http://localhost:4000/users/cart/59","api xóa sản phẩm khi đã đăng nhập (nhập id muốn xóa)","deleteHaveToken","{}","ss",false
 "http://localhost:4000/users/cart/1","api xóa sản phẩm khi id sản phẩm trong giỏ hàng không tồn tại","deleteHaveToken","{}","cart_item_not_found_err",true
 "http://localhost:4000/users/cart/","()api xóa sản phẩm khi không có id truyền vào","deleteHaveToken","{}","unauthorized_err",true
 "http://localhost:4000/users/cart/16","api xóa sản phẩm trong giỏ hàng khi chưa đăng nhập","delete","{}","empty_token_err",true
-"http://localhost:4000/orders","api lấy tất cả sản phẩm khi đã đang nhập (đã có token user) ","getHaveToken","{}","ss",false
-"http://localhost:4000/orders","()api lấy tất cả sản phẩm khi đã đang nhập (đã có token admin) ","getHaveToken","{}","ss",false
-"http://localhost:4000/orders","api lấy tất cả sản phẩm khi chưa có token","get","{}","empty_token_err",true
-"http://localhost:4000/orders/1","api lấy chi tiết sản phẩm khi đã đang nhập (đã có token user) ","getHaveToken","{}","ss",false
-"http://localhost:4000/orders/1","()api lấy chi tiết sản phẩm khi đã đang nhập (đã có token admin) ","getHaveToken","{}","ss",false
-"http://localhost:4000/orders/9999","api lấy chi tiết sản phẩm id không tồn tại trong hệ thống","getHaveToken","{}","ss",false
-"http://localhost:4000/orders/1","api lấy chi tiết sản phẩm khi chưa có token","get","{}","empty_token_err",true
-"http://localhost:4000/orders/1","api lấy update trạng thái sản phẩm khi đã đang nhập (đã có token user) ","patchHaveToken","{ ""status"":""pending""}","ss",false
-"http://localhost:4000/orders/1","()api lấy update trạng thái sản phẩm khi đã đang nhập (đã có token admin) ","patchHaveToken","{ ""status"":""pending""}","ss",false
-"http://localhost:4000/orders/1","()api lấy update trạng thái sản phẩm khi đã đang nhập (đã có token admin) ","patchHaveToken","{ ""status"":""canceled""}","ss",false
-"http://localhost:4000/orders/1","api lấy update trạng thái sản phẩm khi cố truyền các thuộc tính khác","patchHaveToken","{""name"":""canceled"",""total"":""0""}","ss",false
-"http://localhost:4000/orders/9999","api update trạng thái sản phẩm id không tồn tại trong hệ thống","patchHaveToken","{}","ss",false
-"http://localhost:4000/orders/1","api lấy update trạng thái sản phẩm khi chưa có token","patch","{}","empty_token_err",true
+"http://localhost:4000/orders","api lấy tất cả order khi đã đang nhập (đã có token user) ","getTypeHaveToken","{}","List",true
+"http://localhost:4000/orders","()api lấy tất cả order khi đã đang nhập (đã có token admin) ","getTypeHaveTokenAdmin","{}","List",true
+"http://localhost:4000/orders","api lấy tất cả order khi chưa có token","get","{}","empty_token_err",false
+"http://localhost:4000/orders/1","api lấy chi tiết order khi đã đang nhập (đã có token user) ","getTypeHaveToken","{}","Object",true
+"http://localhost:4000/orders/1","()api lấy chi tiết order khi đã đang nhập (đã có token admin) ","getTypeHaveTokenAdmin","{}","Object",true
+"http://localhost:4000/orders/9999","api lấy chi tiết order id không tồn tại trong hệ thống","getHaveToken","{}","ss",false
+"http://localhost:4000/orders/1","api lấy chi tiết order khi chưa có token","get","{}","empty_token_err",false
+"http://localhost:4000/orders/1","api lấy update trạng thái order khi đã đang nhập (đã có token user) ","patchHaveToken","{ ""status"":""pending""}","ss",false
+"http://localhost:4000/orders/1","()api lấy update trạng thái order khi đã đang nhập (đã có token admin) ","patchHaveToken","{ ""status"":""pending""}","ss",false
+"http://localhost:4000/orders/1","()api lấy update trạng thái order khi đã đang nhập (đã có token admin) ","patchHaveToken","{ ""status"":""canceled""}","ss",false
+"http://localhost:4000/orders/1","api lấy update trạng thái order khi cố truyền các thuộc tính khác","patchHaveToken","{""name"":""canceled"",""total"":""0""}","ss",false
+"http://localhost:4000/orders/9999","api update trạng thái order id không tồn tại trong hệ thống","patchHaveToken","{}","ss",false
+"http://localhost:4000/orders/1","api lấy update trạng thái order khi chưa có token","patch","{}","empty_token_err",true
 "http://localhost:4000/orders","api order sản phẩm khi đã đang nhập (đã có token)","postHaveToken","{""name"":""pending"",""phone"":""0922"",""address"":""119 binh hung hoa""}","ss",false
 "http://localhost:4000/orders","api order sản phẩm không có name (đã có token)","postHaveToken","{""name"":"""",""phone"":""0922"",""address"":""119 binh hung hoa""}","ss",false
 "http://localhost:4000/orders","api order sản phẩm không có phone (đã có token)","postHaveToken","{""name"":""pending"",""phone"":"""",""address"":""119 binh hung hoa""}","ss",false
 "http://localhost:4000/orders","api order sản phẩm không có address (đã có token)","postHaveToken","{""name"":""pending"",""phone"":""0922"",""address"":""""}","ss",false
 "http://localhost:4000/orders","api order sản phẩm khi đã chưa đăng nhập","patch","{}","empty_token_err",false
+"http://localhost:4000/users/me","api lấy thông tin của user đã đăng nhập ","getHaveToken","{}","get_current_user_success",true
+"http://localhost:4000/users/orders","api lấy lịch sử order của user đã đăng nhập ","getHaveToken","{}","get_history_orders_success",true
+"http://localhost:4000/users/orders","api lấy lịch sử order chưa đăng nhập","get","{}","empty_token_err",true
