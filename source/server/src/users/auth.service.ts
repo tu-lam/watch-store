@@ -7,6 +7,7 @@ import { UsersService } from './users.service';
 import { randomBytes, scrypt as _scrypt } from 'crypto';
 import { promisify } from 'util';
 import { JwtService } from '@nestjs/jwt';
+import { User } from './entities/user.entity';
 
 const scrypt = promisify<string, string, number, Buffer>(_scrypt);
 
@@ -110,6 +111,28 @@ export class AuthService {
     }
 
     return user;
+  }
+
+  async changePassword(
+    user: User,
+    currentPassword: string,
+    newPassword: string,
+  ) {
+    const tempUser = await this.signin(user.email, currentPassword);
+    if (tempUser) {
+      // generate a salt
+      const salt = randomBytes(8).toString('hex');
+
+      // hash the salt and the password together
+      const hash = await scrypt(newPassword, salt, 32);
+
+      // join the hashed result and result together
+      const result = salt + '.' + hash.toString('hex');
+
+      user.password = result;
+      const newUser = await this.usersService.update(user.id, user);
+      return newUser;
+    }
   }
 
   async signupManager(email: string, password: string) {

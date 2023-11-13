@@ -39,8 +39,6 @@ export class ProductsController {
     @Body() createProductDto: CreateProductDto,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    // console.log(file);
-    console.log(file);
     if (!file) {
       throw new BadRequestException({
         messageCode: 'empty_image_product_err',
@@ -123,7 +121,12 @@ export class ProductsController {
     @Body() updateProductDto: UpdateProductDto,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    console.log(file);
+    console.log(updateProductDto.price);
+    // const numericRegex = /^[0-9]+$/
+    // if(numericRegex.test(updateProductDto.price)) {
+
+    // }
+    console.log(updateProductDto);
     if (file && file.size > 5242880) {
       throw new BadRequestException({
         messageCode: 'invalid_file_size_product_err',

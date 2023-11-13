@@ -9,6 +9,7 @@ import {
   Session,
   UseGuards,
   UseInterceptors,
+  BadRequestException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -26,6 +27,7 @@ import { CreateOrderDto } from 'src/orders/dto/create-order.dto';
 import { OrdersService } from 'src/orders/orders.service';
 import { ManagerGuard } from 'guards/manager.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { UpdateMyPasswordDto } from './dto/update-my-password.dto';
 
 @Controller('users')
 export class UsersController {
@@ -36,6 +38,23 @@ export class UsersController {
     private cartItemService: CartItemsService,
     private orderService: OrdersService,
   ) {}
+
+  @Post('update-my-password')
+  async updateMyPassword(
+    @CurrentUser() user: User,
+    @Body() updateMyPasswordDto: UpdateMyPasswordDto,
+  ) {
+    if (updateMyPasswordDto.password != updateMyPasswordDto.confirmPassword) {
+      throw new BadRequestException({ messageCode: 'confirm_password_err' });
+    }
+    await this.authService.changePassword(
+      user,
+      updateMyPasswordDto.currentPassword,
+      updateMyPasswordDto.password,
+    );
+
+    return { messageCode: 'update_my_password_success' };
+  }
 
   @Get('orders')
   @UseGuards(AuthGuard)
@@ -51,7 +70,6 @@ export class UsersController {
   @UseGuards(AuthGuard)
   getCart(@CurrentUser() user: User) {
     const cart = this.cartItemService.findAll({ userId: user.id });
-    console.log(cart);
     return cart;
   }
 
@@ -77,7 +95,7 @@ export class UsersController {
     @CurrentUser() user: User,
   ) {
     const updatedUser = await this.usersService.update(user.id, body);
-    console.log(updatedUser);
+
     return {
       messageCode: 'update_current_user_success',
       data: { user: updatedUser },
