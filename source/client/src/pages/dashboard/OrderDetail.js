@@ -16,6 +16,8 @@ import { useForm } from "react-hook-form";
 import { myAlert } from "../../utils";
 import moment from "moment";
 import { cancelOrder } from "../../queries/auth";
+import { useState } from "react";
+import CustomAlert from "../../utils/CustomAlert";
 
 const formatOrderStatus = (status) => {
   if (status == "pending") return "Chờ xác nhận";
@@ -26,6 +28,21 @@ const formatOrderStatus = (status) => {
 };
 
 const OrderDetail = () => {
+  /**
+   * Configuration for handling alerts in the component.
+   * These states control the behavior of the alert:
+   * - `showAlert`: Indicates whether the alert should be displayed or hidden.
+   * - `success`: Specifies if the alert represents a success (true) or an error (false).
+   * - `alertMessage`: The message to be displayed in the alert.
+   * - `handleAlertClose()`: A function that sets `showAlert` to `false`, hiding the alert when called.
+   */
+  const [showAlert, setShowAlert] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const handleAlertClose = () => {
+    setShowAlert(false);
+  };
+  // end
   const navigate = useNavigate();
   const { id: orderId } = useParams();
 
@@ -46,7 +63,9 @@ const OrderDetail = () => {
     onSuccess: async (data, _, __) => {
       // const data = await response.json();
       console.log("response", data);
-      myAlert(data.messageCode);
+      setAlertMessage(data.messageCode);
+      setShowAlert(true);
+      setSuccess(true);
     },
   });
 
@@ -62,6 +81,19 @@ const OrderDetail = () => {
 
   return (
     <div className="bg-white">
+      {/* 
+                  Render the CustomAlert component with the following props:
+                  - `show`: Determines whether the alert should be displayed or hidden based on the value of `showAlert`.
+                  - `messageCode`: Passes the alert message or message code to be displayed in the alert.
+                  - `onClose`: Provides the `handleAlertClose` function as a callback for closing the alert when needed.
+                  - `success`: Specifies whether the alert should have a success (true) or error (false) appearance.
+                */}
+      <CustomAlert
+        show={showAlert}
+        messageCode={alertMessage}
+        onClose={handleAlertClose}
+        success={success}
+      />
       <div className="mx-auto max-w-2xl px-4 pb-24 pt-8 sm:px-6 lg:max-w-7xl lg:px-8">
         <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
           Đơn hàng #{orderId}

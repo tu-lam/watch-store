@@ -7,6 +7,7 @@ import { useState } from "react";
 import { createProductQuery } from "../../queries/product";
 import { useNavigate } from "react-router-dom";
 import { myAlert } from "../../utils";
+import CustomAlert from "../../utils/CustomAlert";
 
 const schema = yup.object().shape({
   image: yup.mixed(),
@@ -17,6 +18,21 @@ const schema = yup.object().shape({
 });
 
 const AddProduct = () => {
+  /**
+   * Configuration for handling alerts in the component.
+   * These states control the behavior of the alert:
+   * - `showAlert`: Indicates whether the alert should be displayed or hidden.
+   * - `success`: Specifies if the alert represents a success (true) or an error (false).
+   * - `alertMessage`: The message to be displayed in the alert.
+   * - `handleAlertClose()`: A function that sets `showAlert` to `false`, hiding the alert when called.
+   */
+  const [showAlert, setShowAlert] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const handleAlertClose = () => {
+    setShowAlert(false);
+  };
+  // end 
   const navigate = useNavigate();
 
   const [image, setImage] = useState("");
@@ -41,10 +57,19 @@ const AddProduct = () => {
     onSuccess: async (response, _, __) => {
       const data = await response.json();
       console.log(data);
-      myAlert(data.messageCode);
+
       if (data.messageCode == "add_product_success") {
-        navigate("/bang-dieu-khien/san-pham");
+        setAlertMessage(data.messageCode);
+        setShowAlert(true);
+        setSuccess(true);
+        setTimeout(() => {
+          navigate("/bang-dieu-khien/san-pham");
+        }, 1000)
+        return;
       }
+      setAlertMessage(data.messageCode);
+      setShowAlert(true);
+      setSuccess(false);
       //   if (
       //     data.status === "fail" &&
       //     data.message === "Incorrect username or password"
@@ -72,6 +97,7 @@ const AddProduct = () => {
   return (
     <div className="flex justify-center max-w-5xl">
       <form className="flex-1 max-w-xl" onSubmit={handleSubmit(submitHandler)}>
+        <CustomAlert show={showAlert} messageCode={alertMessage} onClose={handleAlertClose} success={success} />
         <div className="space-y-12">
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-base font-semibold leading-7 text-gray-900">

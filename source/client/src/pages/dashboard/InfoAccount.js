@@ -9,6 +9,7 @@ import { myAlert } from "../../utils";
 import { getUser, updateUser } from "../../queries/user";
 import { getCurrentUser, updateCurrentUser } from "../../queries/auth";
 import UpdateMyPasswordForm from "../../components/form/UpdateMyPasswordForm";
+import CustomAlert from "../../utils/CustomAlert";
 
 const schema = yup.object().shape({
   name: yup.string().required("Vui lòng nhập tên"),
@@ -18,7 +19,21 @@ const schema = yup.object().shape({
 
 const InfoAccount = () => {
   const navigate = useNavigate();
-
+  /**
+   * Configuration for handling alerts in the component.
+   * These states control the behavior of the alert:
+   * - `showAlert`: Indicates whether the alert should be displayed or hidden.
+   * - `success`: Specifies if the alert represents a success (true) or an error (false).
+   * - `alertMessage`: The message to be displayed in the alert.
+   * - `handleAlertClose()`: A function that sets `showAlert` to `false`, hiding the alert when called.
+   */
+  const [showAlert, setShowAlert] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const handleAlertClose = () => {
+    setShowAlert(false);
+  };
+  // end 
   const userQuery = useQuery({ queryKey: ["user"], queryFn: getCurrentUser });
   // console.log(userQuery.data);
 
@@ -39,7 +54,9 @@ const InfoAccount = () => {
       console.log("response", response);
       const data = await response.json();
       console.log("data", data);
-      myAlert(data.messageCode);
+      setAlertMessage(data.messageCode);
+      setShowAlert(true);
+      setSuccess(true);
       //   if (data.messageCode === "edit_message_code") {
       //     navigate("/bang-dieu-khien/san-pham");
       //   }
@@ -67,6 +84,15 @@ const InfoAccount = () => {
     <>
       {user && (
         <>
+          {/* 
+        Render the CustomAlert component with the following props:
+        - `show`: Determines whether the alert should be displayed or hidden based on the value of `showAlert`.
+        - `messageCode`: Passes the alert message or message code to be displayed in the alert.
+        - `onClose`: Provides the `handleAlertClose` function as a callback for closing the alert when needed.
+        - `success`: Specifies whether the alert should have a success (true) or error (false) appearance.
+      */}
+          <CustomAlert show={showAlert} messageCode={alertMessage} onClose={handleAlertClose} success={success} />
+
           <div className="flex justify-center max-w-5xl">
             <form
               className="flex-1 max-w-xl"

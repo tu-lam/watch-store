@@ -19,7 +19,7 @@ import { useForm } from "react-hook-form";
 import { myAlert } from "../utils";
 import { useMutation } from "@tanstack/react-query";
 import { createOrder } from "../queries/auth";
-
+import CustomAlert from "../utils/CustomAlert";
 const schema = yup.object({
   // name: yup.string().required("Vui lòng nhập tên"),
   // phone: yup.string().required("Vui lòng nhập số điện thoại"),
@@ -28,6 +28,21 @@ const schema = yup.object({
 });
 
 export default function Cart() {
+  /**
+   * Configuration for handling alerts in the component.
+   * These states control the behavior of the alert:
+   * - `showAlert`: Indicates whether the alert should be displayed or hidden.
+   * - `success`: Specifies if the alert represents a success (true) or an error (false).
+   * - `alertMessage`: The message to be displayed in the alert.
+   * - `handleAlertClose()`: A function that sets `showAlert` to `false`, hiding the alert when called.
+   */
+  const [showAlert, setShowAlert] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const handleAlertClose = () => {
+    setShowAlert(false);
+  };
+  // end
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const payload = useSelector((state) => state.auth);
@@ -44,7 +59,18 @@ export default function Cart() {
     onSuccess: async (response, _, __) => {
       const data = await response.json();
       console.log(data);
-      myAlert(data.messageCode);
+      if (response.status == 201) {
+        setAlertMessage(data.messageCode);
+        setShowAlert(true);
+        setSuccess(true);
+        setTimeout(() => {
+          navigate('/bang-dieu-khien/lich-su-don-hang');
+        }, 1000);
+      } else {
+        setAlertMessage(data.messageCode);
+        setShowAlert(true);
+        setSuccess(false);
+      }
     },
     onError: (err) => {
       console.log(err);
@@ -86,7 +112,7 @@ export default function Cart() {
             // console.log(data);
           } else {
           }
-        } catch (error) {}
+        } catch (error) { }
       };
       fetchData();
     }
@@ -118,6 +144,19 @@ export default function Cart() {
 
   return (
     <Layout>
+      {/* 
+                  Render the CustomAlert component with the following props:
+                  - `show`: Determines whether the alert should be displayed or hidden based on the value of `showAlert`.
+                  - `messageCode`: Passes the alert message or message code to be displayed in the alert.
+                  - `onClose`: Provides the `handleAlertClose` function as a callback for closing the alert when needed.
+                  - `success`: Specifies whether the alert should have a success (true) or error (false) appearance.
+                */}
+      <CustomAlert
+        show={showAlert}
+        messageCode={alertMessage}
+        onClose={handleAlertClose}
+        success={success}
+      />
       <div className="bg-white">
         <div className="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
           <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">

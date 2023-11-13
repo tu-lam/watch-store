@@ -4,6 +4,8 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { updateMyPassword } from "../../queries/auth";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { myAlert } from "../../utils";
+import { useState } from "react";
+import CustomAlert from "../../utils/CustomAlert";
 
 const schema = yup.object().shape({
   currentPassword: yup.string(),
@@ -12,6 +14,21 @@ const schema = yup.object().shape({
 });
 
 const UpdateMyPasswordForm = () => {
+  /**
+   * Configuration for handling alerts in the component.
+   * These states control the behavior of the alert:
+   * - `showAlert`: Indicates whether the alert should be displayed or hidden.
+   * - `success`: Specifies if the alert represents a success (true) or an error (false).
+   * - `alertMessage`: The message to be displayed in the alert.
+   * - `handleAlertClose()`: A function that sets `showAlert` to `false`, hiding the alert when called.
+   */
+  const [showAlert, setShowAlert] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const handleAlertClose = () => {
+    setShowAlert(false);
+  };
+  // end 
   const {
     watch,
     register,
@@ -27,7 +44,15 @@ const UpdateMyPasswordForm = () => {
       console.log("response", response);
       const data = await response.json();
       console.log("data", data);
-      myAlert(data.messageCode);
+      if (response.ok == true) {
+        setAlertMessage(data.messageCode);
+        setShowAlert(true);
+        setSuccess(true);
+        return;
+      }
+      setAlertMessage(data.messageCode);
+      setShowAlert(true);
+      setSuccess(false);
       //   if (data.messageCode === "edit_message_code") {
       //     navigate("/bang-dieu-khien/san-pham");
       //   }
@@ -49,6 +74,8 @@ const UpdateMyPasswordForm = () => {
   return (
     <div className="flex justify-center max-w-5xl">
       <form className="flex-1 max-w-xl" onSubmit={handleSubmit(submitHandler)}>
+        <CustomAlert show={showAlert} messageCode={alertMessage} onClose={handleAlertClose} success={success} />
+
         <div className="space-y-12">
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-base font-semibold leading-7 text-gray-900">

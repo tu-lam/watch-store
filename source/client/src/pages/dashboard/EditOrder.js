@@ -15,8 +15,25 @@ import {
 import { useForm } from "react-hook-form";
 import { myAlert } from "../../utils";
 import moment from "moment";
+import CustomAlert from "../../utils/CustomAlert";
+import { useState } from "react";
 
 const EditOrder = () => {
+  /**
+   * Configuration for handling alerts in the component.
+   * These states control the behavior of the alert:
+   * - `showAlert`: Indicates whether the alert should be displayed or hidden.
+   * - `success`: Specifies if the alert represents a success (true) or an error (false).
+   * - `alertMessage`: The message to be displayed in the alert.
+   * - `handleAlertClose()`: A function that sets `showAlert` to `false`, hiding the alert when called.
+   */
+  const [showAlert, setShowAlert] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const handleAlertClose = () => {
+    setShowAlert(false);
+  };
+  // end 
   const navigate = useNavigate();
   const { id: orderId } = useParams();
 
@@ -37,7 +54,10 @@ const EditOrder = () => {
     onSuccess: async (response, _, __) => {
       const data = await response.json();
       console.log("response", data);
-      myAlert(data.messageCode);
+      setAlertMessage("Cập nhật đơn hàng thành công");
+      setShowAlert(true);
+      setSuccess(true);
+
     },
   });
 
@@ -53,6 +73,7 @@ const EditOrder = () => {
 
   return (
     <div className="bg-white">
+      <CustomAlert show={showAlert} messageCode={alertMessage} onClose={handleAlertClose} success={success} />
       <div className="mx-auto max-w-2xl px-4 pb-24 pt-8 sm:px-6 lg:max-w-7xl lg:px-8">
         <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
           Đơn hàng #{orderId}

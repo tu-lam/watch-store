@@ -22,5 +22,8 @@
   "empty_address_order_err": "Địa chỉ không được để trống",
   "invalid_phone_order_err": "Số điện thoại không hợp lệ",
   "update_my_password_success": "Đổi mật khẩu thành công",
-  "cancel_order_success": "Hủy đơn thành công"
+  "cancel_order_success": "Hủy đơn thành công",
+  "empty_cart_err":"giỏ hàng trống không thể đặt hàng",
+  "create_order_success":"đặt hàng thành công",
+  "update_current_user_success":"Cập nhật thông tin tài khoản thành công"
 }
