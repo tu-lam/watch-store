@@ -164,13 +164,15 @@ export class UsersController {
   }
 
   @Get()
+  @UseGuards(AuthGuard)
   @UseGuards(ManagerGuard)
   findAll() {
     return this.usersService.findAll();
   }
 
   @Get(':id')
-  @UseGuards(ManagerGuard)
+  // @UseGuards(AuthGuard)
+  // @UseGuards(ManagerGuard)
   async findOne(@Param('id') id: string) {
     return this.usersService.findOne(+id);
   }
