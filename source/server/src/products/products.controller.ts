@@ -157,8 +157,7 @@ export class ProductsController {
     // }
 
     const oldProduct = await this.productsService.findOne(+id);
-
-    updateProductDto.image = file.filename;
+    if (file) updateProductDto.image = file.filename;
     const product = await this.productsService.update(+id, updateProductDto);
     if (!product) {
       return {
