@@ -41,9 +41,9 @@ api,description,method,inputBody,outputCode,check
 "http://localhost:4000/products/12","api cập nhẩn thông tin sản phẩm  thành công","patchHaveToken","{""name"": ""kkk"",""price"": ""222"",""image"":""image-products-test/1.jpg""}","edit_product_success",false
 "http://localhost:4000/users/cart","api lấy tất cả thông tin giỏ hàng của user đã đăng nhập (đã có token)","getTypeHaveToken","{}","List",true
 "http://localhost:4000/users/cart","api lấy tất cả thông tin giỏ hàng của user khí chưa đăng nhập hoặc token hết hạng thông báo lỗi","get","{}","empty_token_err",true
-"http://localhost:4000/users/cart","api thêm sản phẩm khi đã đăng nhập (có token)","postHaveToken","{""productId"": 16,""quantity"": 1}","ss",false
-"http://localhost:4000/users/cart","api thêm sản phẩm khi chưa đăng nhập","post","{""productId"": 16,""quantity"": 1}","ss",false
-"http://localhost:4000/users/cart/60","api update số lượng sản phẩm khi đã đăng nhập","patchHaveToken","{""quantity"":""10""}","ss",false
+"http://localhost:4000/users/cart","api thêm sản phẩm khi đã đăng nhập (có token)","postHaveToken","{""productId"": 1,""quantity"": 1}","ss",false
+"http://localhost:4000/users/cart","api thêm sản phẩm khi chưa đăng nhập","post","{""productId"": 1,""quantity"": 1}","empty_token_err",false
+"http://localhost:4000/users/cart/60","?api update số lượng sản phẩm khi đã đăng nhập","patchHaveToken","{""quantity"":""10""}","ss",false
 "http://localhost:4000/users/cart/1","api update phẩm khi id sản phẩm trong giỏ hàng không tồn tại","patchHaveToken","{""quantity"":""10""}","cart_item_not_found_err",true
 "http://localhost:4000/users/cart/","()api update khi không truyền vào id","patchHaveToken","{""quantity"":""10""}","user_not_found_err",false
 "http://localhost:4000/users/cart/16","api update số lượng sản phẩm khi chưa đăng nhập","patch","{""quantity"":""10""}","empty_token_err",true
