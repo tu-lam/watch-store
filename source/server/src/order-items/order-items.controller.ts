@@ -14,7 +14,7 @@ import { UpdateOrderItemDto } from './dto/update-order-item.dto';
 import { AuthGuard } from 'guards/auth.guard';
 
 @Controller('order-items')
-@UseGuards(AuthGuard)
+// @UseGuards(AuthGuard)
 export class OrderItemsController {
   constructor(private readonly orderItemsService: OrderItemsService) {}
 

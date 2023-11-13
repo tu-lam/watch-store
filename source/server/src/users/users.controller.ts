@@ -239,10 +239,11 @@ export class UsersController {
 
   @Post('order')
   @UseGuards(AuthGuard)
-  createOrder(
+  async createOrder(
     @Body() createOrderDto: CreateOrderDto,
     @CurrentUser() user: User,
   ) {
-    return this.orderService.create(user.id, createOrderDto);
+    const order = await this.orderService.create(user.id, createOrderDto);
+    return { messageCode: 'create_order_success', data: { order } };
   }
 }
