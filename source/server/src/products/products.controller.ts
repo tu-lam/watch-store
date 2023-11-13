@@ -79,6 +79,7 @@ export class ProductsController {
         messageCode: 'add_product_fail',
       };
     }
+
     return {
       messageCode: 'add_product_success',
       data: {
@@ -121,23 +122,43 @@ export class ProductsController {
     @Body() updateProductDto: UpdateProductDto,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    console.log(updateProductDto.price);
-    // const numericRegex = /^[0-9]+$/
-    // if(numericRegex.test(updateProductDto.price)) {
+    console.log(file);
+    if (file) {
+      const filePath = path.join('public', 'products', file.filename);
+      if (file.size > 5242880) {
+        fs.unlinkSync(filePath);
+        throw new BadRequestException({
+          messageCode: 'invalid_file_size_product_err',
+        });
+      }
 
-    // }
-    console.log(updateProductDto);
-    if (file && file.size > 5242880) {
-      throw new BadRequestException({
-        messageCode: 'invalid_file_size_product_err',
-      });
+      if (
+        !file.originalname.match(/\.(jpg|jpeg|png|gif)$/) ||
+        !file.mimetype.startsWith('image/')
+      ) {
+        fs.unlinkSync(filePath);
+        throw new BadRequestException({
+          messageCode: 'invalid_file_product_err',
+        });
+      }
     }
+    // if (file && file.size > 5242880) {
+    //   throw new BadRequestException({
+    //     messageCode: 'invalid_file_size_product_err',
+    //   });
+    // }
+
+    const oldProduct = await this.productsService.findOne(+id);
+
+    updateProductDto.image = file.filename;
     const product = await this.productsService.update(+id, updateProductDto);
     if (!product) {
       return {
         messageCode: 'edit_product_fail',
       };
     }
+    const filePath = path.join('public', 'products', oldProduct.image);
+    if (file) fs.unlinkSync(filePath);
     return {
       messageCode: 'edit_product_success',
       data: {
