@@ -46,9 +46,9 @@ api,description,method,inputBody,outputCode,check
 "http://localhost:4000/users/cart/60","?api update số lượng sản phẩm khi đã đăng nhập","patchHaveToken","{""quantity"":""10""}","ss",false
 "http://localhost:4000/users/cart/1","api update phẩm khi id sản phẩm trong giỏ hàng không tồn tại","patchHaveToken","{""quantity"":""10""}","cart_item_not_found_err",true
 "http://localhost:4000/users/cart/16","api update số lượng sản phẩm khi chưa đăng nhập","patch","{""quantity"":""10""}","empty_token_err",true
-"http://localhost:4000/users/cart/59","api xóa sản phẩm khi đã đăng nhập (nhập id muốn xóa)","deleteHaveToken","{}","ss",false
+"http://localhost:4000/users/cart/59","api xóa sản phẩm trong giỏ hàng khi đã đăng nhập (nhập id muốn xóa)","deleteHaveToken","{}","ss",false
 "http://localhost:4000/users/cart/1","api xóa sản phẩm khi id sản phẩm trong giỏ hàng không tồn tại","deleteHaveToken","{}","cart_item_not_found_err",true
-"http://localhost:4000/users/cart/","()api xóa sản phẩm khi không có id truyền vào","deleteHaveToken","{}","unauthorized_err",true
+"http://localhost:4000/users/cart/","()api xóa sản phẩm trong giỏ hàng khi không có id truyền vào","deleteHaveToken","{}","unauthorized_err",true
 "http://localhost:4000/users/cart/16","api xóa sản phẩm trong giỏ hàng khi chưa đăng nhập","delete","{}","empty_token_err",true
 "http://localhost:4000/orders","api lấy tất cả order khi đã đang nhập (đã có token user) ","getTypeHaveToken","{}","List",true
 "http://localhost:4000/orders","()api lấy tất cả order khi đã đang nhập (đã có token admin) ","getTypeHaveTokenAdmin","{}","List",true
